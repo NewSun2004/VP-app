@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-details',
@@ -10,18 +10,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent implements OnInit{
-  products : any;
+  productId = input.required<string>();
+
   product : any;
 
   constructor (private _productService : ProductService) { }
 
   ngOnInit(): void {
-    this._productService.getAllProduct().subscribe({
-      next : allProductData => {
-        this.products = allProductData;
-        this.product = this.products[0];
-        console.log(this.product);
-      }
+    this._productService.getProduct(this.productId()).subscribe({
+      next : productData => this.product = productData
     })
   }
 }

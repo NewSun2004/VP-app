@@ -3,7 +3,7 @@ import { DisplayProductsComponent } from './components/display-products/display-
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 export const routes: Routes = [
-  {path : "products", component : DisplayProductsComponent},
-  {path : "product/:id", component : ProductDetailsComponent},
-  {path : "", redirectTo : "products", pathMatch : "full"},
+  {path : "eye_glasses", component : DisplayProductsComponent},
+  {path : "eye_glasses/:productId", component : ProductDetailsComponent},
+  {path : "", redirectTo : "eye_glasses", pathMatch : "full"},
 ];

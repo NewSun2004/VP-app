@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { DisplayProductsComponent } from "./components/display-products/display-products.component";
-import { ProductDetailsComponent } from "./components/product-details/product-details.component";
 import { RouterOutlet } from '@angular/router';
 
 @Component({
