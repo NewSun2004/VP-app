@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-display-product-page',
+  selector: 'app-display-products',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './display-product-page.component.html',
-  styleUrl: './display-product-page.component.css'
+  imports: [CommonModule, RouterLink, RouterLinkActive],
+  templateUrl: './display-products.component.html',
+  styleUrl: './display-products.component.css'
 })
-export class DisplayProductPageComponent implements OnInit{
+export class DisplayProductsComponent implements OnInit{
   products : any;
 
   constructor(private _productService : ProductService) { }
