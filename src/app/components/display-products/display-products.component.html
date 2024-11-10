@@ -1,7 +1,7 @@
 <div class="container">
   <div class="d-flex flex-wrap justify-content-center items-start">
     <div class="card me-3 mb-3 border-0" style="width: 22rem;" *ngFor="let product of products">
-      <a [routerLink]="['/product-details']" routerLinkActive="router-link-active" >
+      <a [routerLink]="['/product-details']">
         <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
         <div class="card-body text-center">
           <h5 class="card-title">{{product.name}}</h5>
