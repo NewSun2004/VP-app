@@ -13,12 +13,16 @@ export class ProductDetailsComponent implements OnInit{
   productId = input.required<string>();
 
   product : any;
+  reviews_count : number = 0;
 
   constructor (private _productService : ProductService) { }
 
   ngOnInit(): void {
     this._productService.getProduct(this.productId()).subscribe({
-      next : productData => this.product = productData
+      next : productData => {
+        this.product = productData
+        this.reviews_count = productData["reviews"].length
+      }
     })
   }
 }
