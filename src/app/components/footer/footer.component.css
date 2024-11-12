@@ -1,0 +1,49 @@
+* {
+  color: white;
+}
+
+.media-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.contact-icon {
+  width: 30px;
+  height: 30px;
+}
+
+p.contact {
+  font-size: 22px;
+}
+
+p.function-title {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+a {
+  font-size: 22px;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #D96E05;
+}
+
+p#hashtag {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 90%;
+}
+
+p#instruction {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+p#follow {
+  font-size: 24px;
+  font-weight: 600;
+}
+
