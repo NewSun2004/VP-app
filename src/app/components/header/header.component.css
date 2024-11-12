@@ -1,5 +1,5 @@
 * {
-  font-size: 22px;
+  font-size: 1.1rem;
   color: #00000080;
   font-weight: 600;
 }
@@ -8,8 +8,12 @@
   background-color: #D96E05;
 }
 
+.show {
+  display: none;
+}
+
 #promo {
-  font-size: 20px;
+  font-size: 1rem;
   color: #ffffff;
 }
 
@@ -19,13 +23,14 @@
 }
 
 #logo {
- height: 100px;
- width: 180px;
+ height: 30%;
+ width: 40%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  line-height: 2;
 }
 
 a:hover {
@@ -41,3 +46,30 @@ a#exception:hover {
   font-weight: normal;
 }
 
+@media screen and (max-width: 834px) {
+  * {
+    font-size: 0.7rem;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 393px) {
+  * {
+    font-size: 0.6rem;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+}
