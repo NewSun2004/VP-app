@@ -15,7 +15,7 @@ export class ProductService {
 
   getAllProduct() : Observable<[]>
   {
-    return this._httpClient.get<[]>(this.myAPIUrl + "/eye_glasses").pipe(
+    return this._httpClient.get<[]>(this.myAPIUrl + "/eyeglasses").pipe(
      tap((allProducts : any) => {
       this.products = allProducts;
       this.productsSbuject.next(allProducts);
@@ -25,6 +25,6 @@ export class ProductService {
 
   getProduct(productId : string) : Observable<any>
   {
-    return this._httpClient.get<[]>(this.myAPIUrl + "/eye_glasses" + `/${productId}`);
+    return this._httpClient.get<[]>(this.myAPIUrl + "/eyeglasses" + `/${productId}`);
   }
 }
