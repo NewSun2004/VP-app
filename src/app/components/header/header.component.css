@@ -1,26 +1,16 @@
 * {
-  font-size: 22px;
+  font-size: 1.1rem;
   color: #00000080;
-  font-weight: 600;
 }
 
-.box {
+div.promo {
   background-color: #D96E05;
-}
 
-#promo {
-  font-size: 20px;
-  color: #ffffff;
-}
-
-.icon {
-  height: 20px;
-  width: 20px;
-}
-
-#logo {
- height: 100px;
- width: 180px;
+  p#promo {
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 1rem;
+  }
 }
 
 a {
@@ -32,12 +22,6 @@ a:hover {
   color: #D96E05;
 }
 
-a#exception:hover {
-  color: #000000;
+a.manage:hover {
+  color: black;
 }
-
-::placeholder {
-  color: #0000004D;
-  font-weight: normal;
-}
-
