@@ -1,50 +1,32 @@
 * {
   color: white;
+  font-size: 1.1rem;
+  font-weight: 300;
 }
 
-.media-icon {
-  width: 32px;
-  height: 32px;
+p#nametag {
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 90%;
 }
 
-.contact-icon {
-  width: 30px;
-  height: 30px;
+p#follow {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-p.contact {
-  font-size: 22px;
-}
 
-p.function-title {
-  font-size: 26px;
+p.title {
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
 a {
-  font-size: 22px;
-  font-weight: 300;
   text-decoration: none;
   width: fit-content;
 }
 
 a:hover {
   color: #D96E05;
-}
-
-p#hashtag {
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 90%;
-}
-
-p#instruction {
-  font-size: 20px;
-  font-weight: 400;
-}
-
-p#follow {
-  font-size: 24px;
-  font-weight: 600;
 }
 
