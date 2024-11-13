@@ -15,8 +15,8 @@ export const routes: Routes = [
   {path : "sunglasses", component : DisplayProductsComponent},
   {path : "sunglasses/:productId", component : ProductDetailsComponent},
   {path : "customize", component : CustomizeComponent},
-  {path : "accessory", component : DisplayProductsComponent},
-  {path : "accessory/:productId", component : ProductDetailsComponent},
-  {path : "contact", component : ContactComponent},
+  {path : "accessories", component : DisplayProductsComponent},
+  {path : "accessories/:productId", component : ProductDetailsComponent},
+  {path : "contacts", component : ContactComponent},
   {path : "**", component : PageNotFoundComponent}
 ];
