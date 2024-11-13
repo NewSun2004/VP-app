@@ -43,31 +43,31 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav nav-fill w-100">
           <li class="nav-item">
-            <a href="">About us</a>
+            <a [routerLink]="['/aboutus']" routerLinkActive="router-link-active" >About us</a>
           </li>
           <li class="nav-item dropdown">
             <a type="button" class="nav-link dropdown-toggle p-0 m-0" data-bs-toggle="dropdown" aria-expanded="false">Eyeglasses</a>
 
             <ul class="dropdown-menu">
               <li>
-                <a href="" class="dropdown-item">Men</a>
+                <a [routerLink]="['/eyeglasses']" routerLinkActive="router-link-active"  class="dropdown-item">Men</a>
               </li>
 
-              <li><a href="" class="dropdown-item">Women</a>
+              <li><a [routerLink]="['/eyeglasses']" routerLinkActive="router-link-active"  class="dropdown-item">Women</a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <a href="">Sunglasses</a>
+            <a [routerLink]="['/sunglasses']" routerLinkActive="router-link-active" >Sunglasses</a>
           </li>
           <li class="nav-item">
-            <a href="">Customize</a>
+            <a [routerLink]="['/customize']" routerLinkActive="router-link-active" >Customize</a>
           </li>
           <li class="nav-item">
-            <a href="">Contacts</a>
+            <a [routerLink]="['/contact']" routerLinkActive="router-link-active" >Contacts</a>
           </li>
           <li class="nav-item">
-            <a href="">Accessories</a>
+            <a [routerLink]="['/accessory']" routerLinkActive="router-link-active" >Accessories</a>
           </li>
         </ul>
       </div>
