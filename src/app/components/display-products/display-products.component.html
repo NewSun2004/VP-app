@@ -1,11 +1,18 @@
 <div class="container">
   <div class="d-flex flex-wrap justify-content-center items-start">
     <div class="card me-3 mb-3 border-0" style="width: 20rem;" *ngFor="let product of products">
-      <a [routerLink]="['/eyeglasses', product._id]">
+      <a [routerLink]="['/eyeglasses', product._id]" style="height: 100%;">
         <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+
         <div class="card-body text-center">
-          <h5 class="card-title">{{product.name}}</h5>
-          <p class="card-text">${{product.price}}.00</p>
+          <p class="card-title name">{{product.name}}</p>
+          <p class="card-text price">${{product.price}}.00</p>
+          <div class="d-flex flex-row justify-content-center">
+            <img src="Icons/color-circle-1.svg" alt="" class="me-2">
+            <img src="Icons/color-circle-2.svg" alt="" class="me-2">
+            <img src="Icons/color-circle-3.svg" alt="" class="me-2">
+            <img src="Icons/color-circle-4.svg" alt="">
+          </div>
         </div>
       </a>
     </div>
