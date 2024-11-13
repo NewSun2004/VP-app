@@ -8,7 +8,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { ContactComponent } from './components/contact/contact.component';
 
 export const routes: Routes = [
-  {path : "home", component : HomepageComponent},
+  {path : "", component : HomepageComponent},
   {path : "aboutus", component : AboutUsComponent},
   {path : "eyeglasses", component : DisplayProductsComponent},
   {path : "eyeglasses/:productId", component : ProductDetailsComponent},
@@ -18,6 +18,5 @@ export const routes: Routes = [
   {path : "accessory", component : DisplayProductsComponent},
   {path : "accessory/:productId", component : ProductDetailsComponent},
   {path : "contact", component : ContactComponent},
-  {path : "", redirectTo : "home", pathMatch : "full"},
   {path : "**", component : PageNotFoundComponent}
 ];

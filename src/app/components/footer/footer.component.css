@@ -25,6 +25,7 @@ a {
   font-size: 22px;
   font-weight: 300;
   text-decoration: none;
+  width: fit-content;
 }
 
 a:hover {
