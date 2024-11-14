@@ -43,35 +43,35 @@
       <div class="collapse navbar-collapse" id="navigation">
         <ul class="navbar-nav nav-fill w-100">
           <li class="nav-item">
-            <a [routerLink]="['/aboutus']" routerLinkActive="router-link-active" >About us</a>
+            <a [routerLink]="['/aboutus']">About us</a>
           </li>
           <li class="nav-item dropdown">
             <a type="button" class="nav-link dropdown-toggle p-0 m-0" data-bs-toggle="dropdown" aria-expanded="false">Eyeglasses</a>
 
             <ul class="dropdown-menu">
               <li>
-                <a [routerLink]="['/eyeglasses']" routerLinkActive="router-link-active"  class="dropdown-item">All eyeglasses</a>
+                <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
               </li>
 
               <li>
-                <a [routerLink]="['/eyeglasses']" routerLinkActive="router-link-active"  class="dropdown-item">Men</a>
+                <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
               </li>
 
-              <li><a [routerLink]="['/eyeglasses']" routerLinkActive="router-link-active"  class="dropdown-item">Women</a>
+              <li><a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/sunglasses']" routerLinkActive="router-link-active" >Sunglasses</a>
+            <a [routerLink]="['/sunglasses']">Sunglasses</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/customize']" routerLinkActive="router-link-active" >Customize</a>
+            <a [routerLink]="['/customize']">Customize</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/contacts']" routerLinkActive="router-link-active" >Contacts</a>
+            <a [routerLink]="['/contacts']">Contacts</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/accessories']" routerLinkActive="router-link-active" >Accessories</a>
+            <a [routerLink]="['/accessories']">Accessories</a>
           </li>
         </ul>
       </div>

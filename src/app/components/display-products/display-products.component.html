@@ -1,35 +1,49 @@
 <div class="container">
   <div class="row">
+    <!-- Navigation tree and current display option-->
     <div class="col-3">
       <div class="d-flex flex-column">
-        <div class="d-flex flex-column">
-          <p id="navigation-tree">Home > Eyeglasses > All Eyeglasses</p>
-          <p class="catalog-title">All Eyeglasses</p>
-        </div>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+          <ol class="breadcrumb navigation-tree">
+            <li class="breadcrumb-item">
+              <a href="">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {{filterName}} {{productName}}
+            </li>
+          </ol>
+        </nav>
+
+        <p class="catalog-title">{{filterName}} {{productName}}</p>
       </div>
 
+      <!-- Show or hide filter button -->
       <button class="btn d-flex flex-row align-items-center w-50 border-0 p-0" (click)="filterClose = !filterClose" id="filter-btn">
         <span class="flex-grow-1 text-start">Filter</span>
         <img src="Icons/arrow.svg" alt="" class="flex-shrink-0" [ngClass]="filterClose ? '' : 'rotate'">
       </button>
     </div>
 
+    <!-- Promo image -->
     <div class="col">
       <img src="Images/catalog-promo.png" alt="" class="w-100 h-100">
     </div>
   </div>
 
+  <!-- Filter sidebar -->
   <div class="row mt-2">
     <div class="col-3 p-0 close" id="filter" [ngClass]="{'close' : filterClose}">
       <div class="container options">
+        <!-- Expand shape button -->
         <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="shapeExpand = !shapeExpand">
           <span class="flex-grow-1">Shape</span>
           <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : shapeExpand}">
         </button>
+        <!-- Shape submenu -->
         <div class="submenu" [ngClass]="{'show' : shapeExpand}">
           <div>
             <div class="form-check" *ngFor="let shape of shapes; let i = index">
-              <input class="form-check-input shadow-none" type="checkbox" value="shape" id="flexCheck{{shape.name}}{{i}}" [(ngModel)]="shape.selected" (change)="onChange()">
+              <input class="form-check-input shadow-none" type="checkbox" value="shape.name" id="flexCheck{{shape.name}}{{i}}" [(ngModel)]="shape.selected" (change)="onChange()">
               <label class="form-check-label" for="flexCheck{{shape.name}}{{i}}">
                 {{shape.name}}
               </label>
@@ -37,14 +51,16 @@
           </div>
         </div>
 
+        <!-- Expand materials button -->
         <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="materialExpand = !materialExpand">
           <span class="flex-grow-1">Materials</span>
           <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : materialExpand}">
         </button>
+        <!-- Materials submenu -->
         <div class="submenu" [ngClass]="{'show' : materialExpand}">
           <div>
             <div class="form-check" *ngFor="let material of materials; let i = index">
-              <input class="form-check-input" type="checkbox" value="{{material.name}}" id="flexCheck{{material.name}}{{i}}" [(ngModel)]="material.selected" (change)="onChange()">
+              <input class="form-check-input shadow-none" type="checkbox" value="material.name" id="flexCheck{{material.name}}{{i}}" [(ngModel)]="material.selected" (change)="onChange()">
               <label class="form-check-label" for="flexCheck{{material.name}}{{i}}">
                 {{material.name}}
               </label>
@@ -52,15 +68,16 @@
           </div>
         </div>
 
-
+        <!-- Expand gender button -->
         <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="genderExpand = !genderExpand">
           <span class="flex-grow-1">Gender</span>
           <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : genderExpand}">
         </button>
+        <!-- Gender submenu -->
         <div class="submenu" [ngClass]="{'show' : genderExpand}">
           <div>
             <div class="form-check" *ngFor="let gender of genders; let i = index">
-              <input class="form-check-input" type="checkbox" value="gender" id="flexCheck{{gender.name}}{{i}}" [(ngModel)]="gender.selected" (change)="onChange()">
+              <input class="form-check-input shadow-none" type="checkbox" value="gender.name" id="flexCheck{{gender.name}}{{i}}" [(ngModel)]="gender.selected" (change)="onChange()">
               <label class="form-check-label" for="flexCheck{{gender.name}}{{i}}">
                 {{gender.name}}
               </label>
@@ -70,10 +87,12 @@
       </div>
     </div>
 
+    <!-- Display product -->
     <div class="col">
       <div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
-        <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of products">
-          <a [routerLink]="['/eyeglasses', product._id]" style="height: 100%;">
+        <!-- NgFor to populate display with cards of product -->
+        <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of displayedProducts">
+          <a [routerLink]="['/eyeglasses', product._id]" class="product" style="height: 100%;">
             <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
             <div class="card-body text-center">
@@ -89,6 +108,13 @@
           </a>
         </div>
       </div>
+
+      <!-- See more button -->
+       <div class="d-flex flex-row justify-content-center">
+        <button class="btn mb-3 seemore" (click)="onSeeMore()">
+          See more
+        </button>
+       </div>
     </div>
   </div>
 </div>

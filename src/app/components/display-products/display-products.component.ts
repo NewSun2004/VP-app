@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -13,6 +13,9 @@ import { HttpParams } from '@angular/common/http';
   styleUrl: './display-products.component.css'
 })
 export class DisplayProductsComponent implements OnInit{
+  filterName : string = "";
+  productName : string = "";
+
   filterClose : boolean = true;
   shapeExpand : boolean = false;
   materialExpand : boolean = false;
@@ -40,31 +43,73 @@ export class DisplayProductsComponent implements OnInit{
   ]
 
   products : any;
-  selectedFilters : string[] = [];
+  displayedProducts: any[] = [];
+  productsPerPage = 15;
+  currentPage = 1;
 
   constructor(private _productService : ProductService, private _route : ActivatedRoute, private _router : Router) { }
 
   ngOnInit(): void {
-    this._route.queryParams.subscribe(params => {
-      const selectedShapes = params['shapes'];
+    const rawRouteUrl = this._router.url;
+    const routeBaseUrl = rawRouteUrl.split("?")[0].replace("/", "");
 
-      if (Array.isArray(selectedShapes)) {
-        selectedShapes.forEach(shapeName => {
-          const shape = this.shapes.find(shape => shape.name === shapeName);
-          if (shape) {
-            shape.selected = true;
-          }
-        });
-      } else if (selectedShapes) {
-        const shape = this.shapes.find(shape => shape.name === selectedShapes);
-        if (shape) {
-          shape.selected = true;
+    if (rawRouteUrl.includes("Male"))
+    {
+      this.filterName = "Men's";
+    }
+    else if (rawRouteUrl.includes("Female"))
+    {
+      this.filterName = "Women's";
+    }
+    else
+    {
+      this.filterName = "All";
+    }
+    this.productName = routeBaseUrl.charAt(0).toUpperCase() + routeBaseUrl.slice(1);
+
+    this._route.queryParams.subscribe(params => {
+      Object.keys(params).forEach(paramKey => {
+        const selectedFilters = params[paramKey];
+        let filterType;
+
+        switch (paramKey)
+        {
+          case "shape":
+            filterType = this.shapes;
+            break;
+          case "material":
+            filterType = this.materials;
+            break;
+          default:
+            filterType = this.genders;
+            break;
         }
-      }
-    });
+
+        if (Array.isArray(selectedFilters))
+        {
+        selectedFilters.forEach(filterName => {
+          const selectedFilter = filterType.find(filter => filter.name === filterName);
+          if (selectedFilter)
+            {
+            selectedFilter.selected = true;
+            }
+          });
+        }
+        else if (selectedFilters)
+        {
+        const selectedFilter = filterType.find(filter => filter.name === selectedFilters);
+        if (selectedFilter)
+          {
+          selectedFilter.selected = true;
+          }
+        }});
+      });
 
     this._productService.getAllProduct().subscribe({
-      next : allProductData => this.products = allProductData
+      next : allProductData => {
+        this.products = allProductData;
+        this.updateDisplayedProducts();
+      }
     })
   }
 
@@ -75,7 +120,19 @@ export class DisplayProductsComponent implements OnInit{
     this.shapes
       .filter(shape => shape.selected)
       .forEach(shape => {
-        params = params.append('shapes', shape.name);
+        params = params.append("shape", shape.name);
+      });
+
+    this.materials
+      .filter(material => material.selected)
+      .forEach(material => {
+        params = params.append("material", material.name);
+      });
+
+    this.genders
+      .filter(gender => gender.selected)
+      .forEach(gender => {
+        params = params.append("gender", gender.name);
       });
 
     const queryParamsObj: { [key: string]: string[] | null} = {};
@@ -83,6 +140,19 @@ export class DisplayProductsComponent implements OnInit{
       queryParamsObj[key] = params.getAll(key);
     });
 
-    this._router.navigate(['/eyeglasses'], { queryParams: queryParamsObj });
+    this._router.navigate(["eyeglasses"], { queryParams: queryParamsObj });
+  }
+
+  updateDisplayedProducts()
+  {
+    const start = 0;
+    const end = this.currentPage * this.productsPerPage;
+    this.displayedProducts = this.products.slice(start, end);
+  }
+
+  onSeeMore()
+  {
+    this.currentPage++;
+    this.updateDisplayedProducts();
   }
 }
