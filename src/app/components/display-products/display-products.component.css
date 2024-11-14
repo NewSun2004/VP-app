@@ -1,3 +1,78 @@
+button#filter-btn {
+  span {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  img {
+    rotate: 180deg;
+    transition: 0.5s ease-in-out;
+  }
+
+  img.rotate {
+    rotate: 360deg;
+  }
+}
+
+p#navigation-tree {
+  font-size: 0.8rem;
+}
+
+p.catalog-title {
+  font-family: "Tiro Bangla";
+  font-style: italic;
+  font-size: 1.75rem;
+}
+
+div#filter {
+  transition: 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+div.close {
+  width: 0px;
+}
+
+div.options {
+display: grid;
+
+  button {
+    span {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    img {
+      rotate: 180deg;
+      transition: 0.5s ease-in-out;
+    }
+
+    img.rotate {
+      rotate: 270deg;
+    }
+  }
+
+  div.submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: 0.5s ease-in-out;
+
+    div {
+      overflow: hidden;
+
+      div{
+        font-size: 1.2rem;
+        font-weight: 300;
+      }
+    }
+  }
+
+  div.submenu.show {
+    grid-template-rows: 1fr;
+  }
+}
+
+
 p.name {
   font-weight: 400;
 }

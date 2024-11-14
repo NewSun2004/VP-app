@@ -1,20 +1,94 @@
 <div class="container">
-  <div class="d-flex flex-wrap justify-content-center items-start">
-    <div class="card me-3 mb-3 border-0" style="width: 20rem;" *ngFor="let product of products">
-      <a [routerLink]="['/eyeglasses', product._id]" style="height: 100%;">
-        <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+  <div class="row">
+    <div class="col-3">
+      <div class="d-flex flex-column">
+        <div class="d-flex flex-column">
+          <p id="navigation-tree">Home > Eyeglasses > All Eyeglasses</p>
+          <p class="catalog-title">All Eyeglasses</p>
+        </div>
+      </div>
 
-        <div class="card-body text-center">
-          <p class="card-title name">{{product.name}}</p>
-          <p class="card-text price">${{product.price}}.00</p>
-          <div class="d-flex flex-row justify-content-center">
-            <img src="Icons/color-circle-1.svg" alt="" class="me-2">
-            <img src="Icons/color-circle-2.svg" alt="" class="me-2">
-            <img src="Icons/color-circle-3.svg" alt="" class="me-2">
-            <img src="Icons/color-circle-4.svg" alt="">
+      <button class="btn d-flex flex-row align-items-center w-50 border-0 p-0" (click)="filterClose = !filterClose" id="filter-btn">
+        <span class="flex-grow-1 text-start">Filter</span>
+        <img src="Icons/arrow.svg" alt="" class="flex-shrink-0" [ngClass]="filterClose ? '' : 'rotate'">
+      </button>
+    </div>
+
+    <div class="col">
+      <img src="Images/catalog-promo.png" alt="" class="w-100 h-100">
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-3 p-0 close" id="filter" [ngClass]="{'close' : filterClose}">
+      <div class="container options">
+        <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="shapeExpand = !shapeExpand">
+          <span class="flex-grow-1">Shape</span>
+          <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : shapeExpand}">
+        </button>
+        <div class="submenu" [ngClass]="{'show' : shapeExpand}">
+          <div>
+            <div class="form-check" *ngFor="let shape of shapes; let i = index">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheck{{shape}}{{i}}">
+              <label class="form-check-label" for="flexCheck{{shape}}{{i}}">
+                {{shape}}
+              </label>
+            </div>
           </div>
         </div>
-      </a>
+
+        <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="materialExpand = !materialExpand">
+          <span class="flex-grow-1">Materials</span>
+          <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : materialExpand}">
+        </button>
+        <div class="submenu" [ngClass]="{'show' : materialExpand}">
+          <div>
+            <div class="form-check" *ngFor="let material of materials; let i = index">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheck{{material}}{{i}}">
+              <label class="form-check-label" for="flexCheck{{material}}{{i}}">
+                {{material}}
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="genderExpand = !genderExpand">
+          <span class="flex-grow-1">Gender</span>
+          <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : genderExpand}">
+        </button>
+        <div class="submenu" [ngClass]="{'show' : genderExpand}">
+          <div>
+            <div class="form-check" *ngFor="let gender of genders; let i = index">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheck{{gender}}{{i}}">
+              <label class="form-check-label" for="flexCheck{{gender}}{{i}}">
+                {{gender}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
+        <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of products">
+          <a [routerLink]="['/eyeglasses', product._id]" style="height: 100%;">
+            <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+
+            <div class="card-body text-center">
+              <p class="card-title name">{{product.name}}</p>
+              <p class="card-text price">${{product.price}}.00</p>
+              <div class="d-flex flex-row justify-content-center">
+                <img src="Icons/color-circle-1.svg" alt="" class="me-2">
+                <img src="Icons/color-circle-2.svg" alt="" class="me-2">
+                <img src="Icons/color-circle-3.svg" alt="" class="me-2">
+                <img src="Icons/color-circle-4.svg" alt="">
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
