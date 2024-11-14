@@ -11,6 +11,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './display-products.component.css'
 })
 export class DisplayProductsComponent implements OnInit{
+  filterClose : boolean = true;
+  shapeExpand : boolean = false;
+  materialExpand : boolean = false;
+  genderExpand : boolean = false;
+
+  shapes : string[] = ["Aviator", "Rectangle", "Cat-eye", "Round", "Square", "Geometric"];
+  materials : string[] = ["Acetate", "Nylon", "Metal", "Mixed"];
+  genders : string[] = ["Female", "Male"]
+
   products : any;
 
   constructor(private _productService : ProductService) { }
