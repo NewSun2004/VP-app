@@ -29,9 +29,9 @@
         <div class="submenu" [ngClass]="{'show' : shapeExpand}">
           <div>
             <div class="form-check" *ngFor="let shape of shapes; let i = index">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheck{{shape}}{{i}}">
-              <label class="form-check-label" for="flexCheck{{shape}}{{i}}">
-                {{shape}}
+              <input class="form-check-input shadow-none" type="checkbox" value="shape" id="flexCheck{{shape.name}}{{i}}" [(ngModel)]="shape.selected" (change)="onChange()">
+              <label class="form-check-label" for="flexCheck{{shape.name}}{{i}}">
+                {{shape.name}}
               </label>
             </div>
           </div>
@@ -44,9 +44,9 @@
         <div class="submenu" [ngClass]="{'show' : materialExpand}">
           <div>
             <div class="form-check" *ngFor="let material of materials; let i = index">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheck{{material}}{{i}}">
-              <label class="form-check-label" for="flexCheck{{material}}{{i}}">
-                {{material}}
+              <input class="form-check-input" type="checkbox" value="{{material.name}}" id="flexCheck{{material.name}}{{i}}" [(ngModel)]="material.selected" (change)="onChange()">
+              <label class="form-check-label" for="flexCheck{{material.name}}{{i}}">
+                {{material.name}}
               </label>
             </div>
           </div>
@@ -60,9 +60,9 @@
         <div class="submenu" [ngClass]="{'show' : genderExpand}">
           <div>
             <div class="form-check" *ngFor="let gender of genders; let i = index">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheck{{gender}}{{i}}">
-              <label class="form-check-label" for="flexCheck{{gender}}{{i}}">
-                {{gender}}
+              <input class="form-check-input" type="checkbox" value="gender" id="flexCheck{{gender.name}}{{i}}" [(ngModel)]="gender.selected" (change)="onChange()">
+              <label class="form-check-label" for="flexCheck{{gender.name}}{{i}}">
+                {{gender.name}}
               </label>
             </div>
           </div>
