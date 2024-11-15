@@ -1,0 +1,53 @@
+[
+    {
+      "product_name": "Classic T-Shirt",
+      "product_description": "A comfortable and stylish classic T-shirt.",
+      "product_price": 20,
+      "category_id": "645f3b4f9a12e456c7a09b01",
+      "product_gender": "unisex",
+      "customizable": true,
+      "product_material": "cotton",
+      "product_shape": "round",
+      "creation_datetime": "2024-11-15T00:00:00.000Z",
+      "product_lines": [
+        {
+          "product_line_name": "Classic T-Shirt Red",
+          "color": "red",
+          "hexa_code": "#FF0000",
+          "imgs": ["red-shirt-front.jpg", "red-shirt-back.jpg"]
+        },
+        {
+          "product_line_name": "Classic T-Shirt Blue",
+          "color": "blue",
+          "hexa_code": "#0000FF",
+          "imgs": ["blue-shirt-front.jpg", "blue-shirt-back.jpg"]
+        }
+      ]
+    },
+    {
+      "product_name": "Stylish Hoodie",
+      "product_description": "A warm and cozy hoodie for all seasons.",
+      "product_price": 45,
+      "category_id": "645f3b4f9a12e456c7a09b02",
+      "product_gender": "male",
+      "customizable": false,
+      "product_material": "polyester",
+      "product_shape": "hooded",
+      "creation_datetime": "2024-11-15T00:00:00.000Z",
+      "product_lines": [
+        {
+          "product_line_name": "Stylish Hoodie Black",
+          "color": "black",
+          "hexa_code": "#000000",
+          "imgs": ["black-hoodie-front.jpg", "black-hoodie-back.jpg"]
+        },
+        {
+          "product_line_name": "Stylish Hoodie Grey",
+          "color": "grey",
+          "hexa_code": "#808080",
+          "imgs": ["grey-hoodie-front.jpg", "grey-hoodie-back.jpg"]
+        }
+      ]
+    }
+  ]
+  
