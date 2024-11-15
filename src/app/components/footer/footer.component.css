@@ -30,3 +30,40 @@ a:hover {
   color: #D96E05;
 }
 
+.hide {
+  display: none;
+}
+
+@media (max-width: 992px)
+{
+  .hide-lg {
+    display: none;
+  }
+
+  .show-lg {
+    display: block;
+  }
+}
+
+@media (max-width: 768px)
+{
+  .hide-md {
+    display: none;
+  }
+
+  .show-md {
+    display: block;
+  }
+}
+
+@media (max-width: 576px)
+{
+  .hide-sm {
+    display: none;
+  }
+
+  .show-sm {
+    display: block;
+  }
+}
+
