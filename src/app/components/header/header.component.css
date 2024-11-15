@@ -3,6 +3,10 @@
   color: #00000080;
 }
 
+img#logo {
+  width: 100%;
+}
+
 div.promo {
   background-color: #d96e05;
 
@@ -11,6 +15,15 @@ div.promo {
     font-weight: 400;
     font-size: 1rem;
   }
+}
+
+.hide-before {
+  display: none;
+}
+
+.menu-btn {
+  border: 0;
+  background-color: transparent;
 }
 
 a {
@@ -24,4 +37,50 @@ a:hover {
 
 a.manage:hover {
   color: black;
+}
+
+@media (max-width : 992px)
+{
+  div.responsive {
+    .hide-after {
+      display: none;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .menu-bar {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: 0.3s ease;
+    }
+
+    .show-nav-bar {
+      grid-template-rows: 1fr;
+    }
+
+    .direction {
+      flex-direction: column;
+      overflow: hidden;
+    }
+  }
+}
+
+@media (max-width : 576px)
+{
+  div.responsive {
+    .hide-after-2 {
+      display: none;
+    }
+
+    .show-2 {
+      display: block;
+    }
+
+    img#logo-2 {
+      width: 10%;
+    }
+  }
 }

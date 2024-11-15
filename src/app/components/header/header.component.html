@@ -1,22 +1,31 @@
-<div>
+<div class="responsive">
   <div class="container-fluid text-center promo">
     <p id="promo">Discount Glasses - up to 50% off Eyeglasses Sale Online</p>
   </div>
 
   <div class="container">
+    <div class="text-center hide-before show-2">
+      <a href="">
+        <img src="Logo/VP_logo.png" alt="" id="logo-2">
+      </a>
+    </div>
+
     <div class="row align-items-center">
       <div class="col-5">
-        <div class="d-flex align-items-center">
-          <a href="">
+        <div class="d-flex flex-row align-items-center gap-2">
+          <button class="p-0 menu-btn hide-before show" (click)="showNavBar = !showNavBar">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <a href="" class="d-flex align-item-center">
             <img src="Icons/search.svg" alt="">
           </a>
 
-          <input type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none pb-0 mb-1" placeholder="Search">
+          <input type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none p-0 m-0" placeholder="Search">
         </div>
       </div>
 
-      <div class="col-2">
-
+      <div class="col-2 hide-after-2">
         <a href="">
           <img src="Logo/VP_logo.png" alt="" id="logo">
         </a>
@@ -32,49 +41,40 @@
     </div>
   </div>
 
-  <hr>
+  <hr class="hide-after">
 
-  <nav class="nav-bar navbar-expand-lg">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="bi bi-list"></i>
-      </button>
+  <div class="container">
+    <div class="menu-bar" [ngClass]="{'show-nav-bar' : showNavBar}">
+      <div class="d-flex direction justify-content-between">
+        <a [routerLink]="['/aboutus']">About us</a>
 
-      <div class="collapse navbar-collapse" id="navigation">
-        <ul class="navbar-nav nav-fill w-100">
-          <li class="nav-item">
-            <a [routerLink]="['/aboutus']">About us</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a type="button" class="nav-link dropdown-toggle p-0 m-0" data-bs-toggle="dropdown" aria-expanded="false">Eyeglasses</a>
+        <div class="dropdown">
+          <a type="button" class="dropdown-toggle p-0 m-0" id="eyeglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Eyeglasses
+          </a>
 
-            <ul class="dropdown-menu">
-              <li>
-                <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
-              </li>
+          <ul class="dropdown-menu" aria-labelledby="eyeglasses">
+            <li>
+              <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
+            </li>
 
-              <li>
-                <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
-              </li>
+            <li>
+              <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+            </li>
 
-              <li><a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/sunglasses']">Sunglasses</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/customize']">Customize</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/contacts']">Contacts</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/accessories']">Accessories</a>
-          </li>
-        </ul>
+            <li><a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+            </li>
+          </ul>
+        </div>
+
+        <a [routerLink]="['/sunglasses']">Sunglasses</a>
+
+        <a [routerLink]="['/customize']">Customize</a>
+
+        <a [routerLink]="['/contacts']">Contacts</a>
+
+        <a [routerLink]="['/accessories']">Accessories</a>
       </div>
     </div>
-  </nav>
+  </div>
 </div>
