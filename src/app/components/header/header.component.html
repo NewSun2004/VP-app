@@ -25,8 +25,8 @@
         </div>
       </div>
 
-      <div class="col-2 hide-after-2">
-        <a href="">
+      <div class="col-2">
+        <a href="" class="hide-after-2">
           <img src="Logo/VP_logo.png" alt="" id="logo">
         </a>
       </div>
@@ -44,12 +44,29 @@
   <hr class="hide-after">
 
   <div class="container">
-    <div class="menu-bar" [ngClass]="{'show-nav-bar' : showNavBar}">
+    <div class="menu-bar" [ngClass]="{'show-menu-bar' : showNavBar}">
       <div class="d-flex direction justify-content-between">
         <a [routerLink]="['/aboutus']">About us</a>
 
-        <div class="dropdown">
-          <a type="button" class="dropdown-toggle p-0 m-0" id="eyeglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="hide-before show">
+          <a class="d-flex flex-row" role="button" (click)="showSubMenuE =! showSubMenuE">
+            <span class="text-start flex-grow-1">Eyeglasses</span>
+            <img class="arrow rotate-close" [ngClass]="{'rotate-open': showSubMenuE}" src="Icons/arrow.svg" alt="">
+          </a>
+        </div>
+
+        <div class="menu-bar hide-before show" [ngClass]="{'show-menu-bar': showSubMenuE}">
+          <div class="d-flex flex-column ms-3 overflow-hidden">
+            <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
+
+            <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+
+            <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+          </div>
+        </div>
+
+        <div class="dropdown hide-after">
+          <a class="dropdown-toggle p-0 m-0" id="eyeglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Eyeglasses
           </a>
 
@@ -62,12 +79,48 @@
               <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
             </li>
 
-            <li><a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+            <li>
+              <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
             </li>
           </ul>
         </div>
 
-        <a [routerLink]="['/sunglasses']">Sunglasses</a>
+        <div class="hide-before show">
+          <a class="d-flex flex-row" role="button" (click)="showSubMenuS =! showSubMenuS">
+            <span class="text-start flex-grow-1">Sunglasses</span>
+            <img class="arrow rotate-close" [ngClass]="{'rotate-open': showSubMenuS}" src="Icons/arrow.svg" alt="">
+          </a>
+        </div>
+
+        <div class="menu-bar hide-before show" [ngClass]="{'show-menu-bar': showSubMenuS}">
+          <div class="d-flex flex-column ms-3 overflow-hidden">
+            <a [routerLink]="['/sunglasses']" class="dropdown-item">All sunglasses</a>
+
+            <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+
+            <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+          </div>
+        </div>
+
+        <div class="dropdown hide-after">
+          <a class="dropdown-toggle p-0 m-0" id="sunglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sunglasses
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="sunglasses">
+            <li>
+              <a [routerLink]="['/sunglasses']" class="dropdown-item">All sunglasses</a>
+            </li>
+
+            <li>
+              <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+            </li>
+
+            <li>
+              <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+            </li>
+          </ul>
+        </div>
 
         <a [routerLink]="['/customize']">Customize</a>
 

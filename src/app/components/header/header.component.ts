@@ -11,4 +11,6 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
   showNavBar : boolean = false;
+  showSubMenuE : boolean = false;
+  showSubMenuS : boolean = false;
 }
