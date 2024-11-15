@@ -11,11 +11,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
     },
-    user_phone_number: {
-        type: String,
-        required: true,
-        match: [/^\d{10}$/, 'Phone number must contain 10 digits']
-    },
     user_password: {
         type: String,
         required: true
@@ -95,6 +90,11 @@ const productSchema = new mongoose.Schema({
     creation_datetime: {
         type: Date
     },
+    reviews:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Reviews"
+        
+    }],
     product_lines:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product_line"
@@ -110,15 +110,10 @@ const product_lineSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    color: {
-        type: String
-    },
-    hexa_code : {
-        type: String
-    },
-    imgs:{
+    image_urls:{
         type: [String]
-    }
+    },
+    image_paths: {type:[String]}
 })
 
 const cartSchema = new mongoose.Schema({
@@ -293,10 +288,13 @@ const shippingSchema = new mongoose.Schema({
     }
 })
 
-const reviewSchema = new mongoose.Schema({
-    order_id: {
+const reviewsSchema = new mongoose.Schema({
+    product_id: {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: "Order"
+        ref: "Product"
+    },
+    title: {
+        type: String
     },
     rating:{
         type: Number,
@@ -323,8 +321,8 @@ let Order_line = mongoose.model("Order_line", order_lineSchema)
 let Invoice = mongoose.model("Invoice", invoiceSchema)
 let Payment = mongoose.model("Payment", paymentSchema)
 let Shipping = mongoose.model("Shipping", shippingSchema)
-let Review = mongoose.model("Review", reviewSchema)
+let Reviews = mongoose.model("Reviews", reviewsSchema)
 
 module.exports = { User, Category, Product, Product_line, Cart, Cart_line, Customize, 
-    Order, Order_line, Invoice, Payment, Shipping, Review
+    Order, Order_line, Invoice, Payment, Shipping, Reviews
 }
