@@ -50,7 +50,7 @@ export class DisplayProductsComponent implements OnInit{
   constructor(private _productService : ProductService, private _route : ActivatedRoute, private _router : Router) { }
 
   ngOnInit(): void {
-    const rawRouteUrl = this._router.url;
+    let rawRouteUrl = this._router.url;
     const routeBaseUrl = rawRouteUrl.split("?")[0].replace("/", "");
 
     if (rawRouteUrl.includes("Male"))
@@ -87,30 +87,32 @@ export class DisplayProductsComponent implements OnInit{
 
         if (Array.isArray(selectedFilters))
         {
-        selectedFilters.forEach(filterName => {
-          const selectedFilter = filterType.find(filter => filter.name === filterName);
+          selectedFilters.forEach(filterName => {
+            const selectedFilter = filterType.find(filter => filter.name === filterName);
+            if (selectedFilter)
+              {
+              selectedFilter.selected = true;
+              }
+            });
+        }
+        else if (selectedFilters)
+        {
+          const selectedFilter = filterType.find(filter => filter.name === selectedFilters);
           if (selectedFilter)
             {
             selectedFilter.selected = true;
             }
-          });
-        }
-        else if (selectedFilters)
-        {
-        const selectedFilter = filterType.find(filter => filter.name === selectedFilters);
-        if (selectedFilter)
-          {
-          selectedFilter.selected = true;
-          }
         }});
-      });
 
-    this._productService.getAllProduct().subscribe({
-      next : allProductData => {
-        this.products = allProductData;
-        this.updateDisplayedProducts();
+        this._productService.getAllProduct(params).subscribe({
+          next : allProductData => {
+            this.products = allProductData;
+            this.updateDisplayedProducts();
+            rawRouteUrl = this._router.url;
+          }
+        });
       }
-    })
+    );
   }
 
   onChange()
