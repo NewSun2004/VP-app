@@ -1,33 +1,73 @@
-<div class="container">
-  <div class="d-flex flex-row">
-    <div class="container" style="width: 50rem;">
-      <div class="d-flex flex-row">
-        <div class="container">
-          <div class="container" *ngFor="let image_url of product['images by colors'][0]['image urls']">
-            <img class="img-small" [src]="image_url" width="80px">
-          </div>
-        </div>
-
-        <div class="container">
-          <img [src]="product['images by colors'][0]['image urls'][1]" alt="" width="500px">
-        </div>
+<div class="d-flex flex-row justify-content-center">
+  <div class="d-flex flex-row justify-content-start align-items-center display-image">
+    <div class="d-flex flex-column align-items-center">
+      <div class="my-2 border border-1 p-2" *ngFor="let image_url of product['images by colors'][0]['image urls']">
+        <a href="">
+          <img src="{{image_url}}" alt="" class="option-image">
+        </a>
       </div>
     </div>
 
-    <div class="container bg-color-gray" style="width: 50rem;">
-      <div class="container m-4">
-        <h3>{{product.name}}</h3>
-        <div class="d-flex flex-row">
-          <i class="bi bi-star"></i>
-          <i class="bi bi-star"></i>
-          <i class="bi bi-star"></i>
-          <i class="bi bi-star"></i>
-          <i class="bi bi-star"></i>
-          <p class="ms-2">({{reviews_count}} reviews)</p>
-        </div>
-        <div class="d-flex align-items-center box bg-color-darkgray">
-          <h3 class="ms-4">${{product.price}}.00</h3>
-        </div>
+    <div class="d-flex flex-column text-center h-75">
+      <div>
+        <button class="btn live-try-on">
+          <img src="Icons/glass-try-on.svg" alt="">
+          Live Try-on
+        </button>
+      </div>
+      <img src="{{currentImageUrl}}" alt="" class="p-5 display-image" style="width: 500px;">
+    </div>
+  </div>
+
+  <div class="d-flex flex-column w-100 product-interaction">
+    <div class="d-flex flex-column bg-color-gray gap-3 ms-2 mt-5 px-5 py-4">
+      <div>
+        <p class="m-0 name">{{product.name}}</p>
+      </div>
+
+      <div class="d-flex flex-row justify-content-between gap-1 w-60">
+        <img src="Icons/star-full.svg" alt="">
+        <img src="Icons/star-full.svg" alt="">
+        <img src="Icons/star-full.svg" alt="">
+        <img src="Icons/star-full.svg" alt="">
+        <img src="Icons/star-half.svg" alt="">
+        <p class="text-end m-0 flex-grow-1 review-count">({{reviewCounts}} reviews)</p>
+      </div>
+
+      <div class="d-flex">
+        <p class="m-0 price">${{product.price}}.00</p>
+      </div>
+
+      <div class="d-flex px-1 py-3 bg-color-orange">
+        <p class="ms-1 me-0 my-0 promo">30% Off $60+ | CODE: VPEVENT</p>
+      </div>
+
+      <div class="d-flex flex-row justify-content-between w-25">
+        <a href="">
+          <img src="Icons/color-circle-1.svg" alt="">
+        </a>
+
+        <a href="">
+          <img src="Icons/color-circle-2.svg" alt="">
+        </a>
+
+        <a href="">
+          <img src="Icons/color-circle-3.svg" alt="">
+        </a>
+
+        <a href="">
+          <img src="Icons/color-circle-4.svg" alt="">
+        </a>
+      </div>
+
+      <div class="d-flex flex-row gap-3 btn-group-size">
+        <button class="btn">Medium</button>
+        <button class="btn">Large</button>
+      </div>
+
+      <div class="d-flex flex-row justify-content-between">
+        <button class="btn add">ADD TO CART</button>
+        <button class="btn buy">BUY NOW</button>
       </div>
     </div>
   </div>
