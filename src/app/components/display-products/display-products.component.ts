@@ -50,23 +50,6 @@ export class DisplayProductsComponent implements OnInit{
   constructor(private _productService : ProductService, private _route : ActivatedRoute, private _router : Router) { }
 
   ngOnInit(): void {
-    const rawRouteUrl = this._router.url;
-    const routeBaseUrl = rawRouteUrl.split("?")[0].replace("/", "");
-
-    if (rawRouteUrl.includes("Male"))
-    {
-      this.filterName = "Men's";
-    }
-    else if (rawRouteUrl.includes("Female"))
-    {
-      this.filterName = "Women's";
-    }
-    else
-    {
-      this.filterName = "All";
-    }
-    this.productName = routeBaseUrl.charAt(0).toUpperCase() + routeBaseUrl.slice(1);
-
     this._route.queryParams.subscribe(params => {
       Object.keys(params).forEach(paramKey => {
         const selectedFilters = params[paramKey];
@@ -87,33 +70,55 @@ export class DisplayProductsComponent implements OnInit{
 
         if (Array.isArray(selectedFilters))
         {
-        selectedFilters.forEach(filterName => {
-          const selectedFilter = filterType.find(filter => filter.name === filterName);
+          selectedFilters.forEach(filterName => {
+            const selectedFilter = filterType.find(filter => filter.name === filterName);
+            if (selectedFilter)
+              {
+              selectedFilter.selected = true;
+              }
+            });
+        }
+        else if (selectedFilters)
+        {
+          const selectedFilter = filterType.find(filter => filter.name === selectedFilters);
           if (selectedFilter)
             {
             selectedFilter.selected = true;
             }
-          });
-        }
-        else if (selectedFilters)
-        {
-        const selectedFilter = filterType.find(filter => filter.name === selectedFilters);
-        if (selectedFilter)
-          {
-          selectedFilter.selected = true;
-          }
         }});
-      });
 
-    this._productService.getAllProduct().subscribe({
-      next : allProductData => {
-        this.products = allProductData;
-        this.updateDisplayedProducts();
+        this._productService.getAllProduct(params).subscribe({
+          next : allProductData => {
+            this.products = allProductData;
+            this.updateDisplayedProducts();
+            this.updateFilterName();
+          }
+        });
       }
-    })
+    );
   }
 
-  onChange()
+  updateFilterName() : void
+  {
+    const rawRouteUrl = this._router.url;
+    const routeBaseUrl = rawRouteUrl.split("?")[0].replace("/", "");
+
+    if (rawRouteUrl.includes("Male") && !rawRouteUrl.includes("Female"))
+    {
+      this.filterName = "Men's";
+    }
+    else if (rawRouteUrl.includes("Female") && !rawRouteUrl.includes("Male"))
+    {
+      this.filterName = "Women's";
+    }
+    else
+    {
+      this.filterName = "All";
+    }
+    this.productName = routeBaseUrl.charAt(0).toUpperCase() + routeBaseUrl.slice(1);
+  }
+
+  onChange() : void
   {
     let params = new HttpParams();
 
@@ -140,17 +145,18 @@ export class DisplayProductsComponent implements OnInit{
       queryParamsObj[key] = params.getAll(key);
     });
 
-    this._router.navigate(["eyeglasses"], { queryParams: queryParamsObj });
+    const routeBaseUrl = this._router.url.split("?")[0].replace("/", "");
+    this._router.navigate([routeBaseUrl], { queryParams: queryParamsObj });
   }
 
-  updateDisplayedProducts()
+  updateDisplayedProducts() : void
   {
     const start = 0;
     const end = this.currentPage * this.productsPerPage;
     this.displayedProducts = this.products.slice(start, end);
   }
 
-  onSeeMore()
+  onSeeMore() : void
   {
     this.currentPage++;
     this.updateDisplayedProducts();
