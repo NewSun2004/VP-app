@@ -1,0 +1,212 @@
+/* heroes.component.css */
+.heroes {
+  width: 100vw; /* Chiếm toàn bộ chiều ngang màn hình */
+  margin-left: calc(50% - 50vw); /* Tràn viền trái */
+  margin-right: calc(50% - 50vw); /* Tràn viền phải */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/Images/heroes.png"); /* Đường dẫn đến hình nền */
+  background-size: cover; /* Bao phủ toàn bộ vùng heroes */
+  background-position: center; /* Đặt vị trí trung tâm của hình nền */
+  background-repeat: no-repeat; /* Đảm bảo không lặp lại hình nền */
+  position: relative;
+  padding: 20px;
+  height: 60vh; /* Chiều cao linh hoạt theo tỷ lệ viewport height */
+}
+
+/* Media Query cho chiều rộng tối đa */
+@media (max-width: 700px) {
+  .heroes {
+    height: 50vh; /* Chiều cao khi màn hình nhỏ hơn 700px */
+  }
+}
+
+/* Media Query cho chiều rộng tối thiểu */
+@media (min-width: 701px) {
+  .heroes {
+    height: 100vh; /* Chiều cao khi màn hình lớn hơn 700px */
+  }
+}
+.heroes-content {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+}
+
+.shop-now-button {
+  position: absolute;
+  bottom: 20px; /* Điều chỉnh chiều cao của nút so với phần dưới cùng */
+  left: 20px; /* Đảm bảo nút nằm ở góc bên trái */
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #d96e05;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.shop-now-button:hover {
+  background-color: white;
+  border: 1px solid #d96e05;
+  color: #d96e05;
+}
+
+/* Media Query cho chiều rộng tối thiểu */
+@media (min-width: 701px) {
+  .heroes {
+    height: 100vh; /* Chiều cao khi màn hình lớn hơn 700px */
+  }
+
+  .shop-now-button {
+    padding: 12px 24px; /* Đảm bảo nút lớn hơn trên màn hình lớn */
+    font-size: 1.2em; /* Tăng kích thước chữ trên màn hình lớn */
+  }
+}
+
+.feature {
+  text-align: center; /* Căn giữa nội dung trong mỗi feature */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Căn giữa tất cả các phần tử trong cột */
+}
+
+.feature-icon {
+  border-radius: 50%;
+  padding: 20px;
+  background-color: #f7e4c9; /* Màu nền cho icon */
+  width: 80px;
+  height: 80px;
+}
+
+.feature-icon img {
+  width: 50px; /* Điều chỉnh kích thước của icon */
+  height: 50px;
+  object-fit: contain; /* Đảm bảo icon giữ tỷ lệ đúng */
+}
+
+h3 {
+  font-size: 16px; /* Cỡ chữ của h3 */
+}
+
+.text-body-emphasis {
+  color: #333;
+}
+
+p {
+  font-size: 12px; /* Cỡ chữ của p */
+  color: #6c757d;
+  margin-top: 1rem;
+  text-align: center; /* Căn giữa đoạn văn bản */
+}
+
+.row-cols-lg-4 .feature {
+  max-width: 350px; /* Giới hạn chiều rộng của các cột */
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center; /* Căn giữa các tiêu đề và mô tả */
+}
+
+/* Điều chỉnh cho kích thước màn hình nhỏ hơn */
+@media (max-width: 767px) {
+  .feature {
+    max-width: 80%; /* Đảm bảo các cột sẽ thu hẹp trên màn hình nhỏ */
+  }
+  .feature-icon {
+    width: 50px;
+    height: 50px;
+  }
+  .feature-icon img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.cta-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.cta-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px; /* Khoảng cách giữa các phần tử */
+  height: 300px; /* Chiều cao của các phần tử */
+}
+
+.cta-item {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f2f0f3;
+  overflow: hidden;
+}
+
+.cta-text {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cta-text h3 {
+  font-size: 1.2em;
+  color: #d96e05;
+  margin-bottom: 10px;
+}
+
+.cta-button {
+  padding: 10px 20px;
+  background-color: #d96e05;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+.cta-button:hover {
+  background-color: #ff7e00;
+}
+
+.cta-image {
+  flex: 1;
+  height: 100%;
+  width: 100%; /* Chiếm hết chiều rộng */
+  overflow: hidden;
+  padding-right: 20px;
+}
+
+.cta-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh không bị cắt và có tỷ lệ hình ảnh phù hợp */
+}
+
+/* Media Query cho màn hình điện thoại */
+@media (max-width: 767px) {
+  .cta-content {
+    flex-direction: column; /* Đặt phần tử theo chiều dọc khi màn hình thu nhỏ */
+    height: auto; /* Cho phép chiều cao tự động điều chỉnh */
+  }
+
+  .cta-item {
+    margin-bottom: 20px; /* Thêm khoảng cách giữa các mục */
+  }
+
+  .cta-text h3 {
+    font-size: 1em; /* Điều chỉnh kích thước chữ cho nhỏ lại trên màn hình điện thoại */
+  }
+
+  .cta-button {
+    font-size: 0.7em; /* Điều chỉnh kích thước nút khi trên điện thoại */
+  }
+}

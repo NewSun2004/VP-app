@@ -13,7 +13,8 @@ export class ProductDetailsComponent implements OnInit{
   productId = input.required<string>();
 
   product : any;
-  reviews_count : number = 0;
+  currentImageUrl : string = "";
+  reviewCounts : number = 0;
 
   constructor (private _productService : ProductService) { }
 
@@ -21,7 +22,8 @@ export class ProductDetailsComponent implements OnInit{
     this._productService.getProduct(this.productId()).subscribe({
       next : productData => {
         this.product = productData
-        this.reviews_count = productData["reviews"].length
+        this.currentImageUrl = productData['images by colors'][0]['image urls'][0]
+        this.reviewCounts = productData["reviews"].length
       }
     })
   }

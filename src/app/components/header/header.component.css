@@ -4,7 +4,7 @@
 }
 
 div.promo {
-  background-color: #D96E05;
+  background-color: #d96e05;
 
   p#promo {
     color: #ffffff;
@@ -19,7 +19,7 @@ a {
 }
 
 a:hover {
-  color: #D96E05;
+  color: #d96e05;
 }
 
 a.manage:hover {
