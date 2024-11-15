@@ -13,9 +13,16 @@ export class ProductService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  getAllProduct() : Observable<[]>
+  getAllProduct(queryParams? : any) : Observable<[]>
   {
-    return this._httpClient.get<[]>(this.myAPIUrl + "/eyeglasses").pipe(
+    // Default URL
+    let queryString : string = ""; // Build the query string from params if provided
+    if (queryParams)
+    {
+        queryString = new URLSearchParams(queryParams).toString();
+    }
+
+    return this._httpClient.get<[]>(this.myAPIUrl +"/eyeglasses" + `${queryString ? '?' + queryString : ''}`).pipe(
      tap((allProducts : any) => {
       this.products = allProducts;
       this.productsSbuject.next(allProducts);
