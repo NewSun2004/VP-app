@@ -5,7 +5,34 @@
   font-style: normal;
 }
 
-* {
-  font-family: "Outfit";
-  font-size: 20px;
+@media (width > 992px)
+{
+  * {
+    font-family: "Outfit";
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 992px)
+{
+  * {
+    font-family: "Outfit";
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px)
+{
+  * {
+    font-family: "Outfit";
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px)
+{
+  * {
+    font-family: "Outfit";
+    font-size: 14px;
+  }
 }
