@@ -110,26 +110,54 @@
   </div>
 </div>
 
-<section class="best-selling-section">
-  <h2 class="section-title">Best Selling Glasses</h2>
-  <p class="section-subtitle">Save up to $125 on VP Event</p>
+<section class="best-selling">
+  <!-- Title -->
+  <h2 class="best-selling-title">Best Selling Glasses</h2>
+  <p class="best-selling-subtitle">Save up to $125 on VP Event</p>
 
-  <div class="products-grid">
-    <div *ngFor="let product of bestSellingProducts" class="product-card">
-      <img
-        [src]="product.product_image || 'assets/placeholder.jpg'"
-        [alt]="product.product_name"
-        class="product-image"
-      />
-      <h3 class="product-name">{{ product.product_name }}</h3>
-      <p class="product-price">${{ product.product_price }}</p>
-      <div class="color-options">
-        <span
-          *ngFor="let color of product.product_colors"
-          class="color-circle"
-          [style.background]="color"
-        ></span>
+  <!-- Carousel Wrapper -->
+  <div class="carousel-container">
+    <!-- Nút điều hướng trái -->
+    <button class="arrow arrow-left" (click)="navigateLeft()">&#8592;</button>
+
+    <!-- Grid sản phẩm -->
+    <div class="carousel" [style.transform]="carouselTransform">
+      <div class="product-card" *ngFor="let product of visibleProducts">
+        <!-- Product Image -->
+        <div class="product-image-wrapper">
+          <img
+            [src]="
+              productLinesByProduct[product._id][selectedColors[product._id]]
+                ?.image_urls[1]
+            "
+            alt="{{ product.product_name }}"
+            class="product-image"
+            (mouseenter)="hoverImage(product._id, true)"
+            (mouseleave)="hoverImage(product._id, false)"
+          />
+        </div>
+
+        <!-- Product Info -->
+        <h3 class="product-name">{{ product.product_name }}</h3>
+        <p class="product-price">{{ product.product_price | currency }}</p>
+
+        <!-- Color Dots -->
+        <div class="color-dots">
+          <div
+            *ngFor="
+              let line of productLinesByProduct[product._id];
+              let i = index
+            "
+            class="dot"
+            [style.backgroundColor]="extractedColors[product._id]?.[i] || '#ccc'"
+            [class.active]="i === selectedColors[product._id]"
+            (click)="changeColor(product._id, i)"
+          ></div>
+        </div>
       </div>
     </div>
+
+    <!-- Nút điều hướng phải -->
+    <button class="arrow arrow-right" (click)="navigateRight()">&#8594;</button>
   </div>
 </section>
