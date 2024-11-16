@@ -27,7 +27,7 @@ export class HomepageComponent implements OnInit {
    * Cập nhật các sản phẩm hiển thị trên giao diện
    */
   updateVisibleProducts(): void {
-    const itemsPerPage = 8; // 2 hàng x 4 sản phẩm mỗi hàng
+    const itemsPerPage = 8;
     const startIndex = this.currentIndex * itemsPerPage;
     this.visibleProducts = this.bestSellingProducts.slice(
       startIndex,
@@ -43,6 +43,7 @@ export class HomepageComponent implements OnInit {
     const totalProducts = this.bestSellingProducts.length;
 
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
+
     if (direction === 'prev' && this.currentIndex > 0) {
       this.currentIndex--;
     } else if (direction === 'next' && this.currentIndex < totalPages - 1) {
@@ -58,15 +59,17 @@ export class HomepageComponent implements OnInit {
   hoverImage(productId: string, isHovering: boolean): void {
     const product = this.bestSellingProducts.find((p) => p._id === productId);
     const productLine = product.product_lines[0];
+
     if (isHovering) {
-      const temp = productLine.image_urls[0];
-      productLine.image_urls[0] = productLine.image_urls[1];
-      productLine.image_urls[1] = temp;
+      productLine.image_urls = [
+        productLine.image_urls[1],
+        productLine.image_urls[0],
+      ];
     } else {
-      // Khi bỏ hover, đổi ảnh về image_urls[1]
-      const temp = productLine.image_urls[0];
-      productLine.image_urls[0] = productLine.image_urls[1];
-      productLine.image_urls[1] = temp;
+      productLine.image_urls = [
+        productLine.image_urls[1],
+        productLine.image_urls[0],
+      ];
     }
   }
 }

@@ -129,16 +129,13 @@
 
     <div class="carousel" [style.transform]="carouselTransform">
       <div class="product-card" *ngFor="let product of visibleProducts">
-        <!-- Product Image -->
-        <div class="product-image-wrapper">
-          <img
-            [src]="product.product_lines[0].image_urls[1]"
-            alt="{{ product.product_name }}"
-            class="product-image"
-            (mouseenter)="hoverImage(product._id, true)"
-            (mouseleave)="hoverImage(product._id, false)"
-          />
-        </div>
+        <img
+          [src]="product.product_lines[0].image_urls[1]"
+          alt="{{ product.product_name }}"
+          class="product-image"
+          (mouseenter)="hoverImage(product._id, true)"
+          (mouseleave)="hoverImage(product._id, false)"
+        />
         <!-- Product Name -->
         <h3 class="product-name">{{ product.product_name }}</h3>
         <!-- Product Price -->
