@@ -119,14 +119,16 @@
 
   <!-- Carousel -->
   <div class="carousel-container">
-    <!-- Buttons -->
-    <button class="nav-btn prev-btn" (click)="navigate('prev')">
-      <span class="icon">&lt;</span>
-    </button>
-    <button class="nav-btn next-btn" (click)="navigate('next')">
-      <span class="icon">&gt;</span>
+    <!-- Nút điều hướng trái -->
+    <button
+      class="prev-btn"
+      (click)="navigate('prev')"
+      [hidden]="currentIndex === 0"
+    >
+      &lt;
     </button>
 
+    <!-- Carousel -->
     <div class="carousel" [style.transform]="carouselTransform">
       <div class="product-card" *ngFor="let product of visibleProducts">
         <img
@@ -136,11 +138,18 @@
           (mouseenter)="hoverImage(product._id, true)"
           (mouseleave)="hoverImage(product._id, false)"
         />
-        <!-- Product Name -->
         <h3 class="product-name">{{ product.product_name }}</h3>
-        <!-- Product Price -->
         <p class="product-price">{{ product.product_price | currency }}</p>
       </div>
     </div>
+
+    <!-- Nút điều hướng phải -->
+    <button
+      class="next-btn"
+      (click)="navigate('next')"
+      [hidden]="currentIndex === totalPages - 1"
+    >
+      &gt;
+    </button>
   </div>
 </section>

@@ -12,6 +12,8 @@ export class HomepageComponent implements OnInit {
   bestSellingProducts: any[] = [];
   visibleProducts: any[] = [];
   currentIndex: number = 0;
+  itemsPerPage: number = 0;
+  totalPages: number = 0; // Tổng số trang
   carouselTransform: string = 'translateX(0%)';
 
   constructor(private productService: ProductService) {}
@@ -19,6 +21,9 @@ export class HomepageComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getBestSellingProducts().subscribe((products) => {
       this.bestSellingProducts = products;
+      this.totalPages = Math.ceil(
+        this.bestSellingProducts.length / this.itemsPerPage
+      );
       this.updateVisibleProducts(); // Hiển thị sản phẩm ban đầu
     });
   }
@@ -27,30 +32,39 @@ export class HomepageComponent implements OnInit {
    * Cập nhật các sản phẩm hiển thị trên giao diện
    */
   updateVisibleProducts(): void {
-    const itemsPerPage = 8;
+    const itemsPerPage = 8; // 2 hàng x 4 sản phẩm mỗi hàng
     const startIndex = this.currentIndex * itemsPerPage;
-    this.visibleProducts = this.bestSellingProducts.slice(
-      startIndex,
-      startIndex + itemsPerPage
-    );
+
+    // Kiểm tra nếu vượt quá số lượng sản phẩm
+    if (startIndex >= this.bestSellingProducts.length) {
+      this.visibleProducts = []; // Không còn sản phẩm để hiển thị
+    } else {
+      this.visibleProducts = this.bestSellingProducts.slice(
+        startIndex,
+        startIndex + itemsPerPage
+      );
+    }
   }
 
   /**
    * Điều hướng carousel trái/phải
    */
-  navigate(direction: 'prev' | 'next') {
-    const itemsPerPage = 4; // 4 sản phẩm mỗi hàng
+  navigate(direction: 'prev' | 'next'): void {
+    const itemsPerPage = 8; // 2 hàng x 4 sản phẩm mỗi hàng
     const totalProducts = this.bestSellingProducts.length;
-
     const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
     if (direction === 'prev' && this.currentIndex > 0) {
       this.currentIndex--;
-    } else if (direction === 'next' && this.currentIndex < totalPages - 1) {
+    } else if (
+      direction === 'next' &&
+      this.currentIndex < this.totalPages - 1
+    ) {
       this.currentIndex++;
     }
 
-    this.carouselTransform = `translateX(-${this.currentIndex * 100}%)`;
+    // Cập nhật sản phẩm hiển thị
+    this.updateVisibleProducts();
   }
 
   /**

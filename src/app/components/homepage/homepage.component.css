@@ -228,7 +228,8 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.5s ease; /* Hiệu ứng trượt mượt */
+  will-change: transform; /* Tối ưu hiệu suất */
 }
 
 .product-card {
