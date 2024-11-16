@@ -1,23 +1,49 @@
-<div>
+<div class="responsive">
+  <!-- Promo banner -->
   <div class="container-fluid text-center promo">
     <p id="promo">Discount Glasses - up to 50% off Eyeglasses Sale Online</p>
   </div>
 
+  <!-- Mid section -->
   <div class="container">
+    <!-- Logo for responsive -->
+    <div class="text-center hide-before show-2">
+      <a href="">
+        <img src="Logo/VP_logo.png" alt="" id="logo-2">
+      </a>
+    </div>
+
+    <!-- Search and nav-bar toggle btn -->
     <div class="row align-items-center">
       <div class="col-5">
-        <div class="d-flex align-items-center">
-          <a href="">
-            <img src="Icons/search.svg" alt="">
-          </a>
+        <!-- nav-bar toggle btn -->
+        <div class="d-flex flex-row align-items-center gap-2">
+          <button class="p-0 menu-btn hide-before show" (click)="showNavBar = !showNavBar">
+            <i class="bi bi-list"></i>
+          </button>
 
-          <input type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none pb-0 mb-1" placeholder="Search">
+          <!-- Search btn and search popup-->
+          <button class="btn d-flex flex-row align-items-center search" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTopScrolling" aria-controls="offcanvasTopScrolling">
+            <img src="Icons/search.svg" alt="">
+            <span class="text-start ms-2">Search</span>
+          </button>
+
+          <div class="offcanvas offcanvas-top" tabindex="-1" scroll="true" data-bs-backdrop="false" id="offcanvasTopScrolling" aria-labelledby="offcanvasTopScrollingLabel" style="height: 24.5%;">
+            <div class="container">
+              <div class="offcanvas-header">
+                <h5 id="offcanvasTopLabel">Search</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <input [(ngModel)]="searchInput" type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none p-0 m-0" placeholder="Type here...">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="col-2">
-
-        <a href="">
+        <a href="" class="hide-after-2">
           <img src="Logo/VP_logo.png" alt="" id="logo">
         </a>
       </div>
@@ -32,49 +58,93 @@
     </div>
   </div>
 
-  <hr>
+  <hr class="hide-after">
 
-  <nav class="nav-bar navbar-expand-lg">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="bi bi-list"></i>
-      </button>
+  <div class="container">
+    <div class="menu-bar" [ngClass]="{'show-menu-bar' : showNavBar}">
+      <div class="d-flex direction justify-content-between">
+        <a [routerLink]="['/aboutus']">About us</a>
 
-      <div class="collapse navbar-collapse" id="navigation">
-        <ul class="navbar-nav nav-fill w-100">
-          <li class="nav-item">
-            <a [routerLink]="['/aboutus']">About us</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a type="button" class="nav-link dropdown-toggle p-0 m-0" data-bs-toggle="dropdown" aria-expanded="false">Eyeglasses</a>
+        <div class="hide-before show">
+          <a class="d-flex flex-row" role="button" (click)="showSubMenuE =! showSubMenuE">
+            <span class="text-start flex-grow-1">Eyeglasses</span>
+            <img class="arrow rotate-close" [ngClass]="{'rotate-open': showSubMenuE}" src="Icons/arrow.svg" alt="">
+          </a>
+        </div>
 
-            <ul class="dropdown-menu">
-              <li>
-                <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
-              </li>
+        <div class="menu-bar hide-before show" [ngClass]="{'show-menu-bar': showSubMenuE}">
+          <div class="d-flex flex-column ms-3 overflow-hidden">
+            <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
 
-              <li>
-                <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
-              </li>
+            <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
 
-              <li><a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/sunglasses']">Sunglasses</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/customize']">Customize</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/contacts']">Contacts</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/accessories']">Accessories</a>
-          </li>
-        </ul>
+            <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+          </div>
+        </div>
+
+        <div class="dropdown hide-after">
+          <a class="dropdown-toggle p-0 m-0" id="eyeglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Eyeglasses
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="eyeglasses">
+            <li>
+              <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
+            </li>
+
+            <li>
+              <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+            </li>
+
+            <li>
+              <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hide-before show">
+          <a class="d-flex flex-row" role="button" (click)="showSubMenuS =! showSubMenuS">
+            <span class="text-start flex-grow-1">Sunglasses</span>
+            <img class="arrow rotate-close" [ngClass]="{'rotate-open': showSubMenuS}" src="Icons/arrow.svg" alt="">
+          </a>
+        </div>
+
+        <div class="menu-bar hide-before show" [ngClass]="{'show-menu-bar': showSubMenuS}">
+          <div class="d-flex flex-column ms-3 overflow-hidden">
+            <a [routerLink]="['/sunglasses']" class="dropdown-item">All sunglasses</a>
+
+            <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+
+            <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+          </div>
+        </div>
+
+        <div class="dropdown hide-after">
+          <a class="dropdown-toggle p-0 m-0" id="sunglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sunglasses
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="sunglasses">
+            <li>
+              <a [routerLink]="['/sunglasses']" class="dropdown-item">All sunglasses</a>
+            </li>
+
+            <li>
+              <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
+            </li>
+
+            <li>
+              <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Female'}" class="dropdown-item">Women</a>
+            </li>
+          </ul>
+        </div>
+
+        <a [routerLink]="['/customize']">Customize</a>
+
+        <a [routerLink]="['/contacts']">Contacts</a>
+
+        <a [routerLink]="['/accessories']">Accessories</a>
       </div>
     </div>
-  </nav>
+  </div>
 </div>

@@ -309,6 +309,36 @@ const reviewsSchema = new mongoose.Schema({
     }
 })
 
+const temporaryUserSchema = new mongoose.Schema({
+    user_name: {
+        type: String,
+        required: true
+    },
+    user_email: {
+        type: String,
+        required: true,
+        match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
+    },
+    user_password: {
+        type: String,
+        required: true
+    },
+    user_address: {
+        type: String,
+        required: true
+    },
+    token: {
+        type: String,
+        required: true
+    },
+    token_expiry: {
+        type: Date,
+        default: Date.now,
+        expires: 600 // Xóa sau 600 giây (10 phút)
+    }
+})
+
+
 let User = mongoose.model("User", userSchema);
 let Category = mongoose.model("Category", categorySchema)
 let Product = mongoose.model("Product", productSchema)
@@ -322,7 +352,8 @@ let Invoice = mongoose.model("Invoice", invoiceSchema)
 let Payment = mongoose.model("Payment", paymentSchema)
 let Shipping = mongoose.model("Shipping", shippingSchema)
 let Reviews = mongoose.model("Reviews", reviewsSchema)
+let Temporary_user = mongoose.model("Temporary_user", temporaryUserSchema)
 
 module.exports = { User, Category, Product, Product_line, Cart, Cart_line, Customize, 
-    Order, Order_line, Invoice, Payment, Shipping, Reviews
+    Order, Order_line, Invoice, Payment, Shipping, Reviews,Temporary_user
 }

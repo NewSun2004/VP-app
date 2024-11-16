@@ -102,6 +102,12 @@ a.product:hover {
   filter: brightness(0.9);
 }
 
+div.color-circle {
+  img {
+    width: 5%;
+  }
+}
+
 button.seemore {
   font-size: 0.9rem;
   font-weight: 400;

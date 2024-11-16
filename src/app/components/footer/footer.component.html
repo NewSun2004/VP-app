@@ -1,8 +1,8 @@
 <div class="container-fluid bg-black">
   <div class="container py-5">
-    <div class="row">
-      <div class="col-4">
-        <div class="d-flex flex-column w-75">
+    <div class="row gap-3">
+      <div class="col">
+        <div class="d-flex flex-column">
           <p id="nametag">&#64;vpandaseyewear</p>
           <p>Follow us on social for the latest trends and tag #vpandas in your new eyewear!</p>
           <p id="follow">Follow us</p>
@@ -25,58 +25,55 @@
       </div>
 
       <div class="col">
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column align-items-baseline">
           <p class="title">Products</p>
 
-          <div class="d-flex flex-column">
-            <a href="" [routerLink]="['/eyeglasses']">Eyeglasses</a>
-            <a href="" [routerLink]="['/sunglasses']">Sunglasses</a>
-            <a href="" [routerLink]="['/contacts']">Contacts</a>
-            <a href="" [routerLink]="['/accessories']">Accessories</a>
-          </div>
+          <a href="" [routerLink]="['/eyeglasses']">Eyeglasses</a>
+          <a href="" [routerLink]="['/sunglasses']">Sunglasses</a>
+          <a href="" [routerLink]="['/contacts']">Contacts</a>
+          <a href="" [routerLink]="['/accessories']">Accessories</a>
         </div>
       </div>
+
+      <div class="w-100 hide show-md"></div>
 
       <div class="col">
-        <div class="d-flex flex-column">
+        <div class="d-flex flex-column align-items-baseline">
           <p class="title">Customize</p>
 
-          <div class="d-flex flex-column flex-grow-1">
-            <a href="" [routerLink]="['/customize']">Eyeglasses</a>
-            <a href="" [routerLink]="['/customize']">Sunglasses</a>
-          </div>
+          <a href="" [routerLink]="['/customize']">Eyeglasses</a>
+          <a href="" [routerLink]="['/customize']">Sunglasses</a>
         </div>
       </div>
+
+      <div class="w-100 hide-lg"></div>
 
       <div class="col">
         <div class="d-flex flex-column">
           <p class="title">From 8 a.m - 9 p.m</p>
-          <div class="d-flex align-items-center">
+
+          <div class="d-flex flex-row align-items-center">
             <img src="Icons/phone-call.svg" alt="" class="me-2">
             <p class="mb-0">888. 8888. 888</p>
           </div>
 
-          <div class="d-flex">
+          <div class="d-flex flex-row">
             <img src="Icons/email.svg" alt="" class="me-2">
             <p class="mb-0">vpandasew&#64;gmail.com</p>
           </div>
         </div>
       </div>
 
-      <div class="w-100"></div>
-
-      <div class="col-4"></div>
+      <div class="w-100 hide show-md"></div>
 
       <div class="col">
         <div class="d-flex flex-column">
           <p class="title">Policies & Information</p>
 
-          <div class="d-flex flex-column">
-            <a href="">Privacy Policy</a>
-            <a href="">Terms of service</a>
-            <a href="">Shipping & return policy</a>
-            <a href="">Payment methods</a>
-          </div>
+          <a href="">Privacy Policy</a>
+          <a href="">Terms of service</a>
+          <a href="">Shipping & return policy</a>
+          <a href="">Payment methods</a>
         </div>
       </div>
 
@@ -84,15 +81,11 @@
         <div class="d-flex flex-column">
           <p class="title">About us</p>
 
-          <div class="d-flex flex-column">
-            <a href="">Our Story</a>
-            <a href="">Vision & Mission</a>
-            <a href="">Community Initiatives</a>
-          </div>
+          <a href="">Our Story</a>
+          <a href="">Vision & Mission</a>
+          <a href="">Community Initiatives</a>
         </div>
       </div>
-
-      <div class="col"></div>
     </div>
   </div>
 </div>

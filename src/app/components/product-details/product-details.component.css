@@ -2,16 +2,95 @@
   background-color: #D9D9D938;
 }
 
-.bg-color-darkgray {
-  background-color: #D9D9D9;
+.bg-color-orange {
+  background-color: #D96E05;
 }
 
-.img-small {
-  margin-bottom: 28px;
+div.display-image {
+  img.option-image {
+    width: 80px;
+  }
+
+  button.live-try-on {
+    color: #ffffff;
+    font-weight: 400;
+    background-color: #D96E05;
+    border-radius: 25px;
+
+    transition: 0.3s ease-in;
+  }
+
+  button.live-try-on:hover {
+    transform: translateY(-10px);
+  }
 }
 
-.box {
-  width: 509px;
-  height: 90px;
-  border-radius: 10px;
+
+div.product-interaction {
+  p.name {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  p.review-count {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+
+  p.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  p.promo {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  div.btn-group-size {
+    button {
+      font-size: 0.7rem;
+      font-weight: bold;
+      background-color: white;
+      border: 0.2px solid #D9D9D9;
+      width: 22%;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+  }
+
+  button.add {
+    font-weight: 500;
+    color: #D96E05;
+    background-color: transparent;
+    border: 0.2px solid #D96E05;
+    border-radius: 0;
+    width: 45%;
+    padding: 10px 0px;
+
+    transition: 0.3s ease-in;
+  }
+
+  button.add:hover {
+    color: #ffffff;
+    background-color: #D96E05;
+  }
+
+  button.buy {
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #D96E05;
+    border: 0.2px solid #D96E05;
+    border-radius: 0;
+    width: 45%;
+    padding: 10px 0px;
+
+    transition: 0.3s ease-in;
+  }
+
+  button.buy:hover {
+    color: #D96E05;
+    background-color: transparent;
+  }
 }
