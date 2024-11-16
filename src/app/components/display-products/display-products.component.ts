@@ -136,11 +136,8 @@ export class DisplayProductsComponent implements OnInit{
     {
       this.filterName = "All";
     }
-<<<<<<< HEAD
-    this.productName = routeBaseUrl.charAt(0).toUpperCase() + routeBaseUrl.slice(1);
-=======
+
     this.productName = this.routeBaseUrl.charAt(0).toUpperCase() + this.routeBaseUrl.slice(1);
->>>>>>> ee7132edb0ab8114552f75dae013a161a2490bd9
   }
 
   onChange() : void
