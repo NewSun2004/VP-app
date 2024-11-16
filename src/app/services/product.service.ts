@@ -3,15 +3,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-  myAPIUrl : string = "http://localhost:3000";
+  myAPIUrl: string = 'http://localhost:3000';
 
-  products : any = [];
+  products: any = [];
   productsSbuject = new BehaviorSubject([]);
 
-  constructor(private _httpClient : HttpClient) { }
+  constructor(private _httpClient: HttpClient) {}
 
   searchAllProduct(searchTerm : string) : Observable<[]>
   {
@@ -21,22 +21,26 @@ export class ProductService {
   getAllProduct(routeBaseUrl : string, queryParams? : any) : Observable<[]>
   {
     // Default URL
-    let queryString : string = ""; // Build the query string from params if provided
-    if (queryParams)
-    {
-        queryString = new URLSearchParams(queryParams).toString();
+    let queryString: string = ''; // Build the query string from params if provided
+    if (queryParams) {
+      queryString = new URLSearchParams(queryParams).toString();
     }
 
-    return this._httpClient.get<[]>(this.myAPIUrl + `/${routeBaseUrl}` + `${queryString ? '?' + queryString : ''}`).pipe(
-     tap((allProducts : any) => {
-      this.products = allProducts;
-      this.productsSbuject.next(allProducts);
-     })
-    );
+    return this._httpClient
+      .get<[]>(
+        this.myAPIUrl +
+          `/${routeBaseUrl}` +
+          `${queryString ? '?' + queryString : ''}`
+      )
+      .pipe(
+        tap((allProducts: any) => {
+          this.products = allProducts;
+          this.productsSbuject.next(allProducts);
+        })
+      );
   }
 
-  getProduct(routeFullUrl : string) : Observable<any>
-  {
+  getProduct(routeFullUrl: string): Observable<any> {
     return this._httpClient.get<[]>(this.myAPIUrl + routeFullUrl);
   }
 }

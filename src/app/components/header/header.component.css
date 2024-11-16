@@ -2,11 +2,44 @@
   font-size: 1.1rem;
   color: #00000080;
 }
+/* Thêm chiều rộng 100% cho phần header */
+.promo,
+.nav-bar,
+.container-fluid {
+  width: 100%; /* Đảm bảo các thành phần này full-width */
+}
+
+/* Giới hạn chiều rộng của các phần tử bên trong container */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Căn chỉnh logo và các thành phần khác trong hàng */
+#logo {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Điều chỉnh menu để chiếm toàn bộ chiều rộng khi mở */
+.navbar-collapse {
+  justify-content: center;
+}
+
+.nav-item {
+  padding: 0 10px;
+}
+
+/* Đảm bảo các phần tử không giãn quá lớn */
+.row.align-items-center {
+  max-width: 1440px;
+  margin: 0 auto;
+}
 
 div.responsive {
   div.promo {
     background-color: #d96e05;
-
     p#promo {
       color: #ffffff;
       font-weight: 400;
@@ -54,8 +87,7 @@ a.manage:hover {
   color: black;
 }
 
-@media (max-width : 992px)
-{
+@media (max-width: 992px) {
   div.responsive {
     .hide-after {
       display: none;
@@ -82,8 +114,7 @@ a.manage:hover {
   }
 }
 
-@media (max-width : 576px)
-{
+@media (max-width: 576px) {
   div.responsive {
     .hide-after-2 {
       display: none;
