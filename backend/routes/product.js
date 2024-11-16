@@ -1,7 +1,6 @@
-// routes/product.js
 const express = require("express");
 const router = express.Router();
-const { Product } = require("../model/model");
+const { Product, Product_line } = require("../model/model");
 
 // Route để lấy tất cả sản phẩm
 router.get("/", async (req, res) => {
@@ -13,11 +12,28 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Route để lấy các sản phẩm best-seller
+// Route để lấy các sản phẩm best-seller cùng product_lines
 router.get("/best-selling", async (req, res) => {
   try {
-    const bestSellingProducts = await Product.find({ is_best_seller: true });
-    res.json(bestSellingProducts);
+    // Lấy danh sách sản phẩm best-selling
+    const bestSellingProducts = await Product.find({
+      is_best_seller: true,
+    }).lean();
+
+    // Lấy thông tin product_lines cho từng sản phẩm
+    const productsWithLines = await Promise.all(
+      bestSellingProducts.map(async (product) => {
+        const productLines = await Product_line.find({
+          product_id: product._id,
+        }).lean();
+        return {
+          ...product,
+          product_lines: productLines, // Gắn thông tin product_lines vào từng sản phẩm
+        };
+      })
+    );
+
+    res.json(productsWithLines);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
