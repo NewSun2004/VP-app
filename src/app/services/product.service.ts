@@ -13,7 +13,7 @@ export class ProductService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  getAllProduct(queryParams? : any) : Observable<[]>
+  getAllProduct(routeBaseUrl : string, queryParams? : any) : Observable<[]>
   {
     // Default URL
     let queryString : string = ""; // Build the query string from params if provided
@@ -22,7 +22,7 @@ export class ProductService {
         queryString = new URLSearchParams(queryParams).toString();
     }
 
-    return this._httpClient.get<[]>(this.myAPIUrl +"/eyeglasses" + `${queryString ? '?' + queryString : ''}`).pipe(
+    return this._httpClient.get<[]>(this.myAPIUrl + `/${routeBaseUrl}` + `${queryString ? '?' + queryString : ''}`).pipe(
      tap((allProducts : any) => {
       this.products = allProducts;
       this.productsSbuject.next(allProducts);
@@ -30,8 +30,8 @@ export class ProductService {
     );
   }
 
-  getProduct(productId : string) : Observable<any>
+  getProduct(routeFullUrl : string) : Observable<any>
   {
-    return this._httpClient.get<[]>(this.myAPIUrl + "/eyeglasses" + `/${productId}`);
+    return this._httpClient.get<[]>(this.myAPIUrl + routeFullUrl);
   }
 }
