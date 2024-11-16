@@ -13,6 +13,11 @@ export class ProductService {
 
   constructor(private _httpClient : HttpClient) { }
 
+  searchAllProduct(searchTerm : string) : Observable<[]>
+  {
+    return this._httpClient.get<[]>(this.myAPIUrl + "/search" + `/${searchTerm}`);
+  }
+
   getAllProduct(routeBaseUrl : string, queryParams? : any) : Observable<[]>
   {
     // Default URL
