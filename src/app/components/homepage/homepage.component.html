@@ -110,43 +110,26 @@
   </div>
 </div>
 
-<!-- homepage.component.html -->
-<div class="homepage">
-  <h2 class="section-title">BEST SELLING GLASSES</h2>
-  <p class="subtitle">SAVE UP TO $125 ON VP EVENT</p>
+<section class="best-selling-section">
+  <h2 class="section-title">Best Selling Glasses</h2>
+  <p class="section-subtitle">Save up to $125 on VP Event</p>
 
-  <!-- Thanh điều hướng qua lại sản phẩm -->
-  <div class="navigation">
-    <button class="nav-button">&lt;</button>
-    <!-- Nút sang trái -->
-    <button class="nav-button">&gt;</button>
-    <!-- Nút sang phải -->
-  </div>
-
-  <!-- Grid hiển thị sản phẩm -->
-  <div class="product-grid">
+  <div class="products-grid">
     <div *ngFor="let product of bestSellingProducts" class="product-card">
-      <!-- Ảnh sản phẩm -->
       <img
-        [src]="product.image_url || 'assets/default-image.jpg'"
-        alt="{{ product.product_name }}"
+        [src]="product.product_image || 'assets/placeholder.jpg'"
+        [alt]="product.product_name"
         class="product-image"
       />
-
-      <!-- Tên sản phẩm -->
       <h3 class="product-name">{{ product.product_name }}</h3>
-
-      <!-- Giá sản phẩm -->
-      <p class="product-price">{{ product.product_price | currency }}</p>
-
-      <!-- Các tùy chọn màu sắc -->
+      <p class="product-price">${{ product.product_price }}</p>
       <div class="color-options">
         <span
-          *ngFor="let color of product.colors"
-          [style.backgroundColor]="color"
+          *ngFor="let color of product.product_colors"
           class="color-circle"
+          [style.background]="color"
         ></span>
       </div>
     </div>
   </div>
-</div>
+</section>
