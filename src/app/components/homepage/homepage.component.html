@@ -113,51 +113,37 @@
 <section class="best-selling">
   <!-- Title -->
   <h2 class="best-selling-title">Best Selling Glasses</h2>
-  <p class="best-selling-subtitle">Save up to $125 on VP Event</p>
 
-  <!-- Carousel Wrapper -->
+  <!-- Subtitle -->
+  <p class="best-selling-subtitle">SAVE UP TO $125 ON VP EVENT</p>
+
+  <!-- Carousel -->
   <div class="carousel-container">
-    <!-- Nút điều hướng trái -->
-    <button class="arrow arrow-left" (click)="navigateLeft()">&#8592;</button>
+    <!-- Buttons -->
+    <button class="nav-btn prev-btn" (click)="navigate('prev')">
+      <span class="icon">&lt;</span>
+    </button>
+    <button class="nav-btn next-btn" (click)="navigate('next')">
+      <span class="icon">&gt;</span>
+    </button>
 
-    <!-- Grid sản phẩm -->
     <div class="carousel" [style.transform]="carouselTransform">
       <div class="product-card" *ngFor="let product of visibleProducts">
         <!-- Product Image -->
         <div class="product-image-wrapper">
           <img
-            [src]="
-              productLinesByProduct[product._id][selectedColors[product._id]]
-                ?.image_urls[1]
-            "
+            [src]="product.product_lines[0].image_urls[1]"
             alt="{{ product.product_name }}"
             class="product-image"
             (mouseenter)="hoverImage(product._id, true)"
             (mouseleave)="hoverImage(product._id, false)"
           />
         </div>
-
-        <!-- Product Info -->
+        <!-- Product Name -->
         <h3 class="product-name">{{ product.product_name }}</h3>
+        <!-- Product Price -->
         <p class="product-price">{{ product.product_price | currency }}</p>
-
-        <!-- Color Dots -->
-        <div class="color-dots">
-          <div
-            *ngFor="
-              let line of productLinesByProduct[product._id];
-              let i = index
-            "
-            class="dot"
-            [style.backgroundColor]="extractedColors[product._id]?.[i] || '#ccc'"
-            [class.active]="i === selectedColors[product._id]"
-            (click)="changeColor(product._id, i)"
-          ></div>
-        </div>
       </div>
     </div>
-
-    <!-- Nút điều hướng phải -->
-    <button class="arrow arrow-right" (click)="navigateRight()">&#8594;</button>
   </div>
 </section>
