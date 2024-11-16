@@ -92,16 +92,16 @@
       <div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
         <!-- NgFor to populate display with cards of product -->
         <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of displayedProducts">
-          <a [routerLink]="['/eyeglasses', product._id]" class="product" style="height: 100%;">
+          <a [routerLink]="['/' + routeBaseUrl, product._id]" class="product" style="height: 100%;">
             <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
             <div class="card-body text-center">
               <p class="card-title name">{{product.name}}</p>
               <p class="card-text price">${{product.price}}.00</p>
-              <div class="d-flex flex-row justify-content-center">
-                <img src="Icons/color-circle-1.svg" alt="" class="me-2">
-                <img src="Icons/color-circle-2.svg" alt="" class="me-2">
-                <img src="Icons/color-circle-3.svg" alt="" class="me-2">
+              <div class="d-flex flex-row justify-content-center gap-2 color-circle">
+                <img src="Icons/color-circle-1.svg" alt="">
+                <img src="Icons/color-circle-2.svg" alt="">
+                <img src="Icons/color-circle-3.svg" alt="">
                 <img src="Icons/color-circle-4.svg" alt="">
               </div>
             </div>

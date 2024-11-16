@@ -13,6 +13,9 @@ import { HttpParams } from '@angular/common/http';
   styleUrl: './display-products.component.css'
 })
 export class DisplayProductsComponent implements OnInit{
+  rawRouteUrl : string = "";
+  routeBaseUrl : string = "";
+
   filterName : string = "";
   productName : string = "";
 
@@ -50,6 +53,9 @@ export class DisplayProductsComponent implements OnInit{
   constructor(private _productService : ProductService, private _route : ActivatedRoute, private _router : Router) { }
 
   ngOnInit(): void {
+    this.rawRouteUrl = this._router.url;
+    this.routeBaseUrl = this.rawRouteUrl.split("?")[0].replace("/", "");
+
     this._route.queryParams.subscribe(params => {
       Object.keys(params).forEach(paramKey => {
         const selectedFilters = params[paramKey];
@@ -87,7 +93,7 @@ export class DisplayProductsComponent implements OnInit{
             }
         }});
 
-        this._productService.getAllProduct(params).subscribe({
+        this._productService.getAllProduct(this.routeBaseUrl, params).subscribe({
           next : allProductData => {
             this.products = allProductData;
             this.updateDisplayedProducts();
@@ -100,14 +106,13 @@ export class DisplayProductsComponent implements OnInit{
 
   updateFilterName() : void
   {
-    const rawRouteUrl = this._router.url;
-    const routeBaseUrl = rawRouteUrl.split("?")[0].replace("/", "");
+    this.rawRouteUrl = this._router.url;
 
-    if (rawRouteUrl.includes("Male") && !rawRouteUrl.includes("Female"))
+    if (this.rawRouteUrl.includes("Male") && !this.rawRouteUrl.includes("Female"))
     {
       this.filterName = "Men's";
     }
-    else if (rawRouteUrl.includes("Female") && !rawRouteUrl.includes("Male"))
+    else if (this.rawRouteUrl.includes("Female") && !this.rawRouteUrl.includes("Male"))
     {
       this.filterName = "Women's";
     }
@@ -115,7 +120,7 @@ export class DisplayProductsComponent implements OnInit{
     {
       this.filterName = "All";
     }
-    this.productName = routeBaseUrl.charAt(0).toUpperCase() + routeBaseUrl.slice(1);
+    this.productName = this.routeBaseUrl.charAt(0).toUpperCase() + this.routeBaseUrl.slice(1);
   }
 
   onChange() : void
@@ -145,8 +150,7 @@ export class DisplayProductsComponent implements OnInit{
       queryParamsObj[key] = params.getAll(key);
     });
 
-    const routeBaseUrl = this._router.url.split("?")[0].replace("/", "");
-    this._router.navigate([routeBaseUrl], { queryParams: queryParamsObj });
+    this._router.navigate([this.routeBaseUrl], { queryParams: queryParamsObj });
   }
 
   updateDisplayedProducts() : void
