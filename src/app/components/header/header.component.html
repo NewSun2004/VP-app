@@ -1,27 +1,44 @@
 <div class="responsive">
+  <!-- Promo banner -->
   <div class="container-fluid text-center promo">
     <p id="promo">Discount Glasses - up to 50% off Eyeglasses Sale Online</p>
   </div>
 
+  <!-- Mid section -->
   <div class="container">
+    <!-- Logo for responsive -->
     <div class="text-center hide-before show-2">
       <a href="">
         <img src="Logo/VP_logo.png" alt="" id="logo-2">
       </a>
     </div>
 
+    <!-- Search and nav-bar toggle btn -->
     <div class="row align-items-center">
       <div class="col-5">
+        <!-- nav-bar toggle btn -->
         <div class="d-flex flex-row align-items-center gap-2">
           <button class="p-0 menu-btn hide-before show" (click)="showNavBar = !showNavBar">
             <i class="bi bi-list"></i>
           </button>
 
-          <a href="" class="d-flex align-item-center">
+          <!-- Search btn and search popup-->
+          <button class="btn d-flex flex-row align-items-center search" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTopScrolling" aria-controls="offcanvasTopScrolling">
             <img src="Icons/search.svg" alt="">
-          </a>
+            <span class="text-start ms-2">Search</span>
+          </button>
 
-          <input type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none p-0 m-0" placeholder="Search">
+          <div class="offcanvas offcanvas-top" tabindex="-1" scroll="true" data-bs-backdrop="false" id="offcanvasTopScrolling" aria-labelledby="offcanvasTopScrollingLabel" style="height: 24.5%;">
+            <div class="container">
+              <div class="offcanvas-header">
+                <h5 id="offcanvasTopLabel">Search</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body">
+                <input [(ngModel)]="searchInput" type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none p-0 m-0" placeholder="Type here...">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

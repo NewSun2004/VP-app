@@ -18,10 +18,6 @@ div.responsive {
     width: 100%;
   }
 
-  input::placeholder {
-    font-size: 0.9rem;
-  }
-
   img.arrow {
     width: 2%;
   }
