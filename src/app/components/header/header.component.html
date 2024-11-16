@@ -28,15 +28,21 @@
             <span class="text-start ms-2">Search</span>
           </button>
 
-          <div class="offcanvas offcanvas-top" tabindex="-1" scroll="true" data-bs-backdrop="false" id="offcanvasTopScrolling" aria-labelledby="offcanvasTopScrollingLabel" style="height: 24.5%;">
+          <div class="offcanvas offcanvas-top overflow-scroll" tabindex="-1" data-bs-backdrop="false" id="offcanvasTopScrolling" aria-labelledby="offcanvasTopScrollingLabel" style="height: 100%">
             <div class="container">
               <div class="offcanvas-header">
                 <h5 id="offcanvasTopLabel">Search</h5>
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
               </div>
               <div class="offcanvas-body">
-                <input [(ngModel)]="searchInput" type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none p-0 m-0" placeholder="Type here...">
+                <input [(ngModel)]="searchInput" type="text" name="search-bar" id="search-bar" class="form-control border-0 shadow-none p-0 m-0" placeholder="Type here..." (keyup.enter)="search()">
               </div>
+            </div>
+
+            <hr>
+
+            <div class="container">
+              <app-display-search-product [products]="products"></app-display-search-product>
             </div>
           </div>
         </div>

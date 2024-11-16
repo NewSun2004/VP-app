@@ -1,0 +1,22 @@
+p.name {
+  font-weight: 400;
+}
+
+p.price {
+  font-size: 0.65rem;
+  font-weight: 400;
+}
+
+a.product {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+
+   transition: 0.5s ease-out;
+}
+
+a.product:hover {
+  transform: translateY(-10px);
+  background-color: #0000001A;
+  filter: brightness(0.9);
+}
