@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
-    user_name: {
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
         type: String,
         required: true
     },
@@ -12,10 +16,6 @@ const userSchema = new mongoose.Schema({
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
     },
     user_password: {
-        type: String,
-        required: true
-    },
-    user_address: {
         type: String,
         required: true
     },
@@ -30,10 +30,6 @@ const userSchema = new mongoose.Schema({
 })
 // Middleware để mã hóa mật khẩu trước khi lưu
 userSchema.pre('save', async function (next) {
-    if (this.isModified('user_password')) {
-      const saltRounds = 10;
-      this.user_password = await bcrypt.hash(this.user_password, saltRounds);
-    }
     // Tạo giỏ hàng nếu chưa có giỏ hàng nào
     if (!this.cart) {
         const newCart = new Cart({ user_id: this._id });
@@ -164,19 +160,36 @@ const customizeSchema = new mongoose.Schema({
  })
 
  const orderSchema = new mongoose.Schema({
-    user_id:{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User"
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
     },
-    order_Datetime: {
+    order_datetime: {
         type: Date,
-        default: Date.now
+        default: Date.now, // Ngày tạo
+    },
+    order_status: {
+        type: String,
+        required: true,
+    },
+    updated_datetime: {
+        type: Date, // Cập nhật mỗi khi thay đổi order_status
     },
     order_line: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Order_line"
-    }]
-})
+        ref: "Order_line",
+    }],
+});
+
+// Middleware trước khi lưu để cập nhật `updated_datetime` khi `order_status` thay đổi
+orderSchema.pre('save', function (next) {
+    if (this.isModified('order_status')) {
+        this.updated_datetime = new Date();
+    }
+    next();
+});
+
 
 const order_lineSchema = new mongoose.Schema({
     order_id:{
@@ -310,7 +323,11 @@ const reviewsSchema = new mongoose.Schema({
 })
 
 const temporaryUserSchema = new mongoose.Schema({
-    user_name: {
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
         type: String,
         required: true
     },
@@ -320,10 +337,6 @@ const temporaryUserSchema = new mongoose.Schema({
         match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email address']
     },
     user_password: {
-        type: String,
-        required: true
-    },
-    user_address: {
         type: String,
         required: true
     },
@@ -337,7 +350,14 @@ const temporaryUserSchema = new mongoose.Schema({
         expires: 600 // Xóa sau 600 giây (10 phút)
     }
 })
-
+// Middleware để mã hóa mật khẩu trước khi lưu
+temporaryUserSchema.pre('save', async function (next) {
+    if (this.isModified('user_password')) {
+        const saltRounds = 10;
+        this.user_password = await bcrypt.hash(this.user_password, saltRounds);
+    }
+    next();
+});
 
 let User = mongoose.model("User", userSchema);
 let Category = mongoose.model("Category", categorySchema)
