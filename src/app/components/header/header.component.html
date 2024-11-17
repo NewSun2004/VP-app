@@ -79,7 +79,7 @@
         </div>
 
         <div class="menu-bar hide-before show" [ngClass]="{'show-menu-bar': showSubMenuE}">
-          <div class="d-flex flex-column ms-3 overflow-hidden">
+          <div class="d-flex flex-column ms-3 overflow-hidden dropdown-font">
             <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
 
             <a [routerLink]="['/eyeglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
@@ -93,7 +93,7 @@
             Eyeglasses
           </a>
 
-          <ul class="dropdown-menu" aria-labelledby="eyeglasses">
+          <ul class="dropdown-menu dropdown-font" aria-labelledby="eyeglasses">
             <li>
               <a [routerLink]="['/eyeglasses']" class="dropdown-item">All eyeglasses</a>
             </li>
@@ -116,7 +116,7 @@
         </div>
 
         <div class="menu-bar hide-before show" [ngClass]="{'show-menu-bar': showSubMenuS}">
-          <div class="d-flex flex-column ms-3 overflow-hidden">
+          <div class="d-flex flex-column ms-3 overflow-hidden dropdown-font">
             <a [routerLink]="['/sunglasses']" class="dropdown-item">All sunglasses</a>
 
             <a [routerLink]="['/sunglasses']" [queryParams]="{gender : 'Male'}" class="dropdown-item">Men</a>
@@ -130,7 +130,7 @@
             Sunglasses
           </a>
 
-          <ul class="dropdown-menu" aria-labelledby="sunglasses">
+          <ul class="dropdown-menu dropdown-font" aria-labelledby="sunglasses">
             <li>
               <a [routerLink]="['/sunglasses']" class="dropdown-item">All sunglasses</a>
             </li>
