@@ -52,18 +52,18 @@ export class HomepageComponent implements OnInit {
   navigate(direction: 'prev' | 'next'): void {
     const itemsPerPage = 8; // 2 hàng x 4 sản phẩm mỗi hàng
     const totalProducts = this.bestSellingProducts.length;
-    const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
+    const totalPages = Math.ceil(totalProducts / itemsPerPage);
     if (direction === 'prev' && this.currentIndex > 0) {
       this.currentIndex--;
-    } else if (
-      direction === 'next' &&
-      this.currentIndex < this.totalPages - 1
-    ) {
-      this.currentIndex++;
+    } else if (direction === 'next') {
+      if (this.currentIndex < totalPages - 1) {
+        this.currentIndex++;
+      } else {
+        this.currentIndex = 0; // Quay lại trang đầu tiên
+      }
     }
 
-    // Cập nhật sản phẩm hiển thị
     this.updateVisibleProducts();
   }
 
