@@ -1,74 +1,203 @@
-<div class="d-flex flex-row justify-content-center">
-  <div class="d-flex flex-row justify-content-start align-items-center display-image">
-    <div class="d-flex flex-column align-items-center">
-      <div class="my-2 border border-1 p-2" *ngFor="let image_url of product['images by colors'][0]['image urls']">
-        <a href="">
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row justify-content-center">
+    <div class="d-flex flex-row justify-content-start align-items-center display-image">
+      <div class="d-flex flex-column gap-3 align-items-center">
+        <button class="option-btn" [ngClass]="{'selected': selectedImageOption === 'button ' + i}" (click)="getCurrentProductImage(i)" *ngFor="let image_url of currentProductImageSet['image urls'], let i = index">
           <img src="{{image_url}}" alt="" class="option-image">
-        </a>
+        </button>
+      </div>
+
+      <div class="d-flex flex-column justify-content-between text-center h-75">
+        <div>
+          <button class="btn live-try-on">
+            <img src="Icons/glass-try-on.svg" alt="">
+            Live Try-on
+          </button>
+        </div>
+        <img src="{{currentProductImage}}" alt="" class="p-5 display-image" style="width: 100%;">
       </div>
     </div>
 
-    <div class="d-flex flex-column text-center h-75">
-      <div>
-        <button class="btn live-try-on">
-          <img src="Icons/glass-try-on.svg" alt="">
-          Live Try-on
-        </button>
+    <div class="d-flex flex-column product-interaction">
+      <div class="d-flex flex-column bg-color-gray gap-3 ms-2 mt-5 px-5 py-4">
+        <div>
+          <p class="m-0 name">{{productData.name}}</p>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between gap-1 w-60">
+          <div *ngFor="let i of starIndex">
+            <img src="Icons/star-full.svg" alt="" *ngIf="i < ratingRoundedUp || i == averageRating">
+            <img src="Icons/star-half.svg" alt="" *ngIf="i == ratingRoundedUp && ratingRoundedUp != averageRating">
+            <img src="Icons/star-empty.svg" alt="" *ngIf="i > ratingRoundedUp">
+          </div>
+
+          <p class="text-end m-0 flex-grow-1 review-count">({{productData.reviews.length}} reviews)</p>
+        </div>
+
+        <div class="d-flex">
+          <p class="m-0 price">${{productData.price}}.00</p>
+        </div>
+
+        <div class="d-flex px-1 py-3 bg-color-orange">
+          <p class="ms-1 me-0 my-0 promo">30% Off $60+ | CODE: VPEVENT</p>
+        </div>
+
+        <div class="d-flex flex-row justify-content-start gap-3 w-25">
+          <button class="border-0 bg-transparent p-0" *ngFor="let item of productData['images by colors'], let i = index" (click)="getCurrentProductImageSet(i)">
+            <img [src]="'Icons/color-circle-' + (i + 1) + '.svg'" alt="">
+          </button>
+        </div>
+
+        <div class="d-flex flex-row gap-3 btn-group-size">
+          <button class="btn" (click)="sizeSelected('Medium')" [ngClass]="{'selected': selectedSizeOption == 'Medium'}">Medium</button>
+          <button class="btn" (click)="sizeSelected('Large')" [ngClass]="{'selected': selectedSizeOption == 'Large'}">Large</button>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between">
+          <button class="btn add">ADD TO CART</button>
+          <button class="btn buy">BUY NOW</button>
+        </div>
       </div>
-      <img src="{{currentImageUrl}}" alt="" class="p-5 display-image" style="width: 500px;">
     </div>
   </div>
 
-  <div class="d-flex flex-column w-100 product-interaction">
-    <div class="d-flex flex-column bg-color-gray gap-3 ms-2 mt-5 px-5 py-4">
+  <div class="d-flex flex-column details py-3">
+    <div class="d-flex flex-row my-3">
+      <button (click)="toggleDescription()" [ngClass]="{'focus': showDescription}">Description</button>
+      <button (click)="togglePolicy()" [ngClass]="{'focus': showPolicy}">Shipping & Returns</button>
+    </div>
+
+    <div class="d-flex flex-row align-items-center gap-2 content" id="description" *ngIf="showDescription">
       <div>
-        <p class="m-0 name">{{product.name}}</p>
+        <p class="title">About {{productData.name}}</p>
+        <p>{{productData.description}}</p>
+        <ul>
+          <li>
+            <b>Size:</b> {{selectedSizeOption}}
+          </li>
+          <li>
+            <b>Materials:</b> {{productData.material}}
+          </li>
+          <li>
+            <b>Shape:</b> {{productData.shape}}
+          </li>
+          <li>
+            <b>Color:</b> {{productData['images by colors'][0]['color description']}}
+          </li>
+          <li>
+            <b>Gender:</b> {{productData.gender}}
+          </li>
+        </ul>
       </div>
 
-      <div class="d-flex flex-row justify-content-between gap-1 w-60">
-        <img src="Icons/star-full.svg" alt="">
-        <img src="Icons/star-full.svg" alt="">
-        <img src="Icons/star-full.svg" alt="">
-        <img src="Icons/star-full.svg" alt="">
-        <img src="Icons/star-half.svg" alt="">
-        <p class="text-end m-0 flex-grow-1 review-count">({{reviewCounts}} reviews)</p>
+      <img src="{{currentProductImage}}" alt="" style="width: 30%;">
+    </div>
+
+    <div class="d-flex flex-row flex-wrap content" id="policy" *ngIf="showPolicy">
+      <div class="flex-shrink-1">
+        <p class="title">Enjoy free Shipping and returns on all orders</p>
+        <p>For orders in VietNam. If, for any reason, you are not completely satisfied with your order, you may return it within the first 14 days for free.</p>
+        <p class="title">Please note</p>
+        <ul>
+          <li>
+            Items must be unused, in original packaging, and in the same condition that you received them.
+          </li>
+          <li>
+            Contact our Customer Service team at <b>[vpandasew&#64;gmail.com]</b> with your order number and reason for return.
+          </li>
+        </ul>
       </div>
 
-      <div class="d-flex">
-        <p class="m-0 price">${{product.price}}.00</p>
+      <div>
+        <table>
+          <tr>
+            <th></th>
+            <th>VietNam</th>
+            <th>International</th>
+          </tr>
+          <tr>
+            <td>Standard</td>
+            <td>3-5 business days<br>Free</td>
+            <td>10-14 business days<br>Free</td>
+          </tr>
+          <tr>
+            <td>Expedite</td>
+            <td>2-3 business days<br>$4.95</td>
+            <td>5-7 business days<br>$5.95</td>
+          </tr>
+          <tr>
+            <td>Express</td>
+            <td>1-2 business days<br>$7.95</td>
+            <td>3-5 business days<br>$8.95</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column gap-4 pt-4 pb-0 m-0 review">
+    <div class="d-flex align-items-center">
+      <div class="col-1">
+        <p class="m-0 average-rating">{{averageRating}}</p>
       </div>
 
-      <div class="d-flex px-1 py-3 bg-color-orange">
-        <p class="ms-1 me-0 my-0 promo">30% Off $60+ | CODE: VPEVENT</p>
+      <div class="col">
+        <p class="m-0">{{productData.reviews.length}} customer reviews</p>
+
+        <div class="d-flex flex-row justify-content-start gap-1">
+          <div *ngFor="let i of starIndex">
+            <img src="Icons/star-full.svg" alt="" *ngIf="i < ratingRoundedUp || i == averageRating">
+            <img src="Icons/star-half.svg" alt="" *ngIf="i == ratingRoundedUp && ratingRoundedUp != averageRating">
+            <img src="Icons/star-empty.svg" alt="" *ngIf="i > ratingRoundedUp">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-1">
+
+    <div class="row" *ngFor="let review of reviewsDisplayed">
+      <div class="col-2 d-flex flex-column gap-2">
+        <div class="d-flex flex-row justify-content-start gap-1">
+          <img [src]="i <= review.rating ? 'Icons/star-full.svg' : 'Icons/star-empty.svg'" alt="" *ngFor="let i of starIndex">
+        </div>
+
+        <p class="username">{{review.username}}</p>
+        <p>9/11/2023</p>
       </div>
 
-      <div class="d-flex flex-row justify-content-between w-25">
-        <a href="">
-          <img src="Icons/color-circle-1.svg" alt="">
+      <div class="col d-flex flex-column gap-2">
+        <p class="title">{{review.title}}</p>
+        <p class="review-text">{{review.review}}</p>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-warning see-more" (click)="onSeeMore()" [disabled]="disableSeeMore">Show more</button>
+  </div>
+
+  <hr class="my-4">
+
+  <div>
+    <p><b style="font-size: 1.6rem;">You may also like</b></p>
+
+    <div class="d-flex flex-row justify-items-between gap-3">
+      <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let recProduct of recommendations">
+        <a  class="product" style="height: 100%;">
+          <img [src]="recProduct['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+
+          <div class="card-body text-center">
+            <p class="card-title name">{{recProduct.name}}</p>
+            <p class="card-text price">${{recProduct.price}}.00</p>
+            <div class="d-flex flex-row justify-content-center gap-2 color-circle">
+              <img src="Icons/color-circle-1.svg" alt="">
+              <img src="Icons/color-circle-2.svg" alt="">
+              <img src="Icons/color-circle-3.svg" alt="">
+              <img src="Icons/color-circle-4.svg" alt="">
+            </div>
+          </div>
         </a>
-
-        <a href="">
-          <img src="Icons/color-circle-2.svg" alt="">
-        </a>
-
-        <a href="">
-          <img src="Icons/color-circle-3.svg" alt="">
-        </a>
-
-        <a href="">
-          <img src="Icons/color-circle-4.svg" alt="">
-        </a>
-      </div>
-
-      <div class="d-flex flex-row gap-3 btn-group-size">
-        <button class="btn">Medium</button>
-        <button class="btn">Large</button>
-      </div>
-
-      <div class="d-flex flex-row justify-content-between">
-        <button class="btn add">ADD TO CART</button>
-        <button class="btn buy">BUY NOW</button>
       </div>
     </div>
   </div>
 </div>
+

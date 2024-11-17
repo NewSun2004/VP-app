@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { ProductDetails } from '../interfaces/product-details';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,7 @@ export class ProductService {
       );
   }
 
-  getProduct(routeFullUrl: string): Observable<any> {
-    return this._httpClient.get<[]>(this.myAPIUrl + routeFullUrl);
+  getProduct(routeFullUrl: string): Observable<ProductDetails> {
+    return this._httpClient.get<ProductDetails>(this.myAPIUrl + routeFullUrl);
   }
 }
