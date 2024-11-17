@@ -40,6 +40,12 @@ div.responsive {
   background-color: transparent;
 }
 
+.dropdown-font {
+  a {
+    font-size: 0.9rem;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
