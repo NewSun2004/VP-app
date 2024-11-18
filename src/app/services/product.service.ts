@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { ProductDetails } from '../interfaces/product-details';
+import { Review } from '../interfaces/review';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  myAPIUrl: string = 'http://localhost:3000';
+  myAPIUrl: string = 'http://localhost:3001';
 
   products: any = [];
   productsSbuject = new BehaviorSubject([]);
@@ -41,7 +42,13 @@ export class ProductService {
       );
   }
 
-  getProduct(routeFullUrl: string): Observable<ProductDetails> {
-    return this._httpClient.get<ProductDetails>(this.myAPIUrl + routeFullUrl);
+  getProduct(productId : string): Observable<ProductDetails>
+  {
+    return this._httpClient.get<ProductDetails>(this.myAPIUrl + `/product/${productId}`);
+  }
+
+  getAllReviews(productId : string) : Observable<Review[]>
+  {
+    return this._httpClient.get<Review[]>(this.myAPIUrl + `/reviews/${productId}`)
   }
 }

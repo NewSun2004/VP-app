@@ -84,17 +84,11 @@
         <!-- NgFor to populate display with cards of product -->
         <div class="card mb-2 border-0 xs" *ngFor="let product of displayedProducts">
           <a [routerLink]="['/' + routeBaseUrl, product._id]" class="product" style="height: 100%;">
-            <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+            <img [src]="product.product_lines[0].image_urls[1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
             <div class="card-body text-center">
-              <p class="card-title name">{{product.name}}</p>
-              <p class="card-text price">${{product.price}}.00</p>
-              <div class="d-flex flex-row justify-content-center gap-2 color-circle">
-                <img src="Icons/color-circle-1.svg" alt="">
-                <img src="Icons/color-circle-2.svg" alt="">
-                <img src="Icons/color-circle-3.svg" alt="">
-                <img src="Icons/color-circle-4.svg" alt="">
-              </div>
+              <p class="card-title name">{{product.product_name}}</p>
+              <p class="card-text price">${{product.product_price}}.00</p>
             </div>
           </a>
         </div>

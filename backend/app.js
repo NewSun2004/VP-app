@@ -12,7 +12,7 @@ const app = express();
 const categoryRoute = require("./routes/category");
 const userRoute = require("./routes/user");
 const tempUserRoute = require("./routes/temporary_user");
-const { Category, Product, Product_line, Reviews } = require("./model/model");
+const { Product, Review } = require("./model/model");
 
 // Kết nối MongoDB
 async function connectDB() {
@@ -62,7 +62,6 @@ app.get('/', (req, res) => {
 });
 
 // Hàm nhập dữ liệu từ JSON (nếu IMPORT_DATA = true)
-// Hàm nhập dữ liệu từ JSON (nếu IMPORT_DATA = true)
 async function importData() {
     console.log("Starting data import...");
     try {
@@ -73,44 +72,40 @@ async function importData() {
         for (const productData of data) {
             console.log(`Processing product: ${productData.product_name}`);
 
-            // Kiểm tra nếu sản phẩm đã tồn tại
-            let product = await Product.findOne({ product_name: productData.product_name });
-            if (!product) {
-                product = new Product({
-                    product_name: productData.product_name,
-                    product_description: productData.product_description,
-                    product_price: productData.product_price,
-                    category_name: productData.category_name,
-                    product_gender: productData.product_gender,
-                    customizable: productData.customizable,
-                    product_material: productData.product_material,
-                    product_shape: productData.product_shape,
-                    stock: productData.stock,
-                    creation_datetime: productData.creation_datetime || Date.now()
-                });
-            }
+            let product = new Product({
+              product_name: productData.product_name,
+              product_description: productData.product_description,
+              product_price: productData.product_price,
+              category_name: productData.category_name,
+              product_gender: productData.product_gender,
+              customizable: productData.customizable,
+              product_material: productData.product_material,
+              product_shape: productData.product_shape,
+              stock: productData.stock,
+              creation_datetime: productData.creation_datetime || Date.now()
+            });
 
             // Thêm product_lines
             for (const line of productData.product_lines || []) {
-                product.product_lines.push({
-                    product_line_name: line.product_line_name,
-                    image_urls: line.image_urls,
-                    image_paths: line.image_paths
-                });
+              product.product_lines.push({
+                  product_line_name: line.product_line_name,
+                  image_urls: line.image_urls,
+                  image_paths: line.image_paths
+              });
             }
 
             // Thêm reviews
             for (const review of productData.reviews || []) {
-                const reviewDoc = await Reviews.create({
-                    product_id: product._id, // Liên kết với sản phẩm
-                    username: review.username,
-                    title: review.title,
-                    rating: review.rating,
-                    review_text: review.review_text,
-                    prescription_type: review["prescription type"], // Lấy từ JSON
-                    creation_datetime: new Date() // Hoặc từ JSON nếu có
-                });
-                product.reviews.push(reviewDoc._id); // Chỉ lưu _id vào sản phẩm
+              const reviewDoc = await Review.create({
+                  product_id: product._id, // Liên kết với sản phẩm
+                  username: review.username,
+                  title: review.title,
+                  rating: review.rating,
+                  review_text: review.review_text,
+                  prescription_type: review["prescription type"], // Lấy từ JSON
+                  creation_datetime: new Date() // Hoặc từ JSON nếu có
+              });
+              product.reviews.push(reviewDoc._id); // Chỉ lưu _id vào sản phẩm
             }
 
             // Lưu sản phẩm
@@ -138,3 +133,119 @@ async function importData() {
         console.log("Server is running on port 3001");
     });
 })();
+
+// Read operation || eye_glasses, sun_glasses, search
+app.get("/search/:searchTerm", async (req, res) => {
+  const { searchTerm } = req.params;
+
+  try
+  {
+      const searchedProduct = await Product.find({ product_name: { $regex: `${searchTerm}*` } })
+      res.json(searchedProduct);
+  }
+  catch (err)
+  {
+      res.status(500).json({ error: err.message });
+  }
+})
+
+
+app.get("/:product", async (req, res) => {
+  const { product } = req.params;
+
+  if (product == "eyeglasses")
+  {
+      await fetchProductsData("eye glasses", req, res);
+  }
+
+  if (product == "sunglasses")
+  {
+      await fetchProductsData("sun glasses", req, res);
+  }
+});
+
+async function fetchProductsData(category, req, res)
+{
+  const filterQuerry = req.query;
+  const filterQuerryKeys = Object.keys(filterQuerry);
+
+  if (filterQuerryKeys.length < 1)
+      {
+          await Product.find({
+            category_name : category
+          })
+          .then( products => res.json(products))
+          .catch(err => res.status(500).json({ error: err.message }));
+      }
+      else
+      {
+          let andExpressions = [];
+
+          for (let key in filterQuerry)
+          {
+              filters = filterQuerry[key].split(",");
+              let expression = {};
+
+              switch (key)
+              {
+                  case "shape":
+                      expression["shape"] = {
+                          $in : filters
+                      };
+                      break;
+                  case "material":
+                      expression["material"] = {
+                          $in : filters
+                      };
+                      break;
+                  default:
+                      expression["gender"] = {
+                          $in : filters.map(filter => filter.toLowerCase())
+                      };
+                      break;
+
+              }
+              andExpressions.push(
+                  expression
+              )
+          }
+
+          await Product.find({$and : andExpressions})
+          .then( products => res.json(products))
+          .catch(err => res.status(500).json({ error: err.message }));
+      }
+}
+
+app.get("/product/:id" , async (req, res) => {
+  const { id } = req.params;
+
+  try
+  {
+      const product = await Product.findById(id)
+      if (!product)
+      {
+          return res.status(404).json( {error: "Product not found"} );
+      }
+      return res.json(product)
+  }
+  catch (error)
+  {
+      res.status(500).json( {error: error.message} );
+  }
+})
+
+app.get("/reviews/:productId", async (req, res) => {
+  const { productId } = req.params;
+
+  try
+  {
+    const reviews = await Review.find({
+      product_id : productId
+    })
+    return res.json(reviews)
+  }
+  catch (error)
+  {
+    res.status(500).json( {error: error.message} );
+  }
+})

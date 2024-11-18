@@ -1,26 +1,20 @@
 export interface ProductDetails {
   _id : string;
-  name : string;
-  description : string;
-  price : number;
-  category : string;
-  gender : string;
-  material : string;
-  shape : string;
-  ["images by colors"] : Array<ImagesByColor>;
-  reviews : Array<Review>;
+  product_name : string;
+  product_description : string;
+  product_price : number;
+  product_gender : string;
+  customizable : boolean;
+  product_material : string;
+  category_name : string;
+  product_shape : string;
+  product_lines : Array<Line>;
+  stock : number;
+  reviews : Array<string>;
 }
 
-interface ImagesByColor {
-  ["color description"] : string;
-  ["image urls"] : Array<string>;
-  ["image paths"] : Array<string>;
-}
-
-interface Review {
-  username : string;
-  title : string;
-  rating : number;
-  review : string;
-  ["prescription type"] : string;
+interface Line {
+  product_line_name : string;
+  image_urls : Array<string>;
+  image_paths : Array<string>;
 }

@@ -4,7 +4,7 @@
   <div class="d-flex flex-column flex-sm-row justify-content-start align-items-center display-image">
     <!-- Image options -->
     <div class="d-flex flex-row flex-sm-column order-1 order-sm-0 gap-3 align-items-center">
-      <button class="option-btn" [ngClass]="{'selected': selectedImageOption === 'button ' + i}" (click)="getCurrentProductImage(i)" *ngFor="let image_url of currentProductImageSet['image urls'], let i = index">
+      <button class="option-btn" [ngClass]="{'selected': selectedImageOption === 'button ' + i}" (click)="getCurrentProductImage(i)" *ngFor="let image_url of currentProductImageSet.image_urls, let i = index">
         <img src="{{image_url}}" alt="" class="option-image">
       </button>
     </div>
@@ -27,7 +27,7 @@
     <!-- Product name -->
     <div class="d-flex flex-column bg-color-gray gap-3 ms-2 mt-5 px-5 py-4">
       <div>
-        <p class="m-0 name">{{productData.name}}</p>
+        <p class="m-0 name">{{productData.product_name}}</p>
       </div>
 
       <!-- Star rating and number of reviews -->
@@ -43,7 +43,7 @@
 
       <!-- Price -->
       <div class="d-flex">
-        <p class="m-0 price">${{productData.price}}.00</p>
+        <p class="m-0 price">${{productData.product_price}}.00</p>
       </div>
 
       <!-- Sale code promo -->
@@ -53,7 +53,7 @@
 
       <!-- Color options -->
       <div class="d-flex flex-row justify-content-start gap-3 w-25">
-        <button class="border-0 bg-transparent p-0" *ngFor="let item of productData['images by colors'], let i = index" (click)="getCurrentProductImageSet(i)">
+        <button class="border-0 bg-transparent p-0" *ngFor="let item of productData.product_lines, let i = index" (click)="getCurrentProductImageSet(i)">
           <img [src]="'Icons/color-circle-' + (i + 1) + '.svg'" alt="">
         </button>
       </div>
@@ -85,22 +85,22 @@
   <div class="d-flex flex-row align-items-center gap-2 content" id="description" *ngIf="showDescription">
     <div>
       <p class="title">About {{productData.name}}</p>
-      <p>{{productData.description}}</p>
+      <p>{{productData.product_description}}</p>
       <ul>
         <li>
           <b>Size:</b> {{selectedSizeOption}}
         </li>
         <li>
-          <b>Materials:</b> {{productData.material}}
+          <b>Materials:</b> {{productData.product_material}}
         </li>
         <li>
-          <b>Shape:</b> {{productData.shape}}
+          <b>Shape:</b> {{productData.product_shape}}
         </li>
         <li>
-          <b>Color:</b> {{productData['images by colors'][0]['color description']}}
+          <b>Color:</b> {{currentProductImageSet.product_line_name}}
         </li>
         <li>
-          <b>Gender:</b> {{productData.gender}}
+          <b>Gender:</b> {{productData.product_gender}}
         </li>
       </ul>
     </div>
@@ -182,14 +182,14 @@
       </div>
 
       <p class="username">{{review.username}}</p>
-      <p>9/11/2023</p>
+      <p>{{review.creation_datetime}}</p>
     </div>
 
     <div class="d-md-none w-100"></div>
 
     <div class="col d-flex flex-column gap-2">
       <p class="title">{{review.title}}</p>
-      <p class="review-text">{{review.review}}</p>
+      <p class="review-text">{{review.review_text}}</p>
     </div>
   </div>
 

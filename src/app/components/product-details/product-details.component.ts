@@ -34,16 +34,21 @@ export class ProductDetailsComponent implements OnInit{
   constructor (private _productService : ProductService, private _router : Router) { }
 
   ngOnInit(): void {
-    this._productService.getProduct(this._router.url).subscribe({
+    this._productService.getProduct(this._router.url.split("/")[2]).subscribe({
       next : productData => {
         this.productData = productData;
         this.getCurrentProductImageSet();
-        this.reviews = productData.reviews;
-        this.calculateAverageRating(productData);
+      }
+    });
+
+    this._productService.getAllReviews(this._router.url.split("/")[2]).subscribe({
+      next : reviews => {
+        this.reviews = reviews;
+        this.calculateAverageRating(this.productData);
         this.updateDisplayedReviews();
         this.checkMaxReviewsShow();
       }
-    });
+    })
 
     this._productService.getAllProduct(this._router.url.split("/")[1]).subscribe({
       next : products => {
@@ -54,13 +59,13 @@ export class ProductDetailsComponent implements OnInit{
 
   getCurrentProductImageSet(index : number = 0) : void
   {
-    this.currentProductImageSet = this.productData['images by colors'][index];
+    this.currentProductImageSet = this.productData.product_lines[index];
     this.getCurrentProductImage();
   }
 
   getCurrentProductImage(index : number = 1) : void
   {
-    this.currentProductImage = this.currentProductImageSet['image urls'][index];
+    this.currentProductImage = this.currentProductImageSet.image_urls[index];
     this.selectedImageOption = `button ${index}`;
   }
 
@@ -84,7 +89,7 @@ export class ProductDetailsComponent implements OnInit{
   calculateAverageRating(product : ProductDetails) : void
   {
     let totalRating : number = 0;
-    for (let review of product.reviews)
+    for (let review of this.reviews)
     {
       totalRating += review.rating;
     }

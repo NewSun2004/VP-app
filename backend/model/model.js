@@ -71,14 +71,14 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     product_shape: {
-        type: String 
+        type: String
     },
     creation_datetime: {
         type: Date
     },
     reviews:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Reviews"        
+        ref: "Reviews"
     }],
     product_lines:[{
         product_line_name: {
@@ -99,18 +99,18 @@ const productSchema = new mongoose.Schema({
 
 const cartSchema = new mongoose.Schema({
     user_id:{
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
     cart_line : [{
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Cart_line"
     }]
 }, {versionKey: false})
 
 const cart_lineSchema = new mongoose.Schema({
     cart_id:{
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Cart"
     },
     has_customized: {
@@ -134,7 +134,7 @@ const cart_lineSchema = new mongoose.Schema({
 
 const customizeSchema = new mongoose.Schema({
     product_id:{
-      type: mongoose.Schema.Types.ObjectId, 
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Product"
     },
     frame_color:String,
@@ -193,7 +193,7 @@ orderSchema.pre('save', function (next) {
 
 const invoiceSchema = new mongoose.Schema({
     order_id:[{
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Order"
     }],
     creation_datetime:{
@@ -205,7 +205,7 @@ const invoiceSchema = new mongoose.Schema({
         required: true
     },
     payment_id:{
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Payment"
     },
     payment_status:{
@@ -231,7 +231,7 @@ const paymentSchema = new mongoose.Schema({
 
 const shippingSchema = new mongoose.Schema({
     invoice_id: {
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Invoice"
     },
     tracking_number:{
@@ -350,9 +350,9 @@ let Order = mongoose.model("Order", orderSchema)
 let Invoice = mongoose.model("Invoice", invoiceSchema)
 let Payment = mongoose.model("Payment", paymentSchema)
 let Shipping = mongoose.model("Shipping", shippingSchema)
-let Reviews = mongoose.model("Reviews", reviewsSchema)
+let Review = mongoose.model("Review", reviewsSchema)
 let Temporary_user = mongoose.model("Temporary_user", temporaryUserSchema)
 
-module.exports = { User,Product, Cart, Cart_line, Customize, 
-    Order, Invoice, Payment, Shipping, Reviews,Temporary_user
+module.exports = { User,Product, Cart, Cart_line, Customize,
+    Order, Invoice, Payment, Shipping, Review, Temporary_user
 }
