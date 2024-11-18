@@ -1,10 +1,13 @@
 button#filter-btn {
+  width: 50%;
+
   span {
     font-size: 1.2rem;
     font-weight: 500;
   }
 
   img {
+    width: 1em;
     rotate: 180deg;
     transition: 0.5s ease-in-out;
   }
@@ -50,6 +53,7 @@ display: grid;
     }
 
     img {
+      width: 1em;
       rotate: 180deg;
       transition: 0.5s ease-in-out;
     }
@@ -67,7 +71,7 @@ display: grid;
     div {
       overflow: hidden;
 
-      div{
+      div {
         font-size: 1.2rem;
         font-weight: 300;
       }
@@ -79,6 +83,9 @@ display: grid;
   }
 }
 
+.card {
+  width: 31%;
+}
 
 p.name {
   font-weight: 400;
@@ -120,4 +127,39 @@ button.seemore {
 button.seemore:hover {
   color: #ffffff;
   background-color: #D96E05;
+}
+
+@media (max-width: 992px)
+{
+  button#filter-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px)
+{
+  button#filter-btn {
+    width: 100%;
+  }
+
+  div#filter {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: 0.5s ease-in-out;
+
+    div {
+      overflow: hidden;
+    }
+  }
+
+  div#filter.close {
+    grid-template-rows: 0fr;
+  }
+}
+
+@media (max-width: 576px)
+{
+  .xs {
+    width: 45%;
+  }
 }

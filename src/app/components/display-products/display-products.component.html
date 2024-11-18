@@ -1,41 +1,30 @@
 <div class="container">
-  <div class="row">
-    <!-- Navigation tree and current display option-->
-    <div class="col-3">
+  <div class="row row-cols-1 row-cols-lg-2">
+    <!-- Current display option-->
+    <div class="col col-lg-3 order-lg-1 order-2">
       <div class="d-flex flex-column">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-          <ol class="breadcrumb navigation-tree">
-            <li class="breadcrumb-item">
-              <a href="">Home</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-              {{filterName}} {{productName}}
-            </li>
-          </ol>
-        </nav>
-
         <p class="catalog-title">{{filterName}} {{productName}}</p>
       </div>
 
       <!-- Show or hide filter button -->
-      <button class="btn d-flex flex-row align-items-center w-50 border-0 p-0" (click)="filterClose = !filterClose" id="filter-btn">
+      <button class="btn d-flex flex-row align-items-center border-0 p-0" (click)="filterClose = !filterClose" id="filter-btn">
         <span class="flex-grow-1 text-start">Filter</span>
-        <img src="Icons/arrow.svg" alt="" class="flex-shrink-0" [ngClass]="filterClose ? '' : 'rotate'">
+        <img src="Icons/arrow.svg" alt="" [ngClass]="filterClose ? '' : 'rotate'">
       </button>
     </div>
 
     <!-- Promo image -->
-    <div class="col">
+    <div class="col col-lg-9 order-lg-2 order-1">
       <img src="Images/catalog-promo.png" alt="" class="w-100 h-100">
     </div>
   </div>
 
   <!-- Filter sidebar -->
   <div class="row mt-2">
-    <div class="col-3 p-0 close" id="filter" [ngClass]="{'close' : filterClose}">
+    <div class="col-12 col-md-3 p-0 close" id="filter" [ngClass]="{'close' : filterClose}">
       <div class="container options">
         <!-- Expand shape button -->
-        <button class="btn d-flex flex-row align-items-center border-0 text-start px-0 option-btn" (click)="shapeExpand = !shapeExpand">
+        <button class="btn d-flex flex-row align-items-center border-0 text-start px-0" (click)="shapeExpand = !shapeExpand">
           <span class="flex-grow-1">Shape</span>
           <img src="Icons/arrow.svg" alt="" [ngClass]="{'rotate' : shapeExpand}">
         </button>
@@ -87,11 +76,13 @@
       </div>
     </div>
 
+    <div class="d-md-none w-100"></div>
+
     <!-- Display product -->
     <div class="col">
       <div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
         <!-- NgFor to populate display with cards of product -->
-        <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of displayedProducts">
+        <div class="card mb-2 border-0 xs" *ngFor="let product of displayedProducts">
           <a [routerLink]="['/' + routeBaseUrl, product._id]" class="product" style="height: 100%;">
             <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
