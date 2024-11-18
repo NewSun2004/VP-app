@@ -18,5 +18,5 @@ export const routes: Routes = [
   {path : "accessories", component : DisplayProductsComponent},
   {path : "accessories/:productId", component : ProductDetailsComponent},
   {path : "contacts", component : ContactComponent},
-  {path : "**", component : PageNotFoundComponent}
+  {path : "**", component : PageNotFoundComponent},
 ];
