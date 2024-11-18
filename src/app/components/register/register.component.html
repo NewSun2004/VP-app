@@ -1,0 +1,123 @@
+<div class="frame-container">
+  <div class="content-container" align="left">
+    <h2 class="title">SIGN UP</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- First Name and Last Name -->
+      <div class="form-row">
+        <div class="form-group" align="left">
+          <label for="first_name">First name</label>
+          <input
+            id="first_name"
+            type="text"
+            formControlName="first_name"
+            placeholder="First name"
+            [class.error]="registerForm.get('first_name')?.invalid && registerForm.get('first_name')?.touched"
+          />
+          <small [ngClass]="{'visible': registerForm.get('first_name')?.errors && registerForm.get('first_name')?.touched}">
+            {{ getErrorMessage('first_name') }}
+          </small>
+        </div>
+        <div class="form-group" align="left">
+          <label for="last_name">Last name</label>
+          <input
+            id="last_name"
+            type="text"
+            formControlName="last_name"
+            placeholder="Last name"
+            [class.error]="registerForm.get('last_name')?.invalid && registerForm.get('last_name')?.touched"
+          />
+          <small [ngClass]="{'visible': registerForm.get('last_name')?.errors && registerForm.get('last_name')?.touched}">
+            {{ getErrorMessage('last_name') }}
+          </small>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group" align="left">
+        <label for="user_email">Email address</label>
+        <input
+          id="user_email"
+          type="email"
+          formControlName="user_email"
+          placeholder="Email address"
+          [class.error]="registerForm.get('user_email')?.invalid && registerForm.get('user_email')?.touched"
+        />
+        <small [ngClass]="{'visible': registerForm.get('user_email')?.errors && registerForm.get('user_email')?.touched}">
+          {{ getErrorMessage('user_email') }}
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group password-group" align="left">
+        <label for="user_password">Password</label>
+        <div class="password-container">
+          <input
+            id="user_password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="user_password"
+            placeholder="Password"
+            [class.error]="registerForm.get('user_password')?.invalid && registerForm.get('user_password')?.touched"
+          />
+          <button
+            type="button"
+            class="toggle-visibility"
+            (click)="togglePasswordVisibility('password')"
+          >
+            {{ passwordVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        <small [ngClass]="{'visible': registerForm.get('user_password')?.errors && registerForm.get('user_password')?.touched}">
+          {{ getErrorMessage('user_password') }}
+        </small>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group password-group" align="left">
+        <label for="confirmPassword">Confirm password</label>
+        <div class="password-container">
+          <input
+            id="confirmPassword"
+            [type]="confirmPasswordVisible ? 'text' : 'password'"
+            formControlName="confirmPassword"
+            placeholder="Confirm password"
+            [class.error]="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
+          />
+          <button
+            type="button"
+            class="toggle-visibility"
+            (click)="togglePasswordVisibility('confirm')"
+          >
+            {{ confirmPasswordVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        <small [ngClass]="{'visible': registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched}">
+          {{ getErrorMessage('confirmPassword') }}
+        </small>
+      </div>
+
+      <!-- Terms and Conditions -->
+      <div class="form-group checkbox-group" align="left">
+        <input id="agreeTerms" type="checkbox" formControlName="agreeTerms" />
+        <label for="agreeTerms" class="element">
+          I agree to our&nbsp;<a href="#">Terms of Use</a>&nbsp;and&nbsp;<a href="#">Privacy Policy</a>
+        </label>
+      </div>
+
+      <!-- Submit Button and Login Link -->
+      <div class="form-footer">
+        <button type="submit" [disabled]="registerForm.invalid" class="submit-button">
+          Sign up
+        </button>
+        <p class="login-link">
+          Already have an account? <a href="http://localhost:4200/login">Sign in</a>
+        </p>
+      </div>
+    </form>
+    <div *ngIf="popupMessage" class="popup visible">
+      <div class="popup-content">
+        <p>{{ popupMessage }}</p>
+        <button (click)="closePopup()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

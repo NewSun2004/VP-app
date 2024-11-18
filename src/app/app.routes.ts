@@ -6,9 +6,13 @@ import { CustomizeComponent } from './components/customize/customize.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
   {path : "", component : HomepageComponent},
+  {path : "register", component: RegisterComponent},
+  {path : "login", component: LoginComponent},
   {path : "aboutus", component : AboutUsComponent},
   {path : "eyeglasses", component : DisplayProductsComponent},
   {path : "eyeglasses/:productId", component : ProductDetailsComponent},

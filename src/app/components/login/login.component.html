@@ -1,0 +1,69 @@
+<div class="frame-container">
+  <div class="content-container" align="left">
+    <h2 class="title">SIGN IN</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Email -->
+      <div class="form-group" align="left">
+        <label for="user_email">Email address</label>
+        <input
+          id="user_email"
+          type="email"
+          formControlName="user_email"
+          placeholder="Email address"
+          [class.error]="loginForm.get('user_email')?.invalid && loginForm.get('user_email')?.touched"
+        />
+        <small [ngClass]="{'visible': loginForm.get('user_email')?.errors && loginForm.get('user_email')?.touched}">
+          {{ getErrorMessage('user_email') }}
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group password-group" align="left">
+        <label for="user_password">Password</label>
+        <div class="password-container">
+          <input
+            id="user_password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="user_password"
+            placeholder="Password"
+          />
+          <button
+            type="button"
+            class="toggle-visibility"
+            (click)="togglePasswordVisibility()"
+          >
+            {{ passwordVisible ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Remember Me and Forgot Password -->
+      <div class="form-group checkbox-group" align="left">
+        <label>
+          <input id="rememberMe" type="checkbox" formControlName="rememberMe" />
+          Remember me
+        </label>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-footer">
+        <button type="submit" [disabled]="loginForm.invalid" class="submit-button">
+          SIGN IN
+        </button>
+      </div>
+    </form>
+
+    <!-- Popup Error -->
+    <div class="popup" *ngIf="popupMessage">
+      <div class="popup-content">
+        <p>{{ popupMessage }}</p>
+        <button (click)="closePopup()">OK</button>
+      </div>
+    </div>
+
+    <p style="text-align: center; margin-top: 10px; font-size: 0.875rem;">
+      Do you have an account? <a href="http://localhost:4200/register">Sign up</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,248 @@
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: start; /* Không căn giữa hoàn toàn mà chỉ căn giữa ngang */
+  min-height: 100vh; /* Đảm bảo nội dung body tối thiểu chiếm chiều cao màn hình */
+  box-sizing: border-box;
+  padding-top: 2.5rem; /* 40px = 2.5rem */
+}
+
+.frame-container {
+  width: 32.5rem; /* 520px = 32.5rem */
+  height: 42.5rem; /* 680px = 42.5rem */
+  border: 0.07rem solid #d8cece; /* 2px = 0.125rem */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  margin: 2rem auto; /* Chỉ phần này sử dụng margin */
+  padding: 1.25rem; /* 20px = 1.25rem */
+}
+
+.content-container {
+  width: 25.625rem; /* 410px */
+  display: flex;
+  padding: 1rem; /* Thay thế margin trong nội dung */
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.title {
+  font-size: 1.625rem; /* 32px */
+  color: #333333;
+  padding-bottom: 1.25rem; /* Thay margin-bottom bằng padding */
+  text-align: center;
+}
+
+.form-row {
+  display: flex;
+  gap: 0.9375rem; /* 15px */
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1.25rem; /* Thay margin-bottom bằng padding */
+}
+
+label {
+  font-size: 1rem; /* 16px */
+  color: #666666;
+  padding-bottom: 0.3125rem; /* Thay margin-bottom bằng padding */
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  width: 100%;
+  height: 3rem; /* 48px */
+  padding: 0.625rem; /* 10px */
+  border: 0.0625rem solid #666666; /* 1px */
+  border-radius: 0.3125rem; /* 5px */
+  font-size: 0.875rem; /* 14px */
+  color: #333333;
+  box-sizing: border-box;
+}
+
+input.error {
+  border: 0.0625rem solid red; /* 1px */
+}
+
+small {
+  font-size: 0.75rem; /* 12px */
+  padding-left: 0.5rem;
+  padding-top:0.3rem;
+  color: red; /* Màu chữ lỗi */
+  height: 1rem; /* Luôn chiếm không gian cố định */
+  line-height: 1rem; /* Căn chữ giữa chiều cao */
+  display: block; /* Duy trì block layout */
+  visibility: hidden; /* Ẩn nội dung nhưng vẫn giữ không gian */
+  transition: visibility 0.2s, opacity 0.2s ease-in-out; /* Hiệu ứng chuyển đổi khi hiện lỗi */
+}
+
+small.visible {
+  visibility: visible; /* Hiển thị nội dung */
+  opacity: 1; /* Đảm bảo hiệu ứng fade-in */
+}
+
+
+.password-group {
+  position: relative;
+}
+
+.password-container {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-visibility {
+  position: absolute;
+  right: 0.625rem; /* 10px */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #666666;
+  font-size: 0.875rem; /* 14px */
+  cursor: pointer;
+}
+
+.toggle-visibility:hover {
+  color: #000000;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  padding-bottom: 1rem; /* Thay thế margin */
+}
+
+.checkbox-group input {
+  margin: 0;
+  width: 0.875rem; /* 14px */
+  height: 0.875rem; /* 14px */
+}
+
+.checkbox-group label {
+  font-size: 0.875rem; /* 14px */
+  color: #666666;
+}
+
+.checkbox-group a {
+  text-decoration: none;
+  color: #F4950F; /* Màu chữ của link */
+  font-size: 0.875rem; /* 14px */
+  text-decoration: underline;
+}
+
+.checkbox-group a:hover {
+  text-decoration: underline;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem; /* Thay margin-top bằng padding */
+}
+
+.submit-button {
+  width: 40%;
+  height: 3rem; /* 48px */
+  /* padding: 0.625rem; 10px */
+  font-size: 1rem; /* 16px */
+  background-color: #f5f5f5;
+  color: #ccc;
+  border: 0.0625rem solid #ddd; /* 1px */
+  border-radius: 0.25rem; /* 4px */
+  cursor: not-allowed;
+  font-weight: bold;
+}
+
+.submit-button:enabled {
+  background-color: #333333;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-button:enabled:hover {
+  background-color: #000000;
+}
+
+.login-link {
+  font-size: 0.875rem; /* 14px */
+  color: #666666;
+  text-align: center;
+  padding-top: 0.9375rem; /* 15px */
+}
+
+.login-link a {
+  font-size: 0.875rem; /* 14px */
+  color: #F4950F;
+  text-decoration: underline;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+/* Popup container */
+.popup {
+  position: fixed; /* Cố định popup trên màn hình */
+  top: 50%; /* Căn giữa theo chiều dọc */
+  left: 50%; /* Căn giữa theo chiều ngang */
+  transform: translate(-50%, -50%); /* Dịch chuyển để căn giữa */
+  background-color: #fff; /* Màu nền */
+  border: 0.0625rem solid #ddd; /* Đường viền nhẹ (1px = 0.0625rem) */
+  border-radius: 0.5rem; /* Bo góc (8px = 0.5rem) */
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng (4px = 0.25rem, 10px = 0.625rem) */
+  padding: 1.25rem; /* Khoảng cách bên trong (20px = 1.25rem) */
+  z-index: 1000; /* Đảm bảo popup luôn hiển thị trên các thành phần khác */
+  visibility: hidden; /* Ẩn mặc định */
+  opacity: 0; /* Ẩn bằng độ mờ */
+  display: flex; /* Sử dụng flexbox cho nội dung */
+  flex-direction: column; /* Sắp xếp nội dung theo cột */
+  align-items: center; /* Căn giữa nội dung theo chiều ngang */
+  transition: visibility 0.2s, opacity 0.2s ease-in-out; /* Hiệu ứng mượt khi hiện/ẩn */
+}
+
+/* Hiển thị popup */
+.popup.visible {
+  visibility: visible; /* Hiển thị */
+  opacity: 1; /* Hiển thị với độ mờ */
+}
+
+/* Nội dung popup */
+.popup-content {
+  text-align: center; /* Căn giữa nội dung văn bản */
+}
+
+/* Văn bản trong popup */
+.popup-content p {
+  font-size: 0.875rem; /* Cỡ chữ (14px = 0.875rem) */
+  color: #333; /* Màu chữ */
+  margin-bottom: 1.25rem; /* Khoảng cách dưới (20px = 1.25rem) */
+}
+
+/* Nút đóng popup */
+.popup-content button {
+  padding: 0.625rem 1.25rem; /* Khoảng cách bên trong (10px = 0.625rem, 20px = 1.25rem) */
+  background-color: #333; /* Màu nền nút */
+  color: #fff; /* Màu chữ */
+  border: none; /* Xóa viền */
+  border-radius: 0.25rem; /* Bo góc (4px = 0.25rem) */
+  cursor: pointer; /* Con trỏ chuột */
+}
+
+.popup-content button:hover {
+  background-color: #000; /* Đổi màu khi hover */
+}
+
