@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service'; // Adjust path as necessary
-import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { take, map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,11 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    return this.authService.isLoggedIn().pipe(
+    // Directly subscribe to the BehaviorSubject and take the first emitted value
+    return this.authService.loggedInSubject.pipe(
+      take(1), // Take only the first value emitted
       map((isLoggedIn: boolean) => {
+        console.log(isLoggedIn)
         if (isLoggedIn) {
           return true; // Allow access if logged in
         } else {
@@ -23,7 +26,7 @@ export class AuthGuard implements CanActivate {
       catchError(() => {
         // Handle any errors (e.g., network issues)
         this.router.navigate(['/login']); // Redirect to login in case of error
-        return [false]; // Deny access
+        return of(false); // Deny access
       })
     );
   }

@@ -55,8 +55,31 @@
       </div>
 
       <div class="col-5 text-end">
-        <div class="d-flex justify-content-end align-items-center">
-          <a [routerLink]="['/login']" class="me-3 manage">Account</a>
+        <div class="d-flex justify-content-end align-items-center" *ngIf="!isLoggedIn">
+          <a [routerLink]="['/login']" class="me-3 manage">Sign in</a>
+          <a [routerLink]="['/register']" class="me-3 manage">Sign up</a>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center" *ngIf="isLoggedIn">
+          <div class="dropdown hide-after manage">
+            <a class="p-0 ms-0 my-0 me-3" id="account" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Account
+            </a>
+
+            <ul class="dropdown-menu dropdown-font" aria-labelledby="account">
+              <li>
+                <button class="btn dropdown-item">My Account</button>
+              </li>
+
+              <li>
+                <button class="btn dropdown-item">My Order</button>
+              </li>
+
+              <li>
+                <button class="btn dropdown-item" (click)="logOut()">Log Out</button>
+              </li>
+            </ul>
+          </div>
           <a [routerLink]="['/cart']" class="me-2 manage">Cart</a>
           <img src="Icons/shopping-bag.svg" alt="">
         </div>
@@ -89,7 +112,7 @@
         </div>
 
         <div class="dropdown hide-after">
-          <a class="dropdown-toggle p-0 m-0" id="eyeglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="p-0 m-0" id="eyeglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Eyeglasses
           </a>
 
@@ -126,7 +149,7 @@
         </div>
 
         <div class="dropdown hide-after">
-          <a class="dropdown-toggle p-0 m-0" id="sunglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="p-0 m-0" id="sunglasses" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Sunglasses
           </a>
 
