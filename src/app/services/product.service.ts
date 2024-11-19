@@ -10,17 +10,21 @@ import { Review } from '../interfaces/review';
 export class ProductService {
   myAPIUrl: string = 'http://localhost:3001';
 
-  products: any = [];
-  productsSbuject = new BehaviorSubject([]);
+  products: ProductDetails[] = [];
+  productsSbuject = new BehaviorSubject<ProductDetails[]>([]);
+  cartProducts =  new BehaviorSubject<{
+    product : ProductDetails,
+    product_line_index : number
+  }[]>([]);
 
   constructor(private _httpClient: HttpClient) {}
 
-  searchAllProduct(searchTerm : string) : Observable<[]>
+  searchAllProduct(searchTerm : string) : Observable<ProductDetails[]>
   {
-    return this._httpClient.get<[]>(this.myAPIUrl + "/search" + `/${searchTerm}`);
+    return this._httpClient.get<ProductDetails[]>(this.myAPIUrl + "/search" + `/${searchTerm}`);
   }
 
-  getAllProduct(routeBaseUrl : string, queryParams? : any) : Observable<[]>
+  getAllProduct(routeBaseUrl : string, queryParams? : any) : Observable<ProductDetails[]>
   {
     // Default URL
     let queryString: string = ''; // Build the query string from params if provided
@@ -29,7 +33,7 @@ export class ProductService {
     }
 
     return this._httpClient
-      .get<[]>(
+      .get<ProductDetails[]>(
         this.myAPIUrl +
           `/${routeBaseUrl}` +
           `${queryString ? '?' + queryString : ''}`

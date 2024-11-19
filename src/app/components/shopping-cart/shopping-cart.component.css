@@ -1,0 +1,9 @@
+.quantity {
+  background-color: #D9D9D9;
+  border: 0px solid #000000;
+  border-radius: 20px;
+
+  button {
+    background-color: transparent;
+  }
+}

@@ -20,6 +20,7 @@ export class ProductDetailsComponent implements OnInit{
   currentProductImageSet : any;
   currentProductImage : any;
   selectedImageOption : string = "";
+  currentProductLineIndex : number = 1;
   selectedSizeOption : string = "Medium";
 
   reviews : any;
@@ -60,6 +61,7 @@ export class ProductDetailsComponent implements OnInit{
   getCurrentProductImageSet(index : number = 0) : void
   {
     this.currentProductImageSet = this.productData.product_lines[index];
+    this.currentProductLineIndex = index;
     this.getCurrentProductImage();
   }
 
@@ -72,6 +74,16 @@ export class ProductDetailsComponent implements OnInit{
   sizeSelected(size : string)
   {
     this.selectedSizeOption = size;
+  }
+
+  addToCart() : void
+  {
+    const currentCartProducts = this._productService.cartProducts.value;
+    currentCartProducts.push({
+      product : this.productData,
+      product_line_index : this.currentProductLineIndex
+    });
+    this._productService.cartProducts.next(currentCartProducts);
   }
 
   toggleDescription() : void

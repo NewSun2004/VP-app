@@ -1,0 +1,76 @@
+<h1>My Cart</h1>
+
+<div class="row">
+  <div class="col-9">
+    <table class="table table-hover align-middle text-center">
+      <thead>
+        <tr>
+          <th scope="col">PRODUCT</th>
+          <th scope="col">PRICE</th>
+          <th scope="col">QUANTITY</th>
+          <th scope="col">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cartProduct of cartProducts">
+          <td class="text-start" scope="row">
+            <div class="row">
+              <div class="col-5">
+                <img [src]="cartProduct.product.product_lines[cartProduct.product_line_index].image_urls[1]" alt="" style="width: 60%;">
+              </div>
+
+              <div class="col">
+                <p>{{cartProduct.product.product_name}}</p>
+                <p>{{cartProduct.product.product_lines[cartProduct.product_line_index].product_line_name}}</p>
+              </div>
+            </div>
+          </td>
+
+          <td>{{cartProduct.product.product_price}}</td>
+
+          <td>
+            <div class="d-flex flex-row justify-content-center align-items-center center gap-2 quantity">
+              <button class="btn">-</button>
+              <p class="m-0">5</p>
+              <button class="btn">+</button>
+            </div>
+          </td>
+
+          <td>{{cartProduct.product.product_price * 10}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container col">
+    <h3>Summary</h3>
+    <p>Items: 2</p>
+
+    <div class="d-flex flex-row">
+      <p class="flex-grow-1">Subtotal:</p>
+      <p>$190</p>
+    </div>
+
+    <div class="d-flex flex-row">
+      <p class="flex-grow-1">Shipping Fee:</p>
+      <p>$5</p>
+    </div>
+
+    <button class="btn">
+      Apply voucher ->
+    </button>
+
+    <hr>
+
+    <div class="d-flex flex-row">
+      <p class="flex-grow-1">
+        Order Total
+      </p>
+
+      <p>$195</p>
+    </div>
+    <button class="btn btn-outline-warning" style="width: 100%;">
+      Proceed to checkout
+    </button>
+  </div>
+</div>

@@ -66,7 +66,7 @@
 
       <!-- Add to cart and buy now -->
       <div class="d-flex flex-row justify-content-between">
-        <button class="btn add">ADD TO CART</button>
+        <button class="btn add" (click)="addToCart()">ADD TO CART</button>
         <button class="btn buy">BUY NOW</button>
       </div>
     </div>
@@ -205,11 +205,11 @@
   <div class="d-flex flex-row justify-items-between gap-3">
     <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let recProduct of recommendations">
       <a  class="product" style="height: 100%;">
-        <img [src]="recProduct['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+        <img [src]="recProduct.product_lines[0].image_urls[1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
         <div class="card-body text-center">
-          <p class="card-title name">{{recProduct.name}}</p>
-          <p class="card-text price">${{recProduct.price}}.00</p>
+          <p class="card-title name">{{recProduct.product_name}}</p>
+          <p class="card-text price">${{recProduct.product_price}}.00</p>
         </div>
       </a>
     </div>
