@@ -12,6 +12,7 @@ const app = express();
 const categoryRoute = require("./routes/category");
 const userRoute = require("./routes/user");
 const tempUserRoute = require("./routes/temporary_user");
+const cartRoute = require("./routes/cart");
 const { Product, Review } = require("./model/model");
 
 // Kết nối MongoDB
@@ -55,6 +56,7 @@ app.use(
 app.use('/category', categoryRoute);
 app.use('/user', userRoute);
 app.use('/register-temp', tempUserRoute);
+app.use('/cart', cartRoute);
 
 // Endpoint kiểm tra server
 app.get('/', (req, res) => {
@@ -189,17 +191,17 @@ async function fetchProductsData(category, req, res)
               switch (key)
               {
                   case "shape":
-                      expression["shape"] = {
+                      expression["product_shape"] = {
                           $in : filters
                       };
                       break;
                   case "material":
-                      expression["material"] = {
+                      expression["Product_material"] = {
                           $in : filters
                       };
                       break;
                   default:
-                      expression["gender"] = {
+                      expression["product_gender"] = {
                           $in : filters.map(filter => filter.toLowerCase())
                       };
                       break;

@@ -29,7 +29,6 @@ export class HeaderComponent implements OnInit{
     this._authService.isLoggedIn().subscribe({
       next : inSession => {
         this.isLoggedIn = inSession;
-        console.log(inSession);
       }
     });
   }

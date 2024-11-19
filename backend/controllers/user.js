@@ -45,25 +45,29 @@ const userController = {
         });
       }
 
-      res.status(200).json({ message: "Login successful." });
+      res.status(200).json(user);
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: "Error logging in." });
     }
   },
-  logout: async (req, res) => {
-    // Reset the session user to default (null or an empty object)
-    req.session.user = null;
-
-    // Save the session after resetting the user data
-    req.session.save(err => {
+  getSession: async (req, res) => {
+    if (req.session.user) {
+      return res.status(200).json(req.session.user); // Return session user data
+    } else {
+      return res.status(401).json({ message: 'No active session' }); // No session found
+    }
+  },
+  logOut: async (req, res) => {
+    req.session.destroy((err) => {
       if (err) {
-        return res.status(500).json({ message: "Failed to log out." });
+        console.error('Error destroying session:', err);
+        return res.status(500).send({ success: false, message: 'Failed to log out.' });
       }
-      res.status(200).json({ message: 'Logout successful.' });
+      res.clearCookie('connect.sid'); // Clear the session cookie
+      res.send({ success: true, message: 'Logged out successfully.' });
     });
   },
-
   forgotPassword: async (req, res) =>{
     try {
       const { email } = req.body;

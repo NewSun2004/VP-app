@@ -44,8 +44,9 @@ export class LoginComponent {
   onSubmit(): void {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
-        next: () => {
+        next: currentUser => {
           this.router.navigate(['/']);
+          this.authService.currentUser = currentUser;
         },
         error: (err: any) => {
           const message = err.error?.message || 'An error occurred. Please try again!';

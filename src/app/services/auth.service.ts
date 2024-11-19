@@ -8,42 +8,62 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class AuthService {
   private readonly baseUrl = 'http://localhost:3001';
-  loggedInSubject = new BehaviorSubject<boolean>(false); // Declare BehaviorSubject
+  loggedInSubject = new BehaviorSubject<boolean>(false); // BehaviorSubject to track login state
+  currentUser : any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.checkSession().subscribe({});
+  }
 
-  // Login method
-  login(credentials: { user_email: string; user_password: string; rememberMe: boolean }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/user/login`, credentials, { withCredentials: true }).pipe(
-      map(() => {
-        this.loggedInSubject.next(true); // Update BehaviorSubject when login is successful
-        return true;
+  // Method to check session on the server
+  checkSession(): Observable<boolean> {
+    return this.http.get<{ user: any }>(`${this.baseUrl}/user/session`, { withCredentials: true }).pipe(
+      map((response) => {
+        if (response) {
+          this.loggedInSubject.next(true); // User session exists, update BehaviorSubject
+          this.currentUser = response;
+          return true;
+        } else {
+          this.loggedInSubject.next(false); // No session, update BehaviorSubject
+          return false;
+        }
       }),
       catchError(() => {
-        this.loggedInSubject.next(false); // If login fails, set to false
+        this.loggedInSubject.next(false); // Handle errors as no session
         return of(false);
       })
     );
   }
 
-  // Check if the user is logged in by validating the server-side session
-  isLoggedIn(): Observable<boolean> {
-    return this.loggedInSubject.asObservable(); // Return the current value of loggedInSubject as an observable
-  }
-
-  // Logout method to end the server-side session
-  logout(): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/user/logout`, {}, { withCredentials: true }).pipe(
-      map(() => {
-        // Update loggedInSubject to false after a successful logout response
-        this.loggedInSubject.next(false);
+  // Login method
+  login(credentials: { user_email: string; user_password: string; rememberMe: boolean }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/user/login`, credentials, { withCredentials: true }).pipe(
+      map((user) => {
+        this.loggedInSubject.next(true); // Login successful, update BehaviorSubject
+        return user;
       }),
-      catchError((error) => {
-        console.error('Logout error:', error); // Log the error if needed
-        this.loggedInSubject.next(false); // Ensure loggedInSubject is also set to false in case of error
-        return of(void 0); // Return an empty observable to continue the stream
+      catchError(() => {
+        this.loggedInSubject.next(false); // Login failed, update BehaviorSubject
+        return of(false);
       })
     );
   }
 
+  // Observable for login state
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedInSubject.asObservable(); // Expose login state as observable
+  }
+
+  // Logout method to end the session
+  logout(): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/user/logout`, {}, { withCredentials: true }).pipe(
+      map(() => {
+        this.loggedInSubject.next(false); // Logout successful, update BehaviorSubject
+      }),
+      catchError(() => {
+        this.loggedInSubject.next(false); // Ensure state is false even if logout fails
+        return of(void 0);
+      })
+    );
+  }
 }

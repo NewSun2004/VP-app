@@ -22,15 +22,11 @@ export class ShoppingCartComponent implements OnInit{
   constructor(private _productService : ProductService) {}
 
   ngOnInit() : void {
-    this._productService.cartProducts.subscribe({
-      next : cartProducts => {
-        this.cartProducts = cartProducts;
-      }
-    })
+
   }
 
   plusQuantity(product : any) : void
   {
-    this.cartProducts[this.cartProducts.findIndex(product)].quantity += 1;
+
   }
 }

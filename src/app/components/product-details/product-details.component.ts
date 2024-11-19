@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductDetails } from '../../interfaces/product-details';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-product-details',
@@ -13,6 +15,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './product-details.component.css'
 })
 export class ProductDetailsComponent implements OnInit{
+  isLoggedIn : boolean = false;
+
   showDescription : boolean = true;
   showPolicy : boolean = false;
   disableSeeMore : boolean = false;
@@ -34,9 +38,15 @@ export class ProductDetailsComponent implements OnInit{
   starIndex : Array<number> = [1, 2, 3, 4, 5];
   recommendations : any;
 
-  constructor (private _productService : ProductService, private _router : Router) { }
+  constructor (private _authService : AuthService, private _productService : ProductService, private _cartService : CartService, private _router : Router) { }
 
   ngOnInit(): void {
+    this._authService.isLoggedIn().subscribe({
+      next : inSession => {
+        this.isLoggedIn = inSession;
+      }
+    })
+
     this._productService.getProduct(this._router.url.split("/")[2]).subscribe({
       next : productData => {
         this.productData = productData;
@@ -107,13 +117,22 @@ export class ProductDetailsComponent implements OnInit{
 
   addToCart() : void
   {
-    const currentCartProducts = this._productService.cartProducts.value;
-    currentCartProducts.push({
-      product : this.productData,
-      product_line_index : this.currentProductLineIndex,
-      quantity : this.selectedQuantity
-    });
-    this._productService.cartProducts.next(currentCartProducts);
+    if (this.isLoggedIn)
+    {
+      const cart_line = {
+        _id : "",
+        cart_id : this._authService.currentUser.cart,
+        has_customized : false,
+        product_id : this.productData._id,
+        quantity : this.selectedQuantity
+      }
+
+      this._cartService.insertCartLine(cart_line);
+    }
+    else
+    {
+      this._router.navigate(["/login"]);
+    }
   }
 
   toggleDescription() : void
