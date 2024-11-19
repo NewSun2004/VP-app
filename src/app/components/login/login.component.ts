@@ -1,36 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'], 
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
   passwordVisible = false;
-  popupMessage: string | null = null; // Nội dung của popup lỗi
+  popupMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
       user_email: ['', [Validators.required, Validators.email]],
       user_password: ['', [Validators.required]],
-      rememberMe: [false], // Checkbox Remember Me
+      rememberMe: [false],
     });
   }
 
-  // Toggle password visibility
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
   }
 
-  // Get error message for email field
   getErrorMessage(controlName: string): string {
     const control = this.loginForm.get(controlName);
     if (control?.errors) {
@@ -44,12 +41,10 @@ export class LoginComponent {
     return '';
   }
 
-  // Handle form submission
   onSubmit(): void {
     if (this.loginForm.valid) {
-      this.http.post('http://localhost:3001/user/login', this.loginForm.value, { withCredentials: true }).subscribe({
+      this.authService.login(this.loginForm.value).subscribe({
         next: () => {
-          // Đăng nhập thành công
           this.router.navigate(['/']);
         },
         error: (err: any) => {
@@ -68,12 +63,10 @@ export class LoginComponent {
     }
   }
 
-  // Show popup with a message
   showPopup(message: string): void {
     this.popupMessage = message;
   }
 
-  // Close popup
   closePopup(): void {
     this.popupMessage = null;
   }

@@ -26,17 +26,17 @@
             </div>
           </td>
 
-          <td>{{cartProduct.product.product_price}}</td>
+          <td>${{cartProduct.product.product_price}}</td>
 
           <td>
-            <div class="d-flex flex-row justify-content-center align-items-center center gap-2 quantity">
-              <button class="btn">-</button>
-              <p class="m-0">5</p>
-              <button class="btn">+</button>
+            <div class="d-flex flex-row justify-content-center align-items-center gap-2 quantity">
+              <button>-</button>
+              <p class="m-0">{{cartProduct.quantity}}</p>
+              <button (click)="plusQuantity(cartProduct)">+</button>
             </div>
           </td>
 
-          <td>{{cartProduct.product.product_price * 10}}</td>
+          <td>${{cartProduct.product.product_price * cartProduct.quantity}}</td>
         </tr>
       </tbody>
     </table>

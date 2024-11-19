@@ -51,6 +51,16 @@
         <p class="ms-1 me-0 my-0 promo">30% Off $60+ | CODE: VPEVENT</p>
       </div>
 
+      <!-- Quanity plus and minus button group and -->
+      <div class="d-flex flex-row justify-content-start align-items-center gap-2 quantity">
+        <button (click)="minusQuantity()">-</button>
+        <input inputmode="numeric" [(ngModel)]="selectedQuantity" type="number" name="" id="">
+        <button (click)="plusQuantity()">+</button>
+      </div>
+
+      <!-- Stock display -->
+       <p>Stock: {{productData.stock}}</p>
+
       <!-- Color options -->
       <div class="d-flex flex-row justify-content-start gap-3 w-25">
         <button class="border-0 bg-transparent p-0" *ngFor="let item of productData.product_lines, let i = index" (click)="getCurrentProductImageSet(i)">

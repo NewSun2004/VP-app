@@ -84,6 +84,32 @@ div.product-interaction {
     color: #D96E05;
   }
 
+  .quantity {
+    button {
+      background-color: transparent;
+      padding: 0px 10px;
+      border: none;
+    }
+
+    button:active {
+      border: 1px solid #000000;
+      border-radius: 25px;
+    }
+  }
+
+  input {
+    width: 5%;
+    text-align: center;
+    border: none;
+    background-color: transparent;
+  }
+
+  input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
   div.btn-group-size {
     button {
       font-size: 0.7rem;

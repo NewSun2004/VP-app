@@ -14,7 +14,8 @@ export class ProductService {
   productsSbuject = new BehaviorSubject<ProductDetails[]>([]);
   cartProducts =  new BehaviorSubject<{
     product : ProductDetails,
-    product_line_index : number
+    product_line_index : number,
+    quantity : number
   }[]>([]);
 
   constructor(private _httpClient: HttpClient) {}

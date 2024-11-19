@@ -3,11 +3,12 @@ import { ProductService } from './../../services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductDetails } from '../../interfaces/product-details';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
@@ -19,6 +20,7 @@ export class ProductDetailsComponent implements OnInit{
   productData : any;
   currentProductImageSet : any;
   currentProductImage : any;
+  selectedQuantity : number = 1;
   selectedImageOption : string = "";
   currentProductLineIndex : number = 1;
   selectedSizeOption : string = "Medium";
@@ -71,6 +73,33 @@ export class ProductDetailsComponent implements OnInit{
     this.selectedImageOption = `button ${index}`;
   }
 
+  plusQuantity() : void
+  {
+    const nextValue = this.selectedQuantity + 1;
+    if (this.quantityCheck(nextValue))
+    {
+      this.selectedQuantity += 1;
+    }
+  }
+
+  minusQuantity() : void
+  {
+    const nextValue = this.selectedQuantity - 1;
+    if (this.quantityCheck(nextValue))
+    {
+      this.selectedQuantity -= 1;
+    }
+  }
+
+  quantityCheck(nextQuantity : number) : boolean
+  {
+    if (1 <= nextQuantity && nextQuantity <= this.productData.stock)
+    {
+      return true;
+    }
+    return false;
+  }
+
   sizeSelected(size : string)
   {
     this.selectedSizeOption = size;
@@ -81,7 +110,8 @@ export class ProductDetailsComponent implements OnInit{
     const currentCartProducts = this._productService.cartProducts.value;
     currentCartProducts.push({
       product : this.productData,
-      product_line_index : this.currentProductLineIndex
+      product_line_index : this.currentProductLineIndex,
+      quantity : this.selectedQuantity
     });
     this._productService.cartProducts.next(currentCartProducts);
   }

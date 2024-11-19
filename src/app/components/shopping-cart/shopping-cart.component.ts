@@ -13,8 +13,11 @@ import { CommonModule } from '@angular/common';
 export class ShoppingCartComponent implements OnInit{
   cartProducts : {
     product : ProductDetails,
-    product_line_index : number
+    product_line_index : number,
+    quantity : number
   }[] = [];
+  totalPrice : number = 0;
+  totalOrder : number = 0;
 
   constructor(private _productService : ProductService) {}
 
@@ -22,9 +25,12 @@ export class ShoppingCartComponent implements OnInit{
     this._productService.cartProducts.subscribe({
       next : cartProducts => {
         this.cartProducts = cartProducts;
-        console.log(this.cartProducts);
       }
     })
+  }
 
+  plusQuantity(product : any) : void
+  {
+    this.cartProducts[this.cartProducts.findIndex(product)].quantity += 1;
   }
 }
