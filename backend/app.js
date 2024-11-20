@@ -13,6 +13,7 @@ const categoryRoute = require("./routes/category");
 const userRoute = require("./routes/user");
 const tempUserRoute = require("./routes/temporary_user");
 const cartRoute = require("./routes/cart");
+const productRoute = require("./routes/product");
 const { Product, Review } = require("./model/model");
 
 // Kết nối MongoDB
@@ -57,6 +58,7 @@ app.use("/category", categoryRoute);
 app.use("/user", userRoute);
 app.use("/register-temp", tempUserRoute);
 app.use("/cart", cartRoute);
+app.use("/product", productRoute);
 
 // Endpoint kiểm tra server
 app.get("/", (req, res) => {
@@ -120,6 +122,44 @@ async function importData() {
     console.error("Error importing data:", err.stack);
   }
 }
+async function updateBestSellers() {
+  console.log("Starting best-seller update...");
+  try {
+    const products = await Product.find();
+    console.log(`Found ${products.length} products`);
+
+    for (const product of products) {
+      // Lấy tổng số lượng review của sản phẩm
+      const totalReviewsCount = await Review.countDocuments({
+        product_id: product._id,
+      });
+
+      // Đếm số lượng review với rating là 5
+      const fiveStarReviewsCount = await Review.countDocuments({
+        product_id: product._id,
+        rating: 5,
+      });
+
+      // Nếu tất cả review đều 5 sao, là best-seller
+      const isBestSeller =
+        totalReviewsCount > 0 && totalReviewsCount === fiveStarReviewsCount;
+
+      // Cập nhật `is_best_seller` trong cơ sở dữ liệu
+      await Product.updateOne(
+        { _id: product._id },
+        { is_best_seller: isBestSeller }
+      );
+
+      console.log(
+        `Product ${product.product_name} updated to is_best_seller: ${isBestSeller}`
+      );
+    }
+
+    console.log("Best-seller update completed.");
+  } catch (error) {
+    console.error("Error updating best-sellers:", error);
+  }
+}
 
 // Khởi động server và nhập dữ liệu nếu cần
 (async () => {
@@ -129,7 +169,10 @@ async function importData() {
   if (process.env.IMPORT_DATA === "true") {
     await importData();
   }
-
+  // Kiểm tra flag UPDATE_BEST_SELLERS trong .env
+  if (process.env.UPDATE_BEST_SELLERS === "true") {
+    await updateBestSellers();
+  }
   app.listen(3001, () => {
     console.log("Server is running on port 3001");
   });
