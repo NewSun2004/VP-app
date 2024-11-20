@@ -86,7 +86,7 @@ const productSchema = new mongoose.Schema(
     reviews: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Reviews",
+        ref: "Review",
       },
     ],
     product_lines: [
@@ -104,6 +104,10 @@ const productSchema = new mongoose.Schema(
     stock: {
       type: Number,
       required: true,
+    },
+    is_best_seller: {
+      type: Boolean,
+      default: false,
     },
   },
   { versionKey: false }

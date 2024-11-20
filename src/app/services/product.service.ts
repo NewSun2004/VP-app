@@ -11,22 +11,26 @@ export class ProductService {
   myAPIUrl: string = 'http://localhost:3001';
 
   products: ProductDetails[] = [];
-  productsSbuject = new BehaviorSubject<ProductDetails[]>([]);
+  productsSubject = new BehaviorSubject<ProductDetails[]>([]);
 
-  bestSellingProducts: any[] = [];
-  bestSellingProductsSubject = new BehaviorSubject<any[]>([]);
+  bestSellingProducts: ProductDetails[] = [];
+  bestSellingProductsSubject = new BehaviorSubject<ProductDetails[]>([]);
 
   constructor(private _httpClient: HttpClient) {}
 
-  searchAllProduct(searchTerm : string) : Observable<ProductDetails[]>
-  {
-    return this._httpClient.get<ProductDetails[]>(this.myAPIUrl + "/search" + `/${searchTerm}`);
+  // Tìm kiếm tất cả sản phẩm theo từ khóa
+  searchAllProduct(searchTerm: string): Observable<ProductDetails[]> {
+    return this._httpClient.get<ProductDetails[]>(
+      this.myAPIUrl + '/search' + `/${searchTerm}`
+    );
   }
 
-  getAllProduct(routeBaseUrl : string, queryParams? : any) : Observable<ProductDetails[]>
-  {
-    // Default URL
-    let queryString: string = ''; // Build the query string from params if provided
+  // Lấy tất cả sản phẩm (kèm query nếu cần)
+  getAllProduct(
+    routeBaseUrl: string,
+    queryParams?: any
+  ): Observable<ProductDetails[]> {
+    let queryString: string = '';
     if (queryParams) {
       queryString = new URLSearchParams(queryParams).toString();
     }
@@ -40,27 +44,36 @@ export class ProductService {
       .pipe(
         tap((allProducts: any) => {
           this.products = allProducts;
-          this.productsSbuject.next(allProducts);
+          this.productsSubject.next(allProducts);
         })
       );
   }
 
-  getProduct(productId : string): Observable<ProductDetails>
-  {
-    return this._httpClient.get<ProductDetails>(this.myAPIUrl + `/product/${productId}`);
-  }
-
-  // Phương thức lấy sản phẩm best-seller
-  getBestSellingProducts(): Observable<any[]> {
-    return this._httpClient.get<any[]>(`${this.myAPIUrl}/best-selling`).pipe(
-      tap((bestSellingProducts: any[]) => {
-        this.bestSellingProductsSubject.next(bestSellingProducts);
-      })
+  // Lấy chi tiết một sản phẩm theo ID
+  getProduct(productId: string): Observable<ProductDetails> {
+    return this._httpClient.get<ProductDetails>(
+      this.myAPIUrl + `/product/${productId}`
     );
   }
 
-  getAllReviews(productId : string) : Observable<Review[]>
-  {
-    return this._httpClient.get<Review[]>(this.myAPIUrl + `/reviews/${productId}`)
+  // Lấy tất cả đánh giá của sản phẩm
+  getAllReviews(productId: string): Observable<Review[]> {
+    return this._httpClient.get<Review[]>(
+      this.myAPIUrl + `/reviews/${productId}`
+    );
+  }
+
+  // Lấy danh sách sản phẩm Best-Selling
+  getBestSellingProducts(category?: string): Observable<ProductDetails[]> {
+    const url = category
+      ? `${this.myAPIUrl}/product/best-selling/${category}`
+      : `${this.myAPIUrl}/product/best-selling`;
+
+    return this._httpClient.get<ProductDetails[]>(url).pipe(
+      tap((bestSelling: any) => {
+        this.bestSellingProducts = bestSelling;
+        this.bestSellingProductsSubject.next(bestSelling);
+      })
+    );
   }
 }
