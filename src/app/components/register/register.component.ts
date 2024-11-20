@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router'; // Sử dụng Router để điều hướng
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -16,7 +17,7 @@ export class RegisterComponent {
   confirmPasswordVisible = false;
   popupMessage: string | null = null; // Biến quản lý nội dung pop-up
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.registerForm = this.fb.group(
       {
         first_name: ['', [Validators.required, Validators.minLength(2)]],
@@ -46,26 +47,39 @@ export class RegisterComponent {
     }
   }
 
-  // Submit form
-  onSubmit() {
-    if (this.registerForm.valid) {
-      this.http.post('http://localhost:3001/register-temp', this.registerForm.value).subscribe({
-        next: (res: any) => {
-          this.showPopup(res.message || 'Please check your email to confirm your account!');
-        },
-        error: (err: any) => {
-          this.showPopup(err.error.message || 'Error');
-        },
-      });
-    } else {
-      this.showPopup('Please fill in all information.');
-    }
+// Submit form
+onSubmit() {
+  if (this.registerForm.valid) {
+    this.http.post('http://localhost:3001/register-temp', this.registerForm.value).subscribe({
+      next: (res: any) => {
+        const email = this.registerForm.value.user_email; // Lấy email từ form
+        // Chuyển trang ngay lập tức khi thành công
+        this.router.navigate(['/verify'], { queryParams: { email } });
+      },
+      error: (err: any) => {
+        // Hiển thị popup khi có lỗi
+        this.showPopup(err.error.message || 'Error occurred while registering.');
+      },
+    });
+  } else {
+    // Hiển thị popup khi form không hợp lệ
+    this.showPopup('Please fill in all required information.');
   }
+}
 
-  // Show pop-up with a message
-  showPopup(message: string): void {
-    this.popupMessage = message;
-  }
+/**
+ * Hiển thị popup lỗi
+ * @param message Nội dung thông báo lỗi
+ */
+showPopup(message: string): void {
+  this.popupMessage = message;
+
+  // Tự động đóng popup sau 5 giây (nếu cần)
+  setTimeout(() => {
+    this.popupMessage = null;
+  }, 10000);
+}
+
 
   // Close pop-up
   closePopup(): void {

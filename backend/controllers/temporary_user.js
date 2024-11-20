@@ -1,151 +1,85 @@
-// const { Temporary_user, User } = require('../model/model');
-// const crypto = require('crypto');
-// const nodemailer = require('nodemailer');
-
-// exports.registerTemporaryUser = async (req, res) => {
-//   try {
-//     const { first_name,last_name, user_email, user_password} = req.body;
-
-//     const token = crypto.randomBytes(32).toString('hex');
-//     const temporaryUser = new Temporary_user({
-//       first_name,
-//       last_name,
-//       user_email,
-//       user_password,
-//       token,
-//       token_expiry: Date.now() + 10 * 60 * 1000 // Token expires in 10 minutes
-//     });
-
-//     await temporaryUser.save();
-
-//     // Send email with token
-//     const transporter = nodemailer.createTransport({
-//       service: 'Gmail',
-//       auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS
-//       },
-//       tls: {
-//         rejectUnauthorized: false // Bỏ qua xác minh chứng chỉ
-//       }
-//     });
-
-//     const mailOptions = {
-//       from: process.env.EMAIL_USER,
-//       to: user_email,
-//       subject: 'Email Verification',
-//       html: `<p>Please verify your email by clicking <a href="http://localhost:3001/register-temp/verify?token=${token}">here</a>.</p>`
-//     };
-
-//     await transporter.sendMail(mailOptions);
-//     res.status(200).json({ message: 'Verification email sent.' });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Error registering temporary user.' });
-//   }
-// };
-
-// exports.verifyToken = async (req, res) => {
-//   try {
-//     const { token } = req.query;
-//     const tempUser = await Temporary_user.findOne({ token });
-
-//     if (!tempUser || tempUser.token_expiry < Date.now()) {
-//       return res.status(400).json({ error: 'Invalid or expired token.' });
-//     }
-
-//     // Move data to User schema
-//     const newUser = new User({
-//       first_name: tempUser.first_name,
-//       last_name: tempUser.last_name,
-//       user_email: tempUser.user_email,
-//       user_password: tempUser.user_password,
-//     });
-
-//     await newUser.save();
-//     await Temporary_user.deleteOne({ _id: tempUser._id });
-
-//     res.status(200).json({ message: 'User verified and registered.' });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: 'Error verifying token.' });
-//   }
-// };
 const { Temporary_user, User } = require('../model/model');
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
 exports.registerTemporaryUser = async (req, res) => {
   try {
     const { first_name, last_name, user_email, user_password } = req.body;
 
-    // Kiểm tra email trong bảng User
+    // Kiểm tra email đã tồn tại
     const existingUser = await User.findOne({ user_email });
     if (existingUser) {
-      return res.status(400).json({ message: 'This email has been registered.' });
+      return res.status(400).json({ message: 'This email has already been registered.' });
     }
 
-    // Kiểm tra email trong bảng Temporary_user
+    // Kiểm tra email trong Temporary_user
     const tempUser = await Temporary_user.findOne({ user_email });
     if (tempUser) {
-      return res.status(400).json({ message: 'The process is waiting for you to confirm your email.' });
+      return res.status(400).json({ message: 'Check your email or wait another 10 minutes to do it again' });
     }
 
-    // Tạo token và lưu vào bảng Temporary_user
-    const token = crypto.randomBytes(32).toString('hex');
+    // Tạo mã OTP ngẫu nhiên
+    const rawToken = Math.floor(10000 + Math.random() * 90000).toString();
+
+    // Mã hóa OTP
+    const hashedToken = await bcrypt.hash(rawToken, 10);
+
+    // Lưu thông tin vào Temporary_user
     const newTempUser = new Temporary_user({
       first_name,
       last_name,
       user_email,
       user_password,
-      token,
+      token: hashedToken,
       token_expiry: Date.now() + 10 * 60 * 1000, // Token hết hạn sau 10 phút
     });
 
     await newTempUser.save();
 
-    // Gửi email xác thực
+    // Gửi email chứa mã OTP
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
-      tls: {
-                rejectUnauthorized: false // Bỏ qua xác minh chứng chỉ
-    }});
+      tls: { rejectUnauthorized: false },
+    });
 
-    const verificationLink = `http://localhost:3001/register-temp/verify?token=${token}`;
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: user_email,
-      subject: 'Complete Your Registration at VPandas Eyewear',
+      subject: 'Your VPandas Eyewear OTP Code',
       html: `
         <p>Dear ${first_name} ${last_name},</p>
-        <p>Thank you for registering an account at <strong>VPandas Eyewear</strong>. To complete your registration and activate your account, please confirm your email by clicking the link below:</p>
-        <p><a href="${verificationLink}" style="color: #1a73e8;">Verify Your Email</a></p>
-        <p>This link will expire after <strong>10 minutes</strong>. Please ensure you do not share this information with anyone.</p>
+        <p>Your confirmation code is: <strong>${rawToken}</strong></p>
+        <p>This code will expire after 10 minutes.</p>
         <p>Thank you for choosing <strong>VPandas Eyewear</strong>!</p>
-        <p>Best regards,</p>
-        <p>The VPandas Eyewear Team</p>
       `,
     };
 
     await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Please check your email to verify your account' });
+    res.status(200).json({ message: 'A confirmation code has been sent to your email.' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Error! Please try again.' });
   }
 };
-
 exports.verifyToken = async (req, res) => {
   try {
-    const { token } = req.query;
-    const tempUser = await Temporary_user.findOne({ token });
+    const { email, token } = req.body; // Nhận email và OTP từ client
 
-    if (!tempUser || tempUser.token_expiry < Date.now()) {
-      return res.status(400).json({ error: 'Invalid or expired token.' });
+    // Tìm người dùng tạm thời bằng email
+    const tempUser = await Temporary_user.findOne({ user_email: email });
+
+    if (!tempUser) {
+      return res.status(400).json({ success: false, message: 'No user found for this email.' });
+    }
+
+    // Kiểm tra mã OTP
+    const isMatch = await bcrypt.compare(token, tempUser.token);
+    if (!isMatch || tempUser.token_expiry < Date.now()) {
+      return res.status(400).json({ success: false, message: 'Invalid or expired OTP.' });
     }
 
     // Chuyển thông tin từ Temporary_user sang User
@@ -159,9 +93,9 @@ exports.verifyToken = async (req, res) => {
     await newUser.save();
     await Temporary_user.deleteOne({ _id: tempUser._id });
 
-    res.status(200).json({ message: 'User verified and registered.' });
+    res.status(200).json({ success: true, message: 'Registration successful.' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Error verifying token.' });
+    res.status(500).json({ success: false, message: 'An unexpected error occurred.' });
   }
 };

@@ -8,4 +8,5 @@ router.get("/session", userController.getSession);
 router.post("/logout", userController.logOut);
 router.post('/forgot-password', userController.forgotPassword);
 router.post('/reset-password', userController.resetPassword);
+router.post('/verify-forgot', userController.verifyForgot);
 module.exports = router;

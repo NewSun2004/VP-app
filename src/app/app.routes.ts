@@ -10,11 +10,20 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PaymentComponent } from './components/payment/payment.component';
+import { VerifyComponent } from './components/verify/verify.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyForgotComponent } from './components/verify-forgot/verify-forgot.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {path : "", component : HomepageComponent},
-  {path : "register", component: RegisterComponent},
+  {path :"register", component: RegisterComponent},
+  {path :"verify", component: VerifyComponent},
   {path : "login", component: LoginComponent},
+  {path : "forgot-password", component: ForgotPasswordComponent},
+  {path : "verify-forgot", component:VerifyForgotComponent},
+  {path : "verify-forgot/reset-password", component: ResetPasswordComponent},
   {path : "aboutus", component : AboutUsComponent},
   {path : "eyeglasses", component : DisplayProductsComponent},
   {path : "eyeglasses/:productId", component : ProductDetailsComponent},
@@ -25,5 +34,6 @@ export const routes: Routes = [
   {path : "accessories/:productId", component : ProductDetailsComponent},
   {path : "contacts", component : ContactComponent},
   {path : "cart", component : ShoppingCartComponent, canActivate : [AuthGuard]},
+  {path : "payment", component : PaymentComponent, canActivate : [AuthGuard]},
   {path : "**", component : PageNotFoundComponent},
 ];

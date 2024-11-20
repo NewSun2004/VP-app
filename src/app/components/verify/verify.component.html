@@ -1,0 +1,40 @@
+<div class="verify-container">
+  <div class="verify-box">
+    <h2>OTP VERIFICATION</h2>
+    <p>We have sent OTP on your email</p>
+
+    <!-- OTP Form -->
+    <form [formGroup]="verifyForm" (ngSubmit)="onVerifyToken()">
+      <div class="form-group">
+        <input
+          id="otp"
+          type="text"
+          formControlName="token"
+          maxlength="5"
+          placeholder="Enter 5-digit OTP"
+          [class.error]="verifyForm.get('token')?.invalid && verifyForm.get('token')?.touched"
+        />
+        <!-- <small
+          [ngClass]="{'visible': verifyForm.get('token')?.invalid && verifyForm.get('token')?.touched, 'hidden': !(verifyForm.get('token')?.invalid && verifyForm.get('token')?.touched)}"
+        >
+          Code must be exactly 5 digits.
+        </small> -->
+      </div>
+
+      <!-- Countdown Timer -->
+      <div class="countdown">
+        <p>{{ formatCountdown() }}</p>
+      </div>
+
+      <div class="form-footer">
+        <button
+          type="submit"
+          [disabled]="verifyForm.invalid"
+          class="submit-button"
+        >
+          VERIFY
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

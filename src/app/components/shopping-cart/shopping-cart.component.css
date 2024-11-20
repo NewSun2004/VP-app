@@ -15,3 +15,49 @@
     border-radius: 25px;
   }
 }
+
+.summary {
+  background: #F5F5F5;
+  height: fit-content;
+  padding: 30px;
+
+  p {
+    font-size: 400;
+    margin: 0px 5px 0px;
+  }
+
+  .total {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  button.voucher {
+    color: #D96E05;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    margin-left: 5px;
+    transition: 0.3s ease;
+  }
+
+  button.voucher:hover {
+    transform: translateX(10px);
+  }
+
+  button.checkout {
+    color: #ffffff;
+    font-weight: 600;
+    background-color: #D96E05;
+    border: 3px solid transparent;
+    padding: 5px 0px;
+  }
+
+  button.checkout:hover {
+    border: 3px solid black;
+  }
+
+  hr {
+    margin-top: 0px;
+  }
+}

@@ -1,4 +1,12 @@
 <div class="frame-container">
+  <!-- Popup Notification -->
+  <div class="popup" [ngClass]="{ visible: popupMessage }" *ngIf="popupMessage">
+    <div class="popup-content">
+      <p>{{ popupMessage }}</p>
+      <button (click)="closePopup()">OK</button>
+    </div>
+  </div>
+
   <div class="content-container" align="left">
     <h2 class="title">SIGN IN</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -12,7 +20,7 @@
           placeholder="Email address"
           [class.error]="loginForm.get('user_email')?.invalid && loginForm.get('user_email')?.touched"
         />
-        <small [ngClass]="{'visible': loginForm.get('user_email')?.errors && loginForm.get('user_email')?.touched}">
+        <small [ngClass]="{ visible: loginForm.get('user_email')?.errors && loginForm.get('user_email')?.touched }">
           {{ getErrorMessage('user_email') }}
         </small>
       </div>
@@ -26,15 +34,20 @@
             [type]="passwordVisible ? 'text' : 'password'"
             formControlName="user_password"
             placeholder="Password"
+            [class.error]="loginForm.get('user_password')?.invalid && loginForm.get('user_password')?.touched"
           />
-          <button
-            type="button"
-            class="toggle-visibility"
-            (click)="togglePasswordVisibility()"
-          >
-            {{ passwordVisible ? 'Hide' : 'Show' }}
+          <button type="button" class="toggle-visibility" (click)="togglePasswordVisibility()">
+            <img
+              [src]="passwordVisible ? 'Icons/hide.png' : 'Icons/show.png'"
+              [alt]="passwordVisible ? 'Hide Password' : 'Show Password'"
+              class="toggle-icon"
+            />
           </button>
+
         </div>
+        <small [ngClass]="{visible:loginForm.get('user_password')?.touched && loginForm.get('user_password')?.invalid}">
+          This field is required.
+        </small>
       </div>
 
       <!-- Remember Me and Forgot Password -->
@@ -43,7 +56,7 @@
           <input id="rememberMe" type="checkbox" formControlName="rememberMe" />
           Remember me
         </label>
-        <a href="#">Forgot password?</a>
+        <a href="http://localhost:4200/forgot-password">Forgot password?</a>
       </div>
 
       <!-- Submit Button -->
@@ -54,16 +67,8 @@
       </div>
     </form>
 
-    <!-- Popup Error -->
-    <div class="popup" *ngIf="popupMessage">
-      <div class="popup-content">
-        <p>{{ popupMessage }}</p>
-        <button (click)="closePopup()">OK</button>
-      </div>
-    </div>
-
     <p style="text-align: center; margin-top: 10px; font-size: 0.875rem;">
-      Do you have an account? <a href="http://localhost:4200/register">Sign up</a>
+      Don't have an account? <a href="http://localhost:4200/register">Sign up</a>
     </p>
   </div>
 </div>
