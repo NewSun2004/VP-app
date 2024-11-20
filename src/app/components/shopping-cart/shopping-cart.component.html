@@ -44,7 +44,7 @@
             <div class="d-flex flex-row justify-content-center align-items-center gap-2 quantity">
               <button>-</button>
               <p class="m-0">{{cartLines[i].quantity}}</p>
-              <button (click)="plusQuantity(cartProduct)">+</button>
+              <button>+</button>
             </div>
           </td>
 
@@ -89,7 +89,7 @@
 
       <p>${{this.totalOrder}}</p>
     </div>
-    <button class="checkout" style="width: 100%;">
+    <button class="checkout" style="width: 100%;" (click)="processToOrder()">
       Proceed to checkout
     </button>
   </div>

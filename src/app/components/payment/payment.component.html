@@ -1,48 +1,197 @@
 <h1>Payment</h1>
 
-<div class="d-flex flex-column">
-  <div class="d-flex flex-column">
-    <div class="d-flex flex-row align-items-center">
-      <h3 class="flex-grow-1">My address</h3>
-      <button class="btn">+</button>
+<div class="d-flex flex-column gap-4 pb-5">
+  <div class="d-flex flex-column universal">
+    <div class="d-flex flex-row align-items-center head">
+      <div class="d-flex flex-row align-items-center gap-2 flex-grow-1">
+        <img src="Icons/place.svg" alt="">
+        <p>My address</p>
+      </div>
+      <button class="btn" (click)="addressBarToggle = !addressBarToggle">
+        <img [src]="!addressBarToggle ? 'Icons/expand.svg' : 'Icons/collapse.svg'" alt="">
+      </button>
     </div>
 
-    <div class="d-flex flex-row align-items-center">
-      <div class="flex-grow-1">
-        <p>
-          Ms.Marry - (+83)758697058
-        </p>
+    <div class="vertical-toggle-hide" [ngClass]="{'vertical-toggle-show' : addressBarToggle}">
+      <div class="d-flex flex-row justify-content-between align-items-center overflow-hidden">
+        <div class="d-flex flex-column align-items-start gap-3 p-2">
+          <div class="d-flex flex-row justify-content-start gap-3">
+            <input [(ngModel)]="customerName" type="text" class="form-control shadow-none" placeholder="Enter your name ....">
+            <input [(ngModel)]="phone" type="text" class="form-control shadow-none" placeholder="Enter your phone number ....">
+          </div>
+          <input [(ngModel)]="address" type="text" class="form-control shadow-none" placeholder="Enter your address ....">
+        </div>
 
+        <button class="btn" (click)="editMode()">
+          <img src="Icons/edit.svg" alt="" *ngIf="!isEdit">
+          <i class="bi bi-check-lg" *ngIf="isEdit"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column overflow-hidden universal">
+    <div class="row head">
+      <p class="col-5 text-start">Items</p>
+      <p class="col text-center">Price</p>
+      <p class="col text-center">Qty</p>
+      <p class="col-1 text-center">Total</p>
+    </div>
+
+    <div class="row align-items-center" *ngFor="let cartProduct of cartProducts, let i = index">
+      <div class="col-5 d-flex flex-row justify-content-start align-items-center p-3 gap-3">
+        <img [src]="cartProduct.product_lines[cartLines[i].selected_color_index].image_urls[1]" alt="" style="width: 35%;">
+
+        <div class="d-flex flex-column justify-content-center align-items-start title">
+          <p class="name">
+            {{cartProduct.product_name}}
+          </p>
+          <p class="color">
+            {{cartProduct.product_lines[cartLines[i].selected_color_index].product_line_name}}
+          </p>
+        </div>
+      </div>
+
+      <div class="col text-center price">
         <p>
-          123 Pham Van Dong, Linh Trung, Thu Duc, Ho Chi Minh City
+          ${{cartProduct.product_price}}
         </p>
       </div>
 
+      <div class="col text-center price">
+        <p>
+          x{{cartLines[i].quantity}}
+        </p>
+      </div>
+
+      <div class="col-1 text-center price">
+        <p>
+          ${{cartProduct.product_price * cartLines[i].quantity}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column universal">
+    <div class="d-flex flex-row align-items-center head">
+      <p>Shipping</p>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <p>
+          Note
+        </p>
+
+        <input type="text" class="form-control shadow-none">
+      </div>
+
+      <div class="col d-flex flex-column">
+        <div class="d-flex flex-row justify-content-between">
+          <p>
+            Ninja Van
+          </p>
+
+          <button class="btn">
+            Edit
+          </button>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between">
+          <p>
+            Fast
+          </p>
+
+          <p>
+            $5
+          </p>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between">
+          <p>
+            Expected date:
+          </p>
+
+          <p>
+            17/9/2024
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column universal">
+    <div class="head">
       <button class="btn">
-        Edit
+        <p>
+          Apply voucher ->
+        </p>
       </button>
     </div>
   </div>
 
-  <div class="d-flex flex-column">
-    <div class="d-flex flex-row align-items-center">
-      <h3 class="flex-grow-1">Items</h3>
-      <button class="btn">+</button>
-    </div>
+  <div class="d-flex flex-column universal">
+    <div class="d-flex flex-row justify-content-between head">
+      <p>
+        Payment method
+      </p>
 
-    <div class="d-flex flex-row align-items-center">
-      <div class="flex-grow-1">
+      <div class="d-flex flex-row justify-content-end gap-3">
         <p>
-          Ms.Marry - (+83)758697058
+          Cash on delivery
+        </p>
+
+        <button class="btn">
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-end align-items-start summary">
+    <div class="d-flex flex-column w-25 gap-2">
+      <div class="d-flex flex-row light">
+        <p class="flex-grow-1">
+          Subtotal:
         </p>
 
         <p>
-          123 Pham Van Dong, Linh Trung, Thu Duc, Ho Chi Minh City
+          $190
         </p>
       </div>
 
-      <button class="btn">
-        Edit
+      <div class="d-flex flex-row light">
+        <p class="flex-grow-1">
+          Shipping fee:
+        </p>
+
+        <p>
+          $5
+        </p>
+      </div>
+
+      <div class="d-flex flex-row light">
+        <p class="flex-grow-1">
+          Voucher:
+        </p>
+
+        <p>
+          ......
+        </p>
+      </div>
+
+      <div class="d-flex flex-row align-items-center">
+        <p class="flex-grow-1 bold">
+          Order Total:
+        </p>
+
+        <p class="orange">
+          $195
+        </p>
+      </div>
+
+      <button class="order">
+        ORDER
       </button>
     </div>
   </div>
