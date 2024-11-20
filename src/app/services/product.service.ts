@@ -66,8 +66,8 @@ export class ProductService {
   // Lấy danh sách sản phẩm Best-Selling
   getBestSellingProducts(category?: string): Observable<ProductDetails[]> {
     const url = category
-      ? `${this.myAPIUrl}/product/best-selling/${category}`
-      : `${this.myAPIUrl}/product/best-selling`;
+      ? `${this.myAPIUrl}/bestseller/best-selling/${category}`
+      : `${this.myAPIUrl}/bestseller/best-selling`;
 
     return this._httpClient.get<ProductDetails[]>(url).pipe(
       tap((bestSelling: any) => {

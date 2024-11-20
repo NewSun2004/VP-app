@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
-import { CommonModule, NgFor, NgIf, CurrencyPipe } from '@angular/common';
+import { CommonModule, NgFor, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
   standalone: true,
-  imports: [CommonModule, NgFor, NgIf, CurrencyPipe],
+  imports: [CommonModule, NgFor, CurrencyPipe],
 })
 export class HomepageComponent implements OnInit, OnDestroy {
   bestSellingProducts: any[] = [];

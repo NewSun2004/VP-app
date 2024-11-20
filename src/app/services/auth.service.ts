@@ -21,7 +21,7 @@ export class AuthService {
       map((response) => {
         if (response) {
           this.loggedInSubject.next(true); // User session exists, update BehaviorSubject
-          this.currentUser = response;
+          this.currentUser = response.user;
           return true;
         } else {
           this.loggedInSubject.next(false); // No session, update BehaviorSubject

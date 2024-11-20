@@ -32,7 +32,7 @@ export class ShoppingCartComponent implements OnInit{
       next : state => {
         if (state)
         {
-          this._cartService.getCartLines(this._authService.currentUser.user.cart).subscribe({
+          this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
             next : cartLines => {
               this.cartLines = cartLines
               for (let cartLine of this.cartLines)
@@ -71,7 +71,7 @@ export class ShoppingCartComponent implements OnInit{
     this.cartProducts = this.cartProducts.filter(product => product._id != cartLine?.product_id!);
     console.log(i);
     this.updateTotalPrice(i);
-    // this._cartService.removeCartLine(cartLineId).subscribe({});
+    this._cartService.removeCartLine(cartLineId).subscribe({});
   }
 
   updateTotalPrice(i? : number, temp? : boolean) : void

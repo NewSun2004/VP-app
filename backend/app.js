@@ -58,7 +58,7 @@ app.use("/category", categoryRoute);
 app.use("/user", userRoute);
 app.use("/register-temp", tempUserRoute);
 app.use("/cart", cartRoute);
-app.use("/product", productRoute);
+app.use("/bestseller", productRoute);
 
 // Endpoint kiểm tra server
 app.get("/", (req, res) => {

@@ -120,7 +120,7 @@ export class ProductDetailsComponent implements OnInit{
     if (this.isLoggedIn)
     {
       const cart_line = {
-        cart_id : this._authService.currentUser.user.cart,
+        cart_id : this._authService.currentUser.cart,
         has_customized : false,
         product_id : this.productData._id,
         selected_color_index : this.currentProductLineIndex,

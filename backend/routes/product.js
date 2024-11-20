@@ -2,16 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { Product, Product_line } = require("../model/model");
 
-// Route: Lấy tất cả sản phẩm
-router.get("/", async (req, res) => {
-  try {
-    const products = await Product.find().populate("product_lines");
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
 // Route: Lấy sản phẩm Best-Selling
 router.get("/best-selling", async (req, res) => {
   const category = req.query.category; // Query param để lọc theo loại

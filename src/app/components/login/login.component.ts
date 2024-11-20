@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
         next: currentUser => {
           this.router.navigate(['/']);
           this.authService.currentUser = currentUser;
+          console.log(this.authService.currentUser);
         },
         error: (err: any) => {
           const message = err.error?.message || 'An error occurred. Please try again!';

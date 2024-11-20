@@ -75,38 +75,38 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   // Xử lý sự kiện ngSubmit từ form
-  onVerifyToken(): void {
-    if (this.verifyForm.valid) {
-      const formData = {
-        token: this.verifyForm.value.token,
-        email: this.email,
-      };
+ // Xử lý sự kiện ngSubmit từ form
+onVerifyToken(): void {
+  if (this.verifyForm.valid) {
+    const formData = {
+      token: this.verifyForm.value.token,
+      email: this.email,
+    };
 
-      this.http.post('http://localhost:3001/register-temp/verify', formData).subscribe({
-        next: (res: any) => {
-          this.stopCountdown();
-          this.showPopup('Verification successful! Redirecting to login...', true, '/login');
-        },
-        error: (err) => {
-          this.showPopup(err.error.message || 'Invalid OTP. Please try again.');
-        },
-      });
-    } else {
-      this.showPopup('Please enter a valid 5-digit OTP.');
-    }
+    this.http.post('http://localhost:3001/register-temp/verify', formData).subscribe({
+      next: (res: any) => {
+        this.stopCountdown();
+        this.showPopup('Verification successful! Redirecting to login...', true, '/login');
+      },
+      error: (err) => {
+        this.showPopup(err.error.message || 'Invalid OTP. Please try again.');
+      },
+    });
+  } else {this.showPopup('Please enter a valid 5-digit OTP.');
   }
+}
 
-  // Hiển thị thông báo popup
-  showPopup(message: string, autoRedirect: boolean = false, redirectPath?: string): void {
+
+   // Hiển thị thông báo popup
+   showPopup(message: string, autoRedirect: boolean = false, redirectPath?: string): void {
     this.popupMessage = message;
 
     if (autoRedirect && redirectPath) {
-      setTimeout(() => {
-        this.popupMessage = null;
-        this.router.navigate([redirectPath]); // Chuyển hướng tới đường dẫn được cung cấp
-      }, 10000); // Hiển thị popup trong 5 giây
+      this.popupMessage = null; // Xóa popup ngay
+      this.router.navigate([redirectPath]); // Chuyển hướng tới đường dẫn được cung cấp
     }
   }
+
 
   // Đóng popup
   closePopup(): void {
