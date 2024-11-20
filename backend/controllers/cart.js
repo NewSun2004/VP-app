@@ -35,10 +35,6 @@ const cartController = {
     {
       const cartLine = new Cart_line(req.body);
       const saveCartLine = await cartLine.save();
-      const cartUpdate = Cart.updateOne(
-        {user_id : userId},
-        {$push : {cart_line : saveCartLine._id}}
-      )
       res.status(200).json(saveCartLine, cartUpdate);
     }
     catch (error)
