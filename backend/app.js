@@ -14,6 +14,8 @@ const userRoute = require("./routes/user");
 const tempUserRoute = require("./routes/temporary_user");
 const cartRoute = require("./routes/cart");
 const productRoute = require("./routes/product");
+const orderRoute = require("./routes/order");
+const carrierRoutes = require("./routes/carrier");
 const { Product, Review } = require("./model/model");
 
 // Kết nối MongoDB
@@ -59,6 +61,9 @@ app.use("/user", userRoute);
 app.use("/register-temp", tempUserRoute);
 app.use("/cart", cartRoute);
 app.use("/bestseller", productRoute);
+app.use("/orders", orderRoute)
+app.use("/carrier", carrierRoutes);
+
 
 // Endpoint kiểm tra server
 app.get("/", (req, res) => {

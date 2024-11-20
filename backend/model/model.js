@@ -188,7 +188,7 @@ const orderSchema = new mongoose.Schema(
     },
     order_status: {
       type: String,
-      required: true,
+      default: "Comfirmed"
     },
     updated_datetime: {
       type: Date, // Cập nhật mỗi khi thay đổi order_status
@@ -253,6 +253,7 @@ const invoiceSchema = new mongoose.Schema(
     payment_status: {
       type: String,
       required: true,
+      default: "Wait to Pay"
     },
   },
   { versionKey: false }
@@ -269,8 +270,7 @@ const paymentSchema = new mongoose.Schema(
     account_number: Number,
     bank_name: String,
     payment_datetime: {
-      type: Date,
-      default: Date.now,
+      type: Date
     },
   },
   { versionKey: false }
@@ -284,7 +284,6 @@ const shippingSchema = new mongoose.Schema(
     },
     tracking_number: {
       type: String,
-      required: true,
     },
     shipping_carrier: {
       type: String,
@@ -299,7 +298,7 @@ const shippingSchema = new mongoose.Schema(
       required: true,
     },
     receiver_phone_number: {
-      type: Number,
+      type: String,
       required: true,
     },
     destination: {
@@ -313,16 +312,17 @@ const shippingSchema = new mongoose.Schema(
     },
     shipping_status: {
       type: String,
-      required: true,
+      default: "Pending"
     },
     creation_datetime: {
-      type: Date,
-      required: true,
+      type: Date
     },
     delivery_success_datetime: {
-      type: Date,
-      required: true,
+      type: Date
     },
+    expected_datetime:{
+      type: Date
+    }
   },
   { versionKey: false }
 );
@@ -355,7 +355,25 @@ const reviewsSchema = new mongoose.Schema(
   },
   { versionKey: false }
 );
-
+const carrierSchema = new mongoose.Schema({
+  shipping_carrier: {
+    type: String,
+    required: true
+  },
+  shipping_methods: [
+    {
+      method_name: {
+        type: String,
+        required: true
+      },
+      shipping_fee: {
+        type: Number,
+        required: true,
+        min: 0
+      }
+    }
+  ]
+})
 const temporaryUserSchema = new mongoose.Schema(
   {
     first_name: {
@@ -407,8 +425,9 @@ let Payment = mongoose.model("Payment", paymentSchema);
 let Shipping = mongoose.model("Shipping", shippingSchema);
 let Review = mongoose.model("Review", reviewsSchema);
 let Temporary_user = mongoose.model("Temporary_user", temporaryUserSchema);
+let Carrier = mongoose.model("Carrier", carrierSchema)
 
 module.exports = { User, Product, Cart, Cart_line, Customize,
-    Order, Invoice, Payment, Shipping, Review, Temporary_user
+    Order, Invoice, Payment, Shipping, Review, Temporary_user, Carrier
 }
 
