@@ -1,75 +1,95 @@
 <h1>My Cart</h1>
 
 <div class="row">
-  <div class="col-9">
+  <div class="col-12 col-md-8 col-lg-9">
     <table class="table table-hover align-middle text-center">
       <thead>
         <tr>
+          <th></th>
           <th scope="col">PRODUCT</th>
           <th scope="col">PRICE</th>
           <th scope="col">QUANTITY</th>
           <th scope="col">TOTAL</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cartProduct of cartProducts">
+        <tr *ngFor="let cartProduct of cartProducts, let i = index">
+          <td>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <input [(ngModel)]="boxChecked[i]" class="form-check-input shadow-none" type="checkbox" name="" id="check{{i}}" (change)="checkProduct(i)">
+            </div>
+          </td>
+
           <td class="text-start" scope="row">
             <div class="row">
-              <div class="col-5">
-                <img [src]="cartProduct.product.product_lines[cartProduct.product_line_index].image_urls[1]" alt="" style="width: 60%;">
+              <div class="col col-lg-5">
+                <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                  <img [src]="cartProduct.product_lines[cartLines[i].selected_color_index].image_urls[1]" alt="" style="width: 80%;">
+                </div>
               </div>
 
-              <div class="col">
-                <p>{{cartProduct.product.product_name}}</p>
-                <p>{{cartProduct.product.product_lines[cartProduct.product_line_index].product_line_name}}</p>
+              <div class="d-block d-lg-none w-100"></div>
+
+              <div class="col text-center text-lg-start">
+                <p class="mt-3 mb-0 mt-lg-0 mb-lg-auto">{{cartProduct.product_name}}</p>
+                <p class="mb-1 mb-lg-auto">{{cartProduct.product_lines[cartLines[i].selected_color_index].product_line_name}}</p>
               </div>
             </div>
           </td>
 
-          <td>${{cartProduct.product.product_price}}</td>
+          <td>${{cartProduct.product_price}}</td>
 
           <td>
             <div class="d-flex flex-row justify-content-center align-items-center gap-2 quantity">
               <button>-</button>
-              <p class="m-0">{{cartProduct.quantity}}</p>
+              <p class="m-0">{{cartLines[i].quantity}}</p>
               <button (click)="plusQuantity(cartProduct)">+</button>
             </div>
           </td>
 
-          <td>${{cartProduct.product.product_price * cartProduct.quantity}}</td>
+          <td>${{cartProduct.product_price * cartLines[i].quantity}}</td>
+
+          <td>
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <button class="btn" (click)="delete(cartLines[i]._id!, i)">
+                <img src="Icons/cross-button.svg" alt="">
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="container col">
+  <div class="container col-12 col-md-4 col-lg-3 summary">
     <h3>Summary</h3>
-    <p>Items: 2</p>
+    <p>Items: {{cartLines.length}}</p>
 
     <div class="d-flex flex-row">
       <p class="flex-grow-1">Subtotal:</p>
-      <p>$190</p>
+      <p>${{totalPrice}}</p>
     </div>
 
     <div class="d-flex flex-row">
       <p class="flex-grow-1">Shipping Fee:</p>
-      <p>$5</p>
+      <p>${{shippingPrice}}</p>
     </div>
 
-    <button class="btn">
-      Apply voucher ->
+    <button class="voucher">
+      Apply voucher
     </button>
 
     <hr>
 
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row total">
       <p class="flex-grow-1">
         Order Total
       </p>
 
-      <p>$195</p>
+      <p>${{this.totalOrder}}</p>
     </div>
-    <button class="btn btn-outline-warning" style="width: 100%;">
+    <button class="checkout" style="width: 100%;">
       Proceed to checkout
     </button>
   </div>

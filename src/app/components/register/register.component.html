@@ -59,12 +59,17 @@
             [class.error]="registerForm.get('user_password')?.invalid && registerForm.get('user_password')?.touched"
           />
           <button
-            type="button"
-            class="toggle-visibility"
-            (click)="togglePasswordVisibility('password')"
-          >
-            {{ passwordVisible ? 'Hide' : 'Show' }}
-          </button>
+          type="button"
+          class="toggle-visibility"
+          (click)="togglePasswordVisibility('password')"
+        >
+          <img 
+            [src]="passwordVisible ? 'Icons/hide.png' : 'Icons/show.png'" 
+            [alt]="passwordVisible ? 'Hide Password' : 'Show Password'" 
+            class="toggle-icon"
+          />
+        </button>
+        
         </div>
         <small [ngClass]="{'visible': registerForm.get('user_password')?.errors && registerForm.get('user_password')?.touched}">
           {{ getErrorMessage('user_password') }}
@@ -83,12 +88,17 @@
             [class.error]="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched"
           />
           <button
-            type="button"
-            class="toggle-visibility"
-            (click)="togglePasswordVisibility('confirm')"
-          >
-            {{ confirmPasswordVisible ? 'Hide' : 'Show' }}
-          </button>
+          type="button"
+          class="toggle-visibility"
+          (click)="togglePasswordVisibility('confirm')"
+        >
+          <img 
+            [src]="confirmPasswordVisible ? 'Icons/hide.png' : 'Icons/show.png'" 
+            [alt]="confirmPasswordVisible ? 'Hide Password' : 'Show Password'" 
+            class="toggle-icon"
+          />
+        </button>
+        
         </div>
         <small [ngClass]="{'visible': registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched}">
           {{ getErrorMessage('confirmPassword') }}
@@ -99,7 +109,7 @@
       <div class="form-group checkbox-group" align="left">
         <input id="agreeTerms" type="checkbox" formControlName="agreeTerms" />
         <label for="agreeTerms" class="element">
-          I agree to our&nbsp;<a href="#">Terms of Use</a>&nbsp;and&nbsp;<a href="#">Privacy Policy</a>
+          I agree to &nbsp;<a href="#">Terms of service</a>&nbsp;and&nbsp;<a href="#">Privacy Policy</a>
         </label>
       </div>
 
@@ -118,6 +128,6 @@
         <p>{{ popupMessage }}</p>
         <button (click)="closePopup()">OK</button>
       </div>
-    </div>
+    </div>    
   </div>
 </div>

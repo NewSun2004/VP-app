@@ -1,156 +1,83 @@
-.frame-container {
+/* Frame Container */
+.verify-container {
     width: 32.5rem; /* 520px */
-    height: 31.25rem; /* 500px */
+    height: 20rem; /* 320px */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     border: 0.07rem solid #d8cece; /* 1px */
-    /* border-radius: 0.5rem; 8px */
-    
     background-color: #fff;
     margin: 2rem auto; /* 20px */
     font-family: "Outfit", sans-serif; /* Font chính */
+    box-sizing: border-box;
   }
   
-  .content-container {
+  /* Content Box */
+  .verify-box {
     width: 25.625rem; /* 410px */
-    padding-top: 1.5rem; 
+    padding-top: 1.5rem; /* 20px */
+    box-sizing: border-box;
+    text-align: left; /* Đảm bảo toàn bộ nội dung căn lề trái */
   }
   
-  .title {
-    font-size: 1.625rem; /* 32px */
+  /* Title */
+  .verify-box h2 {
+    font-size: 1.625rem; /* 26px */
+    margin-top: 2rem; /* 20px */
     color: #333333;
-    margin-bottom: 1.25rem; /* 20px */
-    text-align: center;
+    text-align: center; /* Chỉ tiêu đề căn giữa */
   }
   
-  .form-group {
-    margin-bottom: 1.25rem; /* 20px */
-  }
-  
-  label {
+  /* Subtitle */
+  .verify-box p {
     font-size: 1rem; /* 16px */
+    margin-bottom: 0.7rem;
     color: #666666;
-    margin-bottom: 0.3125rem; /* 5px */
-    display: block;
+    text-align: left; /* Căn lề trái */
   }
   
-  input[type="email"],
-  input[type="password"] {
+  /* Form Group */
+  .form-group input {
     width: 100%;
     height: 3rem; /* 48px */
     padding: 0.625rem; /* 10px */
     border: 0.0625rem solid #666666; /* 1px */
     border-radius: 0.3125rem; /* 5px */
-    font-size: 0.875rem; /* 14px */
+    font-size: 1rem; /* 16px */
     color: #333333;
+    box-sizing: border-box;
   }
   
-  .password-container {
-    position: relative;
+  .form-group input.error {
+    border-color: #ff0000;
   }
   
-  .password-container input {
-    width: 100%;
-    height: 3rem; /* 48px */
-
-  }
-  img{
-    width: 1.5rem;
-    height: 1.5rem
-  }
-  button.toggle-visibility {
-    position: absolute;
-    right: 0.625rem; /* 10px */
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    font-size: 0.875rem; /* 14px */
-    color: #666666;
-    cursor: pointer;
+  /* Countdown Timer */
+  .countdown p {
+    font-size: 1.5rem; /* 24px */
+    color: #ff0000;
+    text-align: center; /* Đồng hồ đếm ngược vẫn căn giữa */
+    margin-bottom: 1rem; /* 16px */
+    font-weight: bolder;
   }
   
-  button.toggle-visibility:hover {
-    color: #333333;
-  }
-  
-  input.error {
-    border: 0.0625rem solid red; /* 1px */
-  }
-  
-  input[type="checkbox"] {
-    margin-right: 0.3125rem; /* 5px */
-    background-color: #0b0601;
-    color: black
-  }
-  
-  .checkbox-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .checkbox-group label {
-    font-size: 0.875rem; /* 14px */
-    color: #666666;
-  }
-  
-  a {
-    color: #F4950F;
-    font-size: 0.875rem; /* 14px */
-    text-decoration: none;
-    text-decoration: underline;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
+  /* Submit Button */
   .submit-button {
     width: 100%;
-    padding: 0.625rem; /* 10px */
+    height: 3rem; /* 48px */
+    font-size: 1rem; /* 16px */
+    border: none;
     background-color: #f5f5f5;
     color: #ccc;
-    border: 0.0625rem solid #ddd; /* 1px */
-    font-size: 1rem; /* 16px */
     cursor: not-allowed;
+    transition: background-color 0.3s, color 0.3s;
   }
   
   .submit-button:enabled {
-    background-color: #D96E05;
+    background-color: #d96e05;
     color: #fff;
-    border: none;
     cursor: pointer;
   }
-  
-  .popup {
-    position: fixed; /* Cố định popup trên màn hình */
-    top: 50%; /* Căn giữa theo chiều dọc */
-    left: 50%; /* Căn giữa theo chiều ngang */
-    transform: translate(-50%, -50%); /* Dịch chuyển để căn giữa */
-    background-color: #fff; /* Màu nền */
-    border: 0.0625rem solid #ddd; /* Đường viền nhẹ (1px = 0.0625rem) */
-    border-radius: 0.5rem; /* Bo góc (8px = 0.5rem) */
-    box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.2); /* Hiệu ứng đổ bóng (4px = 0.25rem, 10px = 0.625rem) */
-    padding: 1.25rem; /* Khoảng cách bên trong (20px = 1.25rem) */
-    z-index: 1000; /* Đảm bảo popup luôn hiển thị trên các thành phần khác */
-    visibility: hidden; /* Ẩn mặc định */
-    opacity: 0; /* Ẩn bằng độ mờ */
-    display: flex; /* Sử dụng flexbox cho nội dung */
-    flex-direction: column; /* Sắp xếp nội dung theo cột */
-    align-items: center; /* Căn giữa nội dung theo chiều ngang */
-    justify-content: center; /* Căn giữa nội dung theo chiều dọc */
-    transition: visibility 0.2s, opacity 0.2s ease-in-out; /* Hiệu ứng mượt khi hiện/ẩn */
-    max-width: 90%; /* Đảm bảo không tràn khung màn hình */
-  }
-  
-  /* Hiển thị popup */
-  .popup.visible {
-    visibility: visible; /* Hiển thị */
-    opacity: 1; /* Hiển thị với độ mờ */
-  }
-  
   .popup {
     position: fixed; /* Cố định popup trên màn hình */
     top: 50%; /* Căn giữa theo chiều dọc */
@@ -216,21 +143,4 @@
   .popup {
     padding-bottom: 0.625rem; /* Đảm bảo khoảng cách 10px tới viền dưới */
   }
-  
-
-  small {
-    font-size: 0.75rem; /* 12px */
-    padding-left: 0.5rem;
-    padding-top:0.3rem;
-    color: transparent; /* Mặc định ẩn nội dung */
-    height: 1rem; /* Chiều cao cố định để không xê dịch bố cục */
-    line-height: 1rem; /* Căn giữa chữ theo chiều cao */
-    display: block; /* Đảm bảo giữ không gian */
-    transition: color 0.2s ease-in-out; /* Hiệu ứng mượt mà */
-  }
-  
-  small.visible {
-    color: red; /* Hiển thị lỗi khi có lỗi */
-  }
-  
   
