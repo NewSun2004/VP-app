@@ -109,3 +109,153 @@
     </div>
   </div>
 </div>
+
+<section class="best-selling">
+  <!-- Title -->
+  <h2 class="best-selling-title">Best Selling Glasses</h2>
+
+  <div class="best-selling-navigation">
+    <button class="prev-btn" (click)="navigate('prev')">
+      <span class="icon">&lt;</span>
+    </button>
+    <p class="best-selling-subtitle">SAVE UP TO $125 ON VP EVENT</p>
+    <button class="next-btn" (click)="navigate('next')">
+      <span class="icon">&gt;</span>
+    </button>
+  </div>
+
+  <div class="carousel" [style.transform]="carouselTransform">
+    <div class="product-card" *ngFor="let product of visibleProducts">
+      <!-- Product Image -->
+      <div class="product-image-wrapper">
+        <img
+          [src]="product.product_lines[0].image_urls[1]"
+          alt="{{ product.product_name }}"
+          class="product-image"
+          (mouseenter)="hoverImage(product._id, true)"
+          (mouseleave)="hoverImage(product._id, false)"
+        />
+      </div>
+      <!-- Product Name -->
+      <h3 class="product-name">{{ product.product_name }}</h3>
+      <!-- Product Price -->
+      <p class="product-price">{{ product.product_price | currency }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="customize-section">
+  <!-- Tiêu đề giới thiệu -->
+  <div class="customize-intro">
+    <p>
+      Show your style with our custom eyewear feature! Choose from various
+      styles, colors, and shapes to create your perfect pair.
+    </p>
+  </div>
+
+  <!-- Nội dung chính -->
+  <div class="customize-content">
+    <div class="customize-text">
+      <h3>YOUR GLASSES, YOUR STYLE!</h3>
+      <button class="customize-button">Customize</button>
+    </div>
+  </div>
+</section>
+
+<div class="promo-container">
+  <!-- Promo Content -->
+  <div class="promo-content">
+    <h2 class="fw-bold">TAKE 15% OFF TWO OR MORE PAIRS</h2>
+    <p class="promo-restrictions">restrictions apply.</p>
+
+    <!-- Countdown Timer -->
+    <div class="promo-timer">
+      <div class="timer-box">
+        <div class="timer-value">{{ days }}</div>
+        <small class="timer-label">days</small>
+      </div>
+      <div class="timer-box">
+        <div class="timer-value">{{ hours }}</div>
+        <small class="timer-label">hours</small>
+      </div>
+      <div class="timer-box">
+        <div class="timer-value">{{ minutes }}</div>
+        <small class="timer-label">minutes</small>
+      </div>
+      <div class="timer-box">
+        <div class="timer-value">{{ seconds }}</div>
+        <small class="timer-label">seconds</small>
+      </div>
+    </div>
+
+    <!-- Button -->
+    <button class="promo-button">Shop now</button>
+  </div>
+
+  <!-- Promo Image -->
+  <div class="promo-image"></div>
+</div>
+
+<section class="exclusive-club py-5">
+  <div class="container text-center">
+    <!-- Tiêu đề -->
+    <h2 class="fw-bold">Join The Exclusive Club</h2>
+    <p class="mb-4">
+      See our latest collections & exclusive offers before the crowd!
+    </p>
+
+    <!-- Form đăng ký -->
+    <form class="form-subscribe d-flex justify-content-center">
+      <div class="input-group">
+        <!-- Biểu tượng Email -->
+        <span class="input-group-text bg-white" id="email-addon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-envelope"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"
+            />
+          </svg>
+        </span>
+
+        <!-- Trường nhập Email -->
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter your email"
+          aria-label="Email address"
+          aria-describedby="email-addon"
+          required
+        />
+        <!-- Nút Submit -->
+        <button class="btn" type="submit" aria-label="Submit">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-arrow-right"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"
+            />
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Chú thích -->
+    <p class="small mt-6 text-muted">
+      By subscribing, I confirm that I am over 16 years of age and agree that my
+      personal data can be used by Group V.P.T to send me news, special offers,
+      and other marketing communication as part of the VPandas Loyalty Program.
+    </p>
+  </div>
+</section>

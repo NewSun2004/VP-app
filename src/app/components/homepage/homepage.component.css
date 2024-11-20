@@ -1,46 +1,36 @@
-/* heroes.component.css */
+html {
+  margin-bottom: 2rem;
+}
 .heroes {
-  width: 100vw; /* Chiếm toàn bộ chiều ngang màn hình */
-  margin-left: calc(50% - 50vw); /* Tràn viền trái */
-  margin-right: calc(50% - 50vw); /* Tràn viền phải */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("/Images/heroes.png"); /* Đường dẫn đến hình nền */
-  background-size: cover; /* Bao phủ toàn bộ vùng heroes */
-  background-position: center; /* Đặt vị trí trung tâm của hình nền */
-  background-repeat: no-repeat; /* Đảm bảo không lặp lại hình nền */
+  background-image: url("/Images/heroes.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #f4f4f4; /* Fallback nếu hình nền không tải */
   position: relative;
-  padding: 20px;
-  height: 60vh; /* Chiều cao linh hoạt theo tỷ lệ viewport height */
+  padding: 1.2rem;
+  height: 100vh;
 }
 
-/* Media Query cho chiều rộng tối đa */
-@media (max-width: 700px) {
-  .heroes {
-    height: 50vh; /* Chiều cao khi màn hình nhỏ hơn 700px */
-  }
-}
-
-/* Media Query cho chiều rộng tối thiểu */
-@media (min-width: 701px) {
-  .heroes {
-    height: 100vh; /* Chiều cao khi màn hình lớn hơn 700px */
-  }
-}
 .heroes-content {
   position: relative;
   width: 100%;
   max-width: 1440px;
   height: 100%;
+  z-index: 2; /* Đảm bảo nội dung nằm trên overlay */
 }
 
 .shop-now-button {
   position: absolute;
-  bottom: 20px; /* Điều chỉnh chiều cao của nút so với phần dưới cùng */
-  left: 20px; /* Đảm bảo nút nằm ở góc bên trái */
-  padding: 10px 20px;
-  font-size: 1em;
+  bottom: 2rem;
+  left: 1.125rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.125rem;
   color: #fff;
   background-color: #d96e05;
   border: none;
@@ -54,18 +44,31 @@
   color: #d96e05;
 }
 
-/* Media Query cho chiều rộng tối thiểu */
-@media (min-width: 701px) {
+@media (max-width: 1024px) {
   .heroes {
-    height: 100vh; /* Chiều cao khi màn hình lớn hơn 700px */
+    height: 50vh;
   }
 
   .shop-now-button {
-    padding: 12px 24px; /* Đảm bảo nút lớn hơn trên màn hình lớn */
-    font-size: 1.2em; /* Tăng kích thước chữ trên màn hình lớn */
+    font-size: 0.9em;
+    padding: 0.6rem 1.2rem;
   }
 }
 
+@media (max-width: 480px) {
+  .heroes {
+    height: 30vh;
+  }
+
+  .shop-now-button {
+    bottom: 0.5rem;
+    left: 0.3rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.5em;
+  }
+}
+
+/*FEATURES */
 .feature {
   text-align: center; /* Căn giữa nội dung trong mỗi feature */
   display: flex;
@@ -104,16 +107,15 @@ p {
 }
 
 .row-cols-lg-4 .feature {
-  max-width: 350px; /* Giới hạn chiều rộng của các cột */
+  max-width: 350px;
   margin: 0 auto;
 }
 
 .text-center {
-  text-align: center; /* Căn giữa các tiêu đề và mô tả */
+  text-align: center;
 }
 
-/* Điều chỉnh cho kích thước màn hình nhỏ hơn */
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .feature {
     max-width: 80%; /* Đảm bảo các cột sẽ thu hẹp trên màn hình nhỏ */
   }
@@ -127,17 +129,18 @@ p {
   }
 }
 
+/* CTA Men and Women*/
 .cta-container {
   width: 100%;
-  max-width: 1440px;
+  padding: 2rem 0;
   margin: 0 auto;
 }
 
 .cta-content {
   display: flex;
   justify-content: space-between;
-  gap: 30px; /* Khoảng cách giữa các phần tử */
-  height: 300px; /* Chiều cao của các phần tử */
+  gap: 30px;
+  height: auto;
 }
 
 .cta-item {
@@ -147,6 +150,7 @@ p {
   justify-content: space-between;
   background-color: #f2f0f3;
   overflow: hidden;
+  height: auto;
 }
 
 .cta-text {
@@ -156,6 +160,7 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .cta-text h3 {
@@ -165,22 +170,25 @@ p {
 }
 
 .cta-button {
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   background-color: #d96e05;
   color: white;
   text-align: center;
   text-decoration: none;
   font-size: 0.8em;
+  height: auto;
 }
 
 .cta-button:hover {
-  background-color: #ff7e00;
+  background-color: white;
+  border: 1px solid #d96e05;
+  color: #d96e05;
 }
 
 .cta-image {
   flex: 1;
   height: 100%;
-  width: 100%; /* Chiếm hết chiều rộng */
+  width: 100%;
   overflow: hidden;
   padding-right: 20px;
 }
@@ -188,25 +196,563 @@ p {
 .cta-img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Đảm bảo ảnh không bị cắt và có tỷ lệ hình ảnh phù hợp */
+  object-fit: cover;
 }
 
-/* Media Query cho màn hình điện thoại */
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .cta-content {
-    flex-direction: column; /* Đặt phần tử theo chiều dọc khi màn hình thu nhỏ */
-    height: auto; /* Cho phép chiều cao tự động điều chỉnh */
+    flex-direction: column;
+    height: auto;
   }
 
   .cta-item {
-    margin-bottom: 20px; /* Thêm khoảng cách giữa các mục */
+    margin-bottom: 20px;
   }
 
   .cta-text h3 {
-    font-size: 1em; /* Điều chỉnh kích thước chữ cho nhỏ lại trên màn hình điện thoại */
+    font-size: 1em;
   }
 
   .cta-button {
-    font-size: 0.7em; /* Điều chỉnh kích thước nút khi trên điện thoại */
+    font-size: 0.7em;
+  }
+}
+@media (max-width: 480px) {
+  .cta-text h3 {
+    font-size: 0.625rem;
+  }
+  .cta-button {
+    font-size: 0.5rem;
+    padding: 0.3rem 0.5rem;
+  }
+  .cta-img {
+    max-height: 200px;
+  }
+}
+
+/*BEST SELLING SECTION*/
+.best-selling {
+  margin: 2rem auto;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: visible;
+  margin: auto;
+}
+
+.carousel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-card {
+  flex: 0 0 calc(25% - 1.5rem); /* 4 sản phẩm mỗi hàng, trừ khoảng gap */
+  height: auto;
+  box-sizing: border-box;
+  padding: 1rem;
+  text-align: center;
+  justify-content: space-between;
+  background-color: white;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px); /* Hiệu ứng nổi khi hover */
+}
+
+.product-image-wrapper {
+  aspect-ratio: 1 / 1; /* Tỷ lệ hình vuông */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover {
+  transform: scale(1.1);
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.product-price {
+  font-size: 0.9rem;
+  color: gray;
+  margin-top: 0.3rem;
+}
+
+/* Navigation container */
+.best-selling {
+  margin: 2rem auto;
+  text-align: center;
+  max-width: 75rem;
+}
+
+.best-selling-title {
+  margin-bottom: 0.625rem;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
+.best-selling-subtitle {
+  font-size: 0.8rem;
+  color: black;
+}
+
+.best-selling-navigation {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 8px */
+}
+
+/* Nút điều hướng */
+.prev-btn,
+.next-btn {
+  margin: 0;
+  padding: 0;
+  font-size: 1.25rem; /* 20px */
+  width: 2rem; /* 32px */
+  height: 2rem; /* 32px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+  background-color: #f0f0f0;
+  color: #555;
+  border-radius: 50%;
+}
+
+p {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  margin: 0;
+  padding: 0;
+}
+
+/* Khoảng cách giữa các thành phần */
+.best-selling-navigation p {
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 1024px) {
+  .best-selling {
+    padding: 1rem;
+  }
+  .product-card {
+    flex: 0 0 calc(33.33% - 1rem);
+    height: auto; /* Tự điều chỉnh chiều cao */
+  }
+}
+@media (max-width: 480px) {
+  .best-selling {
+    padding: 0.5rem;
+  }
+
+  .carousel {
+    gap: 0.5rem; /* Giảm khoảng cách giữa các product-card */
+  }
+
+  .product-card {
+    flex: 0 0 calc(50% - 0.5rem); /* Mỗi card chiếm 50% chiều rộng trừ khoảng cách */
+    height: auto; /* Tự động điều chỉnh chiều cao */
+    padding: 0.5rem; /* Padding bên trong nhỏ hơn */
+    box-sizing: border-box; /* Bao gồm cả padding và border vào kích thước tổng */
+  }
+
+  .product-image-wrapper {
+    height: auto; /* Điều chỉnh chiều cao theo tỷ lệ */
+    padding: 0.5rem; /* Giảm padding để tiết kiệm không gian */
+  }
+
+  .product-image {
+    max-width: 100%; /* Giữ nguyên chiều rộng của ảnh */
+    max-height: auto; /* Tự động điều chỉnh chiều cao */
+    object-fit: contain; /* Giữ tỷ lệ ảnh */
+  }
+
+  .product-name {
+    font-size: 0.9rem; /* Giảm kích thước tên sản phẩm */
+    margin-top: 0.5rem;
+  }
+
+  .product-price {
+    font-size: 0.8rem; /* Giảm kích thước giá */
+    color: #888; /* Màu chữ nhạt hơn để nhấn mạnh */
+  }
+
+  /* Navigation buttons */
+  .best-selling-navigation {
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu cần */
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .prev-btn,
+  .next-btn {
+    font-size: 1rem; /* Kích thước nhỏ hơn */
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .best-selling-title {
+    font-size: 1.2rem; /* Giảm kích thước tiêu đề */
+    margin-bottom: 0.5rem;
+  }
+
+  .best-selling-subtitle {
+    font-size: 0.7rem; /* Giảm kích thước phụ đề */
+    line-height: 1rem;
+  }
+}
+
+/* Section Container */
+.customize-section {
+  padding: 2rem 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* Khoảng cách giữa các phần */
+  height: 100vh;
+}
+
+/* Giới thiệu */
+.customize-intro {
+  width: 100%;
+  background-color: #fff6e9;
+  padding: 1rem 0;
+  text-align: center;
+  margin: 0;
+}
+.customize-intro p {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.5rem;
+  margin: 0 auto;
+  max-width: 50rem;
+}
+
+/* Nội dung chính */
+.customize-content {
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  background-image: url("/Images/quotes.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 2rem;
+}
+/* Text được định vị góc trên bên phải */
+.customize-text {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  text-align: center;
+  padding: 1rem;
+}
+.customize-text h3 {
+  font-size: 1.625rem;
+}
+/* Nút Customize */
+.customize-button {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.1rem;
+  background-color: #fff6e9;
+  color: #333;
+  border: none;
+  cursor: pointer;
+}
+.customize-button:hover {
+  background-color: white;
+  border: 1px solid #d96e05;
+  color: #d96e05;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 64rem) {
+  .customize-intro p {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  .customize-text h3 {
+    font-size: 1.2rem; /* Giảm kích thước chữ */
+  }
+
+  .customize-button {
+    font-size: 1rem; /* Giảm kích thước nút */
+    padding: 0.5rem 1rem;
+  }
+}
+@media (max-width: 36rem) {
+  .customize-intro {
+    padding: 0.25rem;
+  }
+  .customize-intro p {
+    font-size: 0.8rem;
+  }
+  .customize-text h3 {
+    font-size: 1rem; /* Giảm kích thước chữ */
+  }
+
+  .customize-button {
+    font-size: 0.8rem; /* Giảm kích thước nút */
+    padding: 0.3rem 1rem;
+  }
+}
+
+/* Promotion Section */
+.promo-container {
+  width: 100vw; /* Full chiều rộng màn hình */
+  margin-left: calc(-50vw + 50%); /* Đảm bảo container canh giữa */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem; /* Khoảng cách giữa 2 cột */
+  padding: 2rem;
+  background-color: #d96e05; /* Màu nền cam */
+  height: 30rem; /* 670px chuyển sang rem */
+}
+
+/* Promo Content */
+.promo-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem; /* Khoảng cách giữa các phần tử */
+  color: #ffffff; /* Màu chữ */
+  padding: 1rem;
+  max-width: 31rem; /* 500px */
+  min-width: 12rem; /* 200px */
+  flex-shrink: 1; /* Cho phép thu nhỏ khi thiếu không gian */
+}
+
+.promo-content h2 {
+  font-size: 3rem; /* 48px */
+  font-weight: bold;
+  margin-bottom: 0.5rem; /* 8px */
+}
+
+.promo-restrictions {
+  font-size: 1.125rem; /* 18px */
+  margin-bottom: 1rem; /* 16px */
+  color: white;
+}
+
+.promo-timer {
+  display: flex;
+  gap: 1rem; /* 16px */
+  justify-content: center;
+}
+
+.timer-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 5rem;
+  background-color: #fff6e9; /* Nền màu sáng */
+  color: #d96e05; /* Màu chữ cam */
+  border-radius: 0.7rem; /* 11.2px */
+  text-align: center;
+}
+
+.timer-value {
+  font-size: 2.5rem;
+  font-weight: 1rem;
+}
+
+.timer-label {
+  font-size: 0.75rem; /* 12px */
+  margin-bottom: 0.2rem; /* Tùy chỉnh khoảng cách trên */
+}
+
+/* CTA Button */
+.promo-button {
+  background-color: #fff6e9; /* Màu nền sáng */
+  color: #d96e05; /* Màu chữ cam */
+  padding: 0.8rem 1.5rem; /* 12.8px 24px */
+  border: none;
+  cursor: pointer;
+  font-size: 1rem; /* 16px */
+  font-weight: bold;
+  width: 10rem;
+  transition: all 0.3s ease;
+}
+
+.promo-button:hover {
+  background-color: #ffdab5; /* Màu nền khi hover */
+  color: #d96e05; /* Màu chữ cam */
+}
+
+/* Promo Image */
+.promo-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem 0;
+
+  /* Background image settings */
+  background-image: url("/Images/promotion.jpg"); /* Thay bằng đường dẫn ảnh */
+  background-size: contain; /* Đảm bảo ảnh bao phủ toàn bộ */
+  background-position: center; /* Căn giữa hình ảnh */
+  background-repeat: no-repeat; /* Không lặp lại ảnh */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 64rem) {
+  /* Tablet (1024px) */
+  .promo-container {
+    height: 24rem;
+    padding: 1rem;
+  }
+
+  .promo-content {
+    max-width: 16rem; /* 360px */
+  }
+
+  .promo-content h2 {
+    font-size: 2rem;
+  }
+  .promo-restrictions {
+    font-size: 1rem;
+  }
+  .timer-box {
+    width: 3.125rem;
+  }
+  .timer-value {
+    font-size: 1.5rem;
+  }
+  .timer-label {
+    font-size: 0.5rem;
+  }
+}
+
+@media (max-width: 36rem) {
+  .promo-container {
+    padding: 2rem 1rem;
+    height: 13rem;
+  }
+
+  .promo-content {
+    max-width: 100%;
+    gap: 0.5rem; /* 8px */
+  }
+
+  .promo-content h2 {
+    font-size: 1.2rem;
+  }
+  .promo-restrictions {
+    font-size: 0.6rem;
+  }
+
+  .timer-box {
+    width: 2rem;
+  }
+
+  .timer-value {
+    font-size: 0.8rem;
+  }
+  .timer-label {
+    font-size: 0.4rem;
+  }
+  .promo-button {
+    width: 5rem; /* 128px */
+    padding: 0.3rem 0.5rem;
+    font-size: 0.6rem; /* 9.6px 16px */
+  }
+}
+
+/* Exclusive Club Section */
+.exclusive-club {
+  background-color: #fff6e9; /* Màu nền */
+  color: #333; /* Màu chữ */
+  width: 100vw; /* Full chiều rộng màn hình */
+  margin-left: calc(-50vw + 50%); /* Đảm bảo container canh giữa */
+}
+
+.exclusive-club h2 {
+  font-size: 1.8rem; /* Kích thước tiêu đề */
+  margin-bottom: 1rem;
+}
+
+.exclusive-club p {
+  font-size: 1rem; /* Kích thước chữ */
+  line-height: 1.5;
+}
+
+.form-subscribe .input-group {
+  max-width: 600px;
+  width: 100%; /* Chiếm toàn bộ chiều ngang */
+}
+
+.form-subscribe .input-group-text {
+  border: none; /* Xóa viền */
+  background-color: #fff; /* Nền trắng */
+}
+
+.form-subscribe .form-control {
+  border: none; /* Xóa viền */
+  box-shadow: none; /* Xóa shadow mặc định */
+}
+
+.form-subscribe .btn {
+  color: black;
+  background-color: #fff;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.form-subscribe .btn:hover {
+  background-color: #a5a3a3; /* Màu nền khi hover */
+  color: #0c0606; /* Màu chữ */
+}
+
+.exclusive-club p.small {
+  font-size: 0.875rem; /* Kích thước chữ nhỏ */
+  color: #999; /* Màu chú thích */
+  padding: 1rem 12rem; /* Padding trái */
+}
+/* Responsive chỉnh sửa padding khi màn hình nhỏ */
+@media (max-width: 64rem) {
+  .exclusive-club p.small {
+    padding: 0.5rem 3rem;
+  }
+}
+
+@media (max-width: 32rem) {
+  .exclusive-club p.small {
+    padding: 0.25rem 1.5rem;
   }
 }

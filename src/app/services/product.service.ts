@@ -13,6 +13,9 @@ export class ProductService {
   products: ProductDetails[] = [];
   productsSbuject = new BehaviorSubject<ProductDetails[]>([]);
 
+  bestSellingProducts: any[] = [];
+  bestSellingProductsSubject = new BehaviorSubject<any[]>([]);
+
   constructor(private _httpClient: HttpClient) {}
 
   searchAllProduct(searchTerm : string) : Observable<ProductDetails[]>
@@ -45,6 +48,15 @@ export class ProductService {
   getProduct(productId : string): Observable<ProductDetails>
   {
     return this._httpClient.get<ProductDetails>(this.myAPIUrl + `/product/${productId}`);
+  }
+
+  // Phương thức lấy sản phẩm best-seller
+  getBestSellingProducts(): Observable<any[]> {
+    return this._httpClient.get<any[]>(`${this.myAPIUrl}/best-selling`).pipe(
+      tap((bestSellingProducts: any[]) => {
+        this.bestSellingProductsSubject.next(bestSellingProducts);
+      })
+    );
   }
 
   getAllReviews(productId : string) : Observable<Review[]>
