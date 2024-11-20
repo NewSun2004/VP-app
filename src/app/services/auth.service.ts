@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -42,9 +42,9 @@ export class AuthService {
         this.loggedInSubject.next(true); // Login successful, update BehaviorSubject
         return user;
       }),
-      catchError(() => {
+      catchError((error) => {
         this.loggedInSubject.next(false); // Login failed, update BehaviorSubject
-        return of(false);
+        return throwError(() => error)
       })
     );
   }

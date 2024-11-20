@@ -2,7 +2,8 @@ const { Cart, Cart_line } = require("../model/model")
 
 const cartController = {
   getCart: async (req, res) => {
-    const userId = req.session.user.id;
+    const {userId} = req.params
+    console.log(req.session.user)
 
     try
     {
@@ -28,12 +29,14 @@ const cartController = {
     }
   },
   addCartLineToCart: async (req, res) => {
+    const { cartID } = req.params
+
     try
     {
       const cartLine = new Cart_line(req.body);
       const saveCartLine = await cartLine.save();
       const cartUpdate = Cart.updateOne(
-        {user_id : req.session.user.id},
+        {user_id : userId},
         {$push : {cart_line : saveCartLine._id}}
       )
       res.status(200).json(saveCartLine, cartUpdate);
