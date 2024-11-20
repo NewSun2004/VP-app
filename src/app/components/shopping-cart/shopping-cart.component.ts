@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -24,7 +25,7 @@ export class ShoppingCartComponent implements OnInit{
   totalPrice : number = 0;
   totalOrder : number = 0;
 
-  constructor(private _authService : AuthService, private _productService : ProductService, private _cartService : CartService)
+  constructor(private _authService : AuthService, private _productService : ProductService, private _cartService : CartService, private _router : Router)
   { }
 
   ngOnInit() : void {
@@ -43,7 +44,6 @@ export class ShoppingCartComponent implements OnInit{
                     this.boxChecked.push(true);
                     this.totalPriceElements.push(cartLine.quantity * productData.product_price);
                     this.updateTotalPrice();
-                    this._cartService.totalPrice.next(this.totalPrice);
                   }
                 })
               }
@@ -57,11 +57,6 @@ export class ShoppingCartComponent implements OnInit{
   checkProduct(i : number) : void
   {
     this.updateTotalPrice(undefined, true);
-  }
-
-  plusQuantity(product : any) : void
-  {
-
   }
 
   delete(cartLineId : string, i : number) : void
@@ -100,5 +95,21 @@ export class ShoppingCartComponent implements OnInit{
     }
 
     this.totalOrder = this.totalPrice + this.shippingPrice;
+  }
+
+  processToOrder() : void
+  {
+    this._cartService.selectedCartLines = [];
+    this._cartService.selectedCartProducts = [];
+
+    for (let i = 0; i < this.boxChecked.length; i++)
+    {
+      if (this.boxChecked[i])
+      {
+        this._cartService.selectedCartLines.push(this.cartLines[i]);
+        this._cartService.selectedCartProducts.push(this.cartProducts[i]);
+      }
+    }
+    this._router.navigate(["/payment"]);
   }
 }

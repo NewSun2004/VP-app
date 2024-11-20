@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Cart } from '../interfaces/cart';
 import { CartLine } from '../interfaces/cart-line';
+import { ProductDetails } from '../interfaces/product-details';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,14 @@ import { CartLine } from '../interfaces/cart-line';
 export class CartService {
   myAPIUrl: string = 'http://localhost:3001';
 
-  totalPrice = new BehaviorSubject<number>(0);
+  customerName : string = "";
+  phone : string = "";
+  address : string = "";
+
+  selectedCartLines : CartLine[] = [];
+  selectedCartProducts : ProductDetails[] = [];
+
+  totalPrice : number = 0;
 
   constructor(private _httpClient : HttpClient) { }
 
