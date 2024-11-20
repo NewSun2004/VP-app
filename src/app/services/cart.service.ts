@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Cart } from '../interfaces/cart';
 import { CartLine } from '../interfaces/cart-line';
 
@@ -9,6 +9,8 @@ import { CartLine } from '../interfaces/cart-line';
 })
 export class CartService {
   myAPIUrl: string = 'http://localhost:3001';
+
+  totalPrice = new BehaviorSubject<number>(0);
 
   constructor(private _httpClient : HttpClient) { }
 

@@ -123,6 +123,7 @@ export class ProductDetailsComponent implements OnInit{
         cart_id : this._authService.currentUser.user.cart,
         has_customized : false,
         product_id : this.productData._id,
+        selected_color_index : this.currentProductLineIndex,
         quantity : this.selectedQuantity
       }
 

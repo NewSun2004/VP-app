@@ -1,7 +1,7 @@
 <h1>My Cart</h1>
 
 <div class="row">
-  <div class="col-9">
+  <div class="col-12 col-md-9">
     <table class="table table-hover align-middle text-center">
       <thead>
         <tr>
@@ -17,21 +17,21 @@
         <tr *ngFor="let cartProduct of cartProducts, let i = index">
           <td>
             <div class="d-flex flex-row justify-content-center align-items-center">
-              <input type="checkbox" name="" id="">
+              <input [(ngModel)]="boxChecked[i]" class="form-check-input shadow-none" type="checkbox" name="" id="check{{i}}" (change)="checkProduct(i)">
             </div>
           </td>
 
           <td class="text-start" scope="row">
             <div class="row">
               <div class="col-5">
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                  <img [src]="cartProduct.product_lines[0].image_urls[1]" alt="" style="width: 60%;">
+                <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
+                  <img [src]="cartProduct.product_lines[cartLines[i].selected_color_index].image_urls[1]" alt="" style="width: 80%;">
                 </div>
               </div>
 
               <div class="col">
                 <p>{{cartProduct.product_name}}</p>
-                <p>{{cartProduct.product_lines[0].product_line_name}}</p>
+                <p>{{cartProduct.product_lines[cartLines[i].selected_color_index].product_line_name}}</p>
               </div>
             </div>
           </td>
@@ -50,7 +50,7 @@
 
           <td>
             <div class="d-flex flex-row justify-content-center align-items-center">
-              <button class="btn" (click)="delete(cartLines[i]._id!)">
+              <button class="btn" (click)="delete(cartLines[i]._id!, i)">
                 <img src="Icons/cross-button.svg" alt="">
               </button>
             </div>
@@ -60,34 +60,34 @@
     </table>
   </div>
 
-  <div class="container col">
+  <div class="container col-12 col-md-3 summary">
     <h3>Summary</h3>
-    <p>Items: 2</p>
+    <p>Items: {{cartLines.length}}</p>
 
     <div class="d-flex flex-row">
       <p class="flex-grow-1">Subtotal:</p>
-      <p>$190</p>
+      <p>${{totalPrice}}</p>
     </div>
 
     <div class="d-flex flex-row">
       <p class="flex-grow-1">Shipping Fee:</p>
-      <p>$5</p>
+      <p>${{shippingPrice}}</p>
     </div>
 
-    <button class="btn">
-      Apply voucher ->
+    <button class="voucher">
+      Apply voucher
     </button>
 
     <hr>
 
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row total">
       <p class="flex-grow-1">
         Order Total
       </p>
 
-      <p>$195</p>
+      <p>${{this.totalOrder}}</p>
     </div>
-    <button class="btn btn-outline-warning" style="width: 100%;">
+    <button class="checkout" style="width: 100%;">
       Proceed to checkout
     </button>
   </div>

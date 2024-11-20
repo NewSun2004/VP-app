@@ -117,9 +117,13 @@ const cart_lineSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
-    product_id:{
+    product_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
+    },
+    selected_color_index : {
+        type: Number,
+        required: true
     },
     for_customize_id:{
         type: mongoose.Schema.Types.ObjectId,
@@ -353,6 +357,6 @@ let Shipping = mongoose.model("Shipping", shippingSchema)
 let Review = mongoose.model("Review", reviewsSchema)
 let Temporary_user = mongoose.model("Temporary_user", temporaryUserSchema)
 
-module.exports = { User,Product, Cart, Cart_line, Customize,
+module.exports = { User, Product, Cart, Cart_line, Customize,
     Order, Invoice, Payment, Shipping, Review, Temporary_user
 }

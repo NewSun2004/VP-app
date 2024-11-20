@@ -5,17 +5,22 @@ import { ProductDetails } from '../../interfaces/product-details';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.css'
 })
 export class ShoppingCartComponent implements OnInit{
   cartLines : CartLine[] = [];
   cartProducts : ProductDetails[] = [];
+
+  boxChecked : boolean[] = [];
+  totalPriceElements : number[] = [];
+  shippingPrice : number = 5;
   totalPrice : number = 0;
   totalOrder : number = 0;
 
@@ -35,6 +40,10 @@ export class ShoppingCartComponent implements OnInit{
                 this._productService.getProduct(cartLine.product_id!).subscribe({
                   next : productData => {
                     this.cartProducts.push(productData);
+                    this.boxChecked.push(true);
+                    this.totalPriceElements.push(cartLine.quantity * productData.product_price);
+                    this.updateTotalPrice();
+                    this._cartService.totalPrice.next(this.totalPrice);
                   }
                 })
               }
@@ -45,16 +54,51 @@ export class ShoppingCartComponent implements OnInit{
     })
   }
 
+  checkProduct(i : number) : void
+  {
+    this.updateTotalPrice(undefined, true);
+  }
+
   plusQuantity(product : any) : void
   {
 
   }
 
-  delete(cartLineId : string) : void
+  delete(cartLineId : string, i : number) : void
   {
     let cartLine = this.cartLines.find(cartLine => cartLine._id == cartLineId);
     this.cartLines = this.cartLines.filter(cartLine => cartLine._id != cartLineId);
     this.cartProducts = this.cartProducts.filter(product => product._id != cartLine?.product_id!);
-    this._cartService.removeCartLine(cartLineId).subscribe({});
+    console.log(i);
+    this.updateTotalPrice(i);
+    // this._cartService.removeCartLine(cartLineId).subscribe({});
+  }
+
+  updateTotalPrice(i? : number, temp? : boolean) : void
+  {
+    if (i != undefined)
+    {
+      this.totalPriceElements.splice(i, 1);
+    }
+
+    this.totalPrice = this.totalPriceElements.reduce((sum, element) => {
+      return sum + element;
+    }, 0);
+
+    if ( temp == true)
+    {
+      let totalPriceTemp = 0;
+      for (let i = 0; i < this.boxChecked.length; i++)
+      {
+        if (this.boxChecked[i])
+        {
+          totalPriceTemp += this.totalPriceElements[i];
+        }
+      }
+
+      this.totalPrice = totalPriceTemp;
+    }
+
+    this.totalOrder = this.totalPrice + this.shippingPrice;
   }
 }
