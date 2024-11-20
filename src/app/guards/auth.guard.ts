@@ -12,10 +12,10 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     // Directly subscribe to the BehaviorSubject and take the first emitted value
-    return this.authService.loggedInSubject.pipe(
+    return this.authService.checkSession().pipe(
       take(1), // Take only the first value emitted
       map((isLoggedIn: boolean) => {
-        console.log(isLoggedIn)
+        console.log(isLoggedIn);
         if (isLoggedIn) {
           return true; // Allow access if logged in
         } else {

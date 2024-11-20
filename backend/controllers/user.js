@@ -27,7 +27,7 @@ const userController = {
         return res.status(401).json({ message: "Invalid credentials." });
       }
 
-      req.session.user = { id: user._id, role: "user" };
+      req.session.user = { user };
 
       if (rememberMe) {
         const token = crypto.randomBytes(32).toString("hex");

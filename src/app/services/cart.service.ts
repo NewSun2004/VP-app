@@ -12,9 +12,9 @@ export class CartService {
 
   constructor(private _httpClient : HttpClient) { }
 
-  getCart() : Observable<Cart>
+  getCart(userId : string) : Observable<Cart>
   {
-    return this._httpClient.get<Cart>(this.myAPIUrl + "/cart");
+    return this._httpClient.get<Cart>(this.myAPIUrl + `/cart/${userId}`);
   }
 
   getCartLines(cartId : string) : Observable<CartLine[]>
@@ -22,8 +22,13 @@ export class CartService {
     return this._httpClient.get<CartLine[]>(this.myAPIUrl + `/cart/cart_lines/${cartId}`);
   }
 
-  insertCartLine(cart_line : CartLine) : Observable<CartLine>
+  insertCartLine(cartLine : CartLine) : Observable<CartLine>
   {
-    return this._httpClient.post<CartLine>(this.myAPIUrl + "/cart/cart_line/add", cart_line);
+    return this._httpClient.post<CartLine>(this.myAPIUrl + "/cart/cart_line/add", cartLine);
+  }
+
+  removeCartLine(cartLineId : string) : Observable<any>
+  {
+    return this._httpClient.delete<any>(this.myAPIUrl + `/cart/cart_line/delete/${cartLineId}`);
   }
 }
