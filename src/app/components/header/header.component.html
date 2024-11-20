@@ -81,7 +81,13 @@
             </ul>
           </div>
           <a [routerLink]="['/cart']" class="me-2 manage">Cart</a>
-          <img src="Icons/shopping-bag.svg" alt="">
+          <div class="position-relative">
+            <img src="Icons/shopping-bag.svg" alt="" class="img-fluid">
+            <span class="badge cart-badge">
+              {{ cartCount }}
+            </span>
+          </div>
+
         </div>
       </div>
     </div>

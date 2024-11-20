@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Cart } from '../interfaces/cart';
 import { CartLine } from '../interfaces/cart-line';
 import { ProductDetails } from '../interfaces/product-details';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,12 @@ export class CartService {
   phone : string = "";
   address : string = "";
 
+  currentItemsInCart : CartLine[] = [];
   selectedCartLines : CartLine[] = [];
   selectedCartProducts : ProductDetails[] = [];
 
   totalPrice : number = 0;
+  shippingFee : number = 0;
 
   constructor(private _httpClient : HttpClient) { }
 

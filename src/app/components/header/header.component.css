@@ -3,6 +3,22 @@
   color: #00000080;
 }
 
+.cart-badge {
+  position: absolute; /* Enable absolute positioning */
+  top: -2px;  /* Adjust the badge position from the top */
+  right: -12px;  /* Adjust the badge position from the right */
+  background-color: red; /* Custom background color */
+  font-size: 0.6rem; /* Adjust the font size */
+  padding: 0.3rem 0.6rem; /* Adjust padding */
+  color: #ffffff; /* Set text color */
+  border-radius: 50%; /* Make the badge circular */
+  width: 15px; /* Set the width of the badge */
+  height: 22px; /* Set the height of the badge */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 div.responsive {
   div.promo {
     background-color: #d96e05;
@@ -99,5 +115,21 @@ a.manage:hover {
     img#logo-2 {
       width: 10%;
     }
+  }
+
+  .cart-badge {
+    position: absolute; /* Enable absolute positioning */
+    top: -5px;  /* Adjust the badge position from the top */
+    right: -6px;  /* Adjust the badge position from the right */
+    background-color: red; /* Custom background color */
+    font-size: 0.5rem; /* Adjust the font size */
+    padding: 0.3rem 0.6rem; /* Adjust padding */
+    color: #ffffff; /* Set text color */
+    border-radius: 50%; /* Make the badge circular */
+    width: 10px; /* Set the width of the badge */
+    height: 15px; /* Set the height of the badge */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

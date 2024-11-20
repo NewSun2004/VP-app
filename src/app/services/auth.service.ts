@@ -11,9 +11,7 @@ export class AuthService {
   loggedInSubject = new BehaviorSubject<boolean>(false); // BehaviorSubject to track login state
   currentUser : any;
 
-  constructor(private http: HttpClient) {
-    this.checkSession().subscribe({});
-  }
+  constructor(private http: HttpClient) {}
 
   // Method to check session on the server
   checkSession(): Observable<boolean> {

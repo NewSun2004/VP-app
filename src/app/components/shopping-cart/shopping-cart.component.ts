@@ -21,7 +21,7 @@ export class ShoppingCartComponent implements OnInit{
 
   boxChecked : boolean[] = [];
   totalPriceElements : number[] = [];
-  shippingPrice : number = 5;
+  shippingFee : number = 5;
   totalPrice : number = 0;
   totalOrder : number = 0;
 
@@ -94,7 +94,7 @@ export class ShoppingCartComponent implements OnInit{
       this.totalPrice = totalPriceTemp;
     }
 
-    this.totalOrder = this.totalPrice + this.shippingPrice;
+    this.totalOrder = this.totalPrice + this.shippingFee;
   }
 
   processToOrder() : void
@@ -110,6 +110,8 @@ export class ShoppingCartComponent implements OnInit{
         this._cartService.selectedCartProducts.push(this.cartProducts[i]);
       }
     }
+    this._cartService.totalPrice = this.totalPrice;
+    this._cartService.shippingFee = this.shippingFee;
     this._router.navigate(["/payment"]);
   }
 }

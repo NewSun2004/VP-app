@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { DisplaySearchProductComponent } from "../display-search-product/display-search-product.component";
 import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -21,14 +22,21 @@ export class HeaderComponent implements OnInit{
   showSubMenuS : boolean = false;
 
   searchInput : string = "";
+  cartCount : number = 0;
   products : any;
 
-  constructor (private _authService : AuthService, private _productService : ProductService, private _router : Router) {}
+  constructor (private _authService : AuthService, private _productService : ProductService, private _cartService : CartService) {}
 
   ngOnInit(): void {
-    this._authService.isLoggedIn().subscribe({
+    this._authService.checkSession().subscribe({
       next : inSession => {
         this.isLoggedIn = inSession;
+        this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
+          next : cartLines => {
+            this._cartService.currentItemsInCart = cartLines;
+            this.cartCount = cartLines.length;
+          }
+        })
       }
     });
   }
