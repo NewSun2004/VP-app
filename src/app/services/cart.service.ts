@@ -24,6 +24,6 @@ export class CartService {
 
   insertCartLine(cart_line : CartLine) : Observable<CartLine>
   {
-    return this._httpClient.post<CartLine>(this.myAPIUrl + "/cart/cart_line/add", cart_line)
+    return this._httpClient.post<CartLine>(this.myAPIUrl + "/cart/cart_line/add", cart_line);
   }
 }

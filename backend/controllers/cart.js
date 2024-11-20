@@ -28,18 +28,26 @@ const cartController = {
       res.status(500).json({ error : error })
     }
   },
-  addCartLineToCart: async (req, res) => {
-    const { cartID } = req.params
+  addCartline: async (req, res) => {
+    try {
+        // Tạo mới một cart_line từ dữ liệu gửi lên
+        const newCart_line = new Cart_line(req.body);
+        const savedCart_line = await newCart_line.save();
 
-    try
-    {
-      const cartLine = new Cart_line(req.body);
-      const saveCartLine = await cartLine.save();
-      res.status(200).json(saveCartLine, cartUpdate);
-    }
-    catch (error)
-    {
-      res.status(500).json({ error : error });
+        // Sau khi lưu cart_line, thêm ID của nó vào cart tương ứng
+        await Cart.findByIdAndUpdate(
+            req.body.cart_id, // cart_id được gửi trong body
+            { $push: { cart_line: savedCart_line._id } }, // Thêm cart_line ID vào cart_line array
+            { new: true } // Trả về document sau khi cập nhật
+        );
+
+        res.status(200).json({
+            message: "Cart line đã được thêm thành công và cập nhật vào cart!",
+            cart_line: savedCart_line,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Lỗi server!", error: err.message });
     }
   }
 }
