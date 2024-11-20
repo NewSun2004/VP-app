@@ -3,6 +3,6 @@ const router = express.Router();
 const { registerTemporaryUser, verifyToken } = require('../controllers/temporary_user');
 
 router.post('/', registerTemporaryUser);
-router.get('/verify', verifyToken);
+router.post('/verify', verifyToken);
 
 module.exports = router;
