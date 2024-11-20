@@ -10,11 +10,12 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PaymentComponent } from './components/payment/payment.component';
 
 export const routes: Routes = [
   {path : "", component : HomepageComponent},
   {path : "register", component: RegisterComponent},
-  {path : "login", component: LoginComponent},
+  {path : "login", component: LoginComponent, canActivate : [AuthGuard]},
   {path : "aboutus", component : AboutUsComponent},
   {path : "eyeglasses", component : DisplayProductsComponent},
   {path : "eyeglasses/:productId", component : ProductDetailsComponent},
@@ -25,5 +26,6 @@ export const routes: Routes = [
   {path : "accessories/:productId", component : ProductDetailsComponent},
   {path : "contacts", component : ContactComponent},
   {path : "cart", component : ShoppingCartComponent, canActivate : [AuthGuard]},
+  {path : "payment", component : PaymentComponent, canActivate : [AuthGuard]},
   {path : "**", component : PageNotFoundComponent},
 ];

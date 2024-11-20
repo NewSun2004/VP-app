@@ -1,7 +1,7 @@
 <h1>My Cart</h1>
 
 <div class="row">
-  <div class="col-12 col-md-9">
+  <div class="col-12 col-md-8 col-lg-9">
     <table class="table table-hover align-middle text-center">
       <thead>
         <tr>
@@ -23,15 +23,17 @@
 
           <td class="text-start" scope="row">
             <div class="row">
-              <div class="col-5">
+              <div class="col col-lg-5">
                 <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
                   <img [src]="cartProduct.product_lines[cartLines[i].selected_color_index].image_urls[1]" alt="" style="width: 80%;">
                 </div>
               </div>
 
-              <div class="col">
-                <p>{{cartProduct.product_name}}</p>
-                <p>{{cartProduct.product_lines[cartLines[i].selected_color_index].product_line_name}}</p>
+              <div class="d-block d-lg-none w-100"></div>
+
+              <div class="col text-center text-lg-start">
+                <p class="mt-3 mb-0 mt-lg-0 mb-lg-auto">{{cartProduct.product_name}}</p>
+                <p class="mb-1 mb-lg-auto">{{cartProduct.product_lines[cartLines[i].selected_color_index].product_line_name}}</p>
               </div>
             </div>
           </td>
@@ -60,7 +62,7 @@
     </table>
   </div>
 
-  <div class="container col-12 col-md-3 summary">
+  <div class="container col-12 col-md-4 col-lg-3 summary">
     <h3>Summary</h3>
     <p>Items: {{cartLines.length}}</p>
 
