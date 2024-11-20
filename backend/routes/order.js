@@ -1,7 +1,17 @@
-const orderController = require("../controllers/order")
+const express = require("express");
+const router = express.Router();
+const orderController = require("../controllers/order");
 
-const router = require("express").Router()
+// Route để tạo đơn hàng mới
+router.post("/create", orderController.createOrder);
 
-router.post('/',orderController.addOrder)
+// Route để cập nhật trạng thái thanh toán
+router.put("/payment/update", orderController.updatePaymentStatus);
 
-module.exports = router
+// Route để cập nhật trạng thái vận chuyển
+router.put("/shipping/update", orderController.updateShippingStatus);
+
+// Route để lấy chi tiết đơn hàng
+router.get("/:order_id", orderController.getOrderDetails);
+
+module.exports = router;
