@@ -369,7 +369,7 @@ p {
     height: auto; /* Tự điều chỉnh chiều cao */
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .best-selling {
     padding: 0.5rem;
   }
@@ -379,10 +379,10 @@ p {
   }
 
   .product-card {
-    flex: 0 0 calc(50% - 0.5rem); /* Mỗi card chiếm 50% chiều rộng trừ khoảng cách */
-    height: auto; /* Tự động điều chỉnh chiều cao */
-    padding: 0.5rem; /* Padding bên trong nhỏ hơn */
-    box-sizing: border-box; /* Bao gồm cả padding và border vào kích thước tổng */
+    flex: 0 0 calc(50% - 0.5rem);
+    height: auto;
+    padding: 0.5rem;
+    box-sizing: border-box;
   }
 
   .product-image-wrapper {

@@ -13,93 +13,101 @@ export class HomepageComponent implements OnInit, OnDestroy {
   bestSellingProducts: any[] = [];
   visibleProducts: any[] = [];
   currentIndex: number = 0;
-  itemsPerRow: number = 4; // Mặc định là 4 sản phẩm mỗi hàng (Desktop)
+  itemsPerRow: number = 4; // Default: Desktop (4 sản phẩm mỗi hàng)
   itemsPerPage: number = 8; // 2 hàng x 4 sản phẩm
   carouselTransform: string = 'translateX(0%)';
 
-  // Biến cho đồng hồ đếm ngược
+  // Countdown variables
   days: string = '00';
   hours: string = '00';
   minutes: string = '00';
   seconds: string = '00';
 
   private countdownInterval: any;
+  private resizeSubscription: any;
 
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    // Lấy sản phẩm từ API
-    this.productService.getBestSellingProducts().subscribe((products) => {
-      this.bestSellingProducts = products;
-      this.updateItemsPerPage(); // Xác định số sản phẩm hiển thị
-      this.updateVisibleProducts(); // Hiển thị sản phẩm ban đầu
-    });
+    // Fetch Best-Selling Products
+    this.productService.getBestSellingProducts().subscribe(
+      (products) => {
+        console.log('Fetched Best-Selling Products:', products); // Log dữ liệu
+        this.bestSellingProducts = products;
+        this.updateVisibleProducts();
+      },
+      (error) => {
+        console.error('Error fetching Best-Selling Products:', error);
+      }
+    );
 
-    // Bắt đầu đồng hồ đếm ngược
+    // Start countdown timer
     const targetDate = new Date();
     targetDate.setDate(targetDate.getDate() + 12); // Thêm 12 ngày
     this.startCountdown(targetDate.toISOString());
-
-    // Thêm sự kiện lắng nghe resize
-    window.addEventListener('resize', this.updateItemsPerPage.bind(this));
   }
 
   ngOnDestroy(): void {
-    // Gỡ bỏ sự kiện và đồng hồ đếm ngược khi component bị hủy
-    window.removeEventListener('resize', this.updateItemsPerPage.bind(this));
-    clearInterval(this.countdownInterval); // Dừng đồng hồ đếm ngược
+    clearInterval(this.countdownInterval);
   }
 
   /**
-   * Cập nhật số sản phẩm hiển thị trên mỗi trang dựa trên kích thước màn hình
+   * Điều chỉnh số lượng sản phẩm mỗi hàng dựa trên kích thước màn hình
    */
   updateItemsPerPage(): void {
     const screenWidth = window.innerWidth;
 
     if (screenWidth < 480) {
-      // Mobile rất nhỏ: 2 sản phẩm mỗi hàng, 2 hàng
-      this.itemsPerRow = 2;
+      this.itemsPerRow = 2; // Mobile: 2 sản phẩm mỗi hàng
     } else if (screenWidth < 1024) {
-      // Tablet/Mobile: 3 sản phẩm mỗi hàng, 2 hàng
-      this.itemsPerRow = 3;
+      this.itemsPerRow = 3; // Tablet: 3 sản phẩm mỗi hàng
     } else {
-      // Desktop: 4 sản phẩm mỗi hàng, 2 hàng
-      this.itemsPerRow = 4;
+      this.itemsPerRow = 4; // Desktop: 4 sản phẩm mỗi hàng
     }
 
     this.itemsPerPage = this.itemsPerRow * 2; // Luôn hiển thị 2 hàng
-    this.updateVisibleProducts(); // Cập nhật danh sách sản phẩm hiển thị
+    this.updateVisibleProducts();
   }
 
   /**
-   * Cập nhật các sản phẩm hiển thị trên giao diện
+   * Cập nhật danh sách sản phẩm hiển thị
    */
   updateVisibleProducts(): void {
     const startIndex = this.currentIndex * this.itemsPerPage;
-    const totalProducts = this.bestSellingProducts.length;
 
-    // Lấy sản phẩm từ danh sách
-    this.visibleProducts = this.bestSellingProducts.slice(
-      startIndex,
-      startIndex + this.itemsPerPage
+    // Lọc sản phẩm theo loại
+    const eyeGlasses = this.bestSellingProducts.filter(
+      (product) => product.category_name === 'eye glasses'
+    );
+    const sunGlasses = this.bestSellingProducts.filter(
+      (product) => product.category_name === 'sun glasses'
     );
 
-    // Nếu không đủ sản phẩm, lấp thêm từ đầu danh sách
-    if (this.visibleProducts.length < this.itemsPerPage) {
-      const remaining = this.itemsPerPage - this.visibleProducts.length;
-      this.visibleProducts = [
-        ...this.visibleProducts,
-        ...this.bestSellingProducts.slice(0, remaining),
-      ];
+    // Lấy sản phẩm cho từng hàng
+    const eyeGlassesRow = eyeGlasses.slice(
+      startIndex,
+      startIndex + this.itemsPerRow
+    );
+    const sunGlassesRow = sunGlasses.slice(
+      startIndex,
+      startIndex + this.itemsPerRow
+    );
+
+    // Kết hợp sản phẩm từ cả 2 hàng
+    this.visibleProducts = [...eyeGlassesRow, ...sunGlassesRow];
+
+    // Nếu không đủ sản phẩm, thêm phần tử trống để lấp đầy hàng
+    while (this.visibleProducts.length < this.itemsPerPage) {
+      this.visibleProducts.push({}); // Placeholder cho sản phẩm trống
     }
   }
 
   /**
-   * Điều hướng carousel trái/phải
+   * Điều hướng trái/phải trong carousel
    */
   navigate(direction: 'prev' | 'next'): void {
     const totalProducts = this.bestSellingProducts.length;
-    const totalPages = Math.ceil(totalProducts / this.itemsPerPage);
+    const totalPages = Math.ceil(totalProducts / (this.itemsPerPage / 2));
 
     if (direction === 'prev' && this.currentIndex > 0) {
       this.currentIndex--;
@@ -111,11 +119,10 @@ export class HomepageComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.updateVisibleProducts(); // Cập nhật danh sách sản phẩm hiển thị
+    this.updateVisibleProducts();
   }
-
   /**
-   * Hover đổi ảnh sản phẩm
+   * Hiệu ứng thay đổi ảnh khi hover chuột
    */
   hoverImage(productId: string, isHovering: boolean): void {
     const product = this.bestSellingProducts.find((p) => p._id === productId);
@@ -135,37 +142,29 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Hàm đếm ngược
+   * Timer đếm ngược khuyến mãi
    */
   startCountdown(endDate: string): void {
     const endTime = new Date(endDate).getTime();
 
     this.countdownInterval = setInterval(() => {
       const now = new Date().getTime();
-      const timeLeft = endTime - now;
+      const timeLeft = Math.max(endTime - now, 0);
 
       if (timeLeft <= 0) {
-        this.days = '00';
-        this.hours = '00';
-        this.minutes = '00';
-        this.seconds = '00';
         clearInterval(this.countdownInterval); // Dừng khi hết giờ
-        return;
       }
 
-      // Tính thời gian còn lại
-      const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      // Tính toán thời gian còn lại
+      const formatTime = (time: number) => time.toString().padStart(2, '0');
+      this.days = formatTime(Math.floor(timeLeft / (1000 * 60 * 60 * 24)));
+      this.hours = formatTime(
+        Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
       );
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-      // Cập nhật giá trị
-      this.days = days.toString().padStart(2, '0');
-      this.hours = hours.toString().padStart(2, '0');
-      this.minutes = minutes.toString().padStart(2, '0');
-      this.seconds = seconds.toString().padStart(2, '0');
+      this.minutes = formatTime(
+        Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
+      );
+      this.seconds = formatTime(Math.floor((timeLeft % (1000 * 60)) / 1000));
     }, 1000);
   }
 }
