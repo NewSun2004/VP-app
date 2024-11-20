@@ -14,7 +14,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 export class VerifyComponent implements OnInit, OnDestroy {
   countdown: number = 600; // Thời gian đếm ngược 10 phút (600 giây)
   interval: any; // Biến lưu trữ setInterval
-  popupMessage: string | null = null;
+  popupMessage: string | null = null; // Nội dung thông báo popup
   email: string = ''; // Email nhận từ query params
   verifyForm: FormGroup; // Quản lý form OTP
 
@@ -26,7 +26,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   ) {
     // Khởi tạo form OTP
     this.verifyForm = this.fb.group({
-      token: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]], // Mã OTP 5 chữ số
+      token: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]], // OTP 5 chữ số
     });
   }
 
@@ -36,7 +36,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
       if (params['email']) {
         this.email = params['email'];
       } else {
-        this.showPopup('Missing email parameter. Redirecting to register...', true, '/register');
+        this.showErrorPopup('Missing email parameter. Redirecting to register...', '/register');
       }
     });
 
@@ -55,7 +55,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.countdown--;
       } else {
         this.stopCountdown();
-        this.showPopup('Verification time expired. Please try again.', true, '/register');
+        this.showErrorPopup('Verification time expired. Redirecting to register...', '/register');
       }
     }, 1000);
   }
@@ -74,39 +74,46 @@ export class VerifyComponent implements OnInit, OnDestroy {
     return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   }
 
-  // Xử lý sự kiện ngSubmit từ form
- // Xử lý sự kiện ngSubmit từ form
-onVerifyToken(): void {
-  if (this.verifyForm.valid) {
-    const formData = {
-      token: this.verifyForm.value.token,
-      email: this.email,
-    };
+  onVerifyToken(): void {
+    if (this.verifyForm.valid) {
+      const formData = {
+        token: this.verifyForm.value.token,
+        email: this.email,
+      };
 
-    this.http.post('http://localhost:3001/register-temp/verify', formData).subscribe({
-      next: (res: any) => {
-        this.stopCountdown();
-        this.showPopup('Verification successful! Redirecting to login...', true, '/login');
-      },
-      error: (err) => {
-        this.showPopup(err.error.message || 'Invalid OTP. Please try again.');
-      },
-    });
-  } else {this.showPopup('Please enter a valid 5-digit OTP.');
-  }
-}
-
-
-   // Hiển thị thông báo popup
-   showPopup(message: string, autoRedirect: boolean = false, redirectPath?: string): void {
-    this.popupMessage = message;
-
-    if (autoRedirect && redirectPath) {
-      this.popupMessage = null; // Xóa popup ngay
-      this.router.navigate([redirectPath]); // Chuyển hướng tới đường dẫn được cung cấp
+      this.http.post('http://localhost:3001/register-temp/verify', formData).subscribe({
+        next: () => {
+          this.stopCountdown();
+          // Thành công: Chuyển trang ngay lập tức
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          // Lỗi: Hiển thị popup thông báo lỗi
+          this.showErrorPopup(err.error.message || 'Invalid OTP. Please try again.');
+        },
+      });
+    } else {
+      // Hiển thị popup nếu form không hợp lệ
+      this.showErrorPopup('Please enter a valid 5-digit OTP.');
     }
   }
 
+  /**
+   * Hiển thị thông báo lỗi qua popup
+   * @param message Nội dung thông báo lỗi
+   * @param redirectPath Đường dẫn chuyển hướng sau lỗi (nếu có)
+   */
+  showErrorPopup(message: string, redirectPath?: string): void {
+    this.popupMessage = message;
+
+    // Tự động đóng popup và chuyển hướng nếu có đường dẫn
+    setTimeout(() => {
+      this.popupMessage = null;
+      if (redirectPath) {
+        this.router.navigate([redirectPath]);
+      }
+    }, 5000); // Hiển thị popup trong 5 giây
+  }
 
   // Đóng popup
   closePopup(): void {
