@@ -4,6 +4,7 @@ import { CartLine } from '../../interfaces/cart-line';
 import { ProductDetails } from '../../interfaces/product-details';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CarrierService } from '../../services/carrier.service';
 
 @Component({
   selector: 'app-payment',
@@ -25,11 +26,12 @@ export class PaymentComponent implements OnInit {
   cartProducts : ProductDetails[] = [];
 
   note : string = "";
+  carriers : any[] = [];
 
   totalPrice : number = 0;
   shippingFee : number = 0;
 
-  constructor(private _cartService : CartService) {}
+  constructor(private _cartService : CartService, private _carrierService : CarrierService) {}
 
   ngOnInit(): void {
     this.cartLines = this._cartService.selectedCartLines;
@@ -38,6 +40,13 @@ export class PaymentComponent implements OnInit {
     this.phone = this._cartService.phone;
     this.address = this._cartService.address;
     this.totalPrice = this._cartService.totalPrice;
+
+    this._carrierService.getCarrier().subscribe({
+      next : carriers => {
+        this.carriers = carriers;
+        console.log(this.carriers);
+      }
+    })
   }
 
   editMode() : void

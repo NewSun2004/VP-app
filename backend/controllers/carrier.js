@@ -56,10 +56,7 @@ const getShippingCarriers = async (req, res) => {
       });
     }
 
-    res.status(200).json({
-      message: "Shipping carriers retrieved successfully.",
-      carriers
-    });
+    res.status(200).json(carriers);
   } catch (error) {
     console.error(error);
     res.status(500).json({

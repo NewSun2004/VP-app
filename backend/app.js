@@ -215,3 +215,99 @@ async function updateBestSellers() {
     console.log("Server is running on port 3001");
   });
 })();
+
+// Read operation || eye_glasses, sun_glasses, search
+app.get("/search/:searchTerm", async (req, res) => {
+  const { searchTerm } = req.params;
+
+  try {
+    const searchedProduct = await Product.find({
+      product_name: { $regex: `${searchTerm}*` },
+    });
+    res.json(searchedProduct);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/:product", async (req, res) => {
+  const { product } = req.params;
+
+  if (product == "eyeglasses") {
+    await fetchProductsData("eye glasses", req, res);
+  }
+
+  if (product == "sunglasses") {
+    await fetchProductsData("sun glasses", req, res);
+  }
+});
+
+async function fetchProductsData(category, req, res) {
+  const filterQuerry = req.query;
+  const filterQuerryKeys = Object.keys(filterQuerry);
+
+  if (filterQuerryKeys.length < 1) {
+    await Product.find({
+      category_name: category,
+    })
+      .then((products) => res.json(products))
+      .catch((err) => res.status(500).json({ error: err.message }));
+  } else {
+    let andExpressions = [];
+
+    for (let key in filterQuerry) {
+      filters = filterQuerry[key].split(",");
+      let expression = {};
+
+      switch (key) {
+        case "shape":
+          expression["product_shape"] = {
+            $in: filters,
+          };
+          break;
+        case "material":
+          expression["Product_material"] = {
+            $in: filters,
+          };
+          break;
+        default:
+          expression["product_gender"] = {
+            $in: filters.map((filter) => filter.toLowerCase()),
+          };
+          break;
+      }
+      andExpressions.push(expression);
+    }
+
+    await Product.find({ $and: andExpressions })
+      .then((products) => res.json(products))
+      .catch((err) => res.status(500).json({ error: err.message }));
+  }
+}
+
+app.get("/product/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    return res.json(product);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/reviews/:productId", async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const reviews = await Review.find({
+      product_id: productId,
+    });
+    return res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
