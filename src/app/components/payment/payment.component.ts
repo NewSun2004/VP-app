@@ -27,9 +27,12 @@ export class PaymentComponent implements OnInit {
 
   note : string = "";
   carriers : any[] = [];
+  carrierName : string = "";
+  shippingType: string = "";
+  shippingFee : number = 0;
 
   totalPrice : number = 0;
-  shippingFee : number = 0;
+
 
   constructor(private _cartService : CartService, private _carrierService : CarrierService) {}
 
@@ -44,6 +47,7 @@ export class PaymentComponent implements OnInit {
     this._carrierService.getCarrier().subscribe({
       next : carriers => {
         this.carriers = carriers;
+        this.updateShipping();
         console.log(this.carriers);
       }
     })
@@ -53,5 +57,12 @@ export class PaymentComponent implements OnInit {
   {
     if (this.customerName && this.phone && this.address)
     this.isEdit = !this.isEdit;
+  }
+
+  updateShipping(i : number = 0)
+  {
+    this.carrierName = this.carriers[i].shipping_carrier;
+    this.shippingType = this.carriers[i].shipping_methods[0].method_name;
+    this.shippingFee = this.carriers[i].shipping_methods[0].shipping_fee;
   }
 }

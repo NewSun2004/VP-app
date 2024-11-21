@@ -101,21 +101,30 @@
       <div class="col d-flex flex-column me-2">
         <div class="d-flex flex-row justify-content-between">
           <p>
-            Ninja Van
+            {{carrierName}}
           </p>
 
-          <button class="btn">
-            <img src="Icons/edit.svg" alt="">
-          </button>
+          <div class="dropdown">
+            <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="Icons/edit.svg" alt="">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li *ngFor="let carrier of carriers, let i = index">
+                <button class="dropdown-item btn" (click)="updateShipping(i)">
+                  {{carrier.shipping_carrier}}
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div class="d-flex flex-row justify-content-between">
           <p>
-            Fast
+            {{shippingType}}
           </p>
 
           <p>
-            $5
+            ${{shippingFee}}
           </p>
         </div>
 
