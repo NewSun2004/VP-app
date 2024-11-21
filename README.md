@@ -4,12 +4,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # Start
 
-Sau khi clone repo này, vào thư mục backend, chạy lệnh "npm i" để cài node_modules cần thiết. Sau đó vào ".env" file và thay đổi các giá trị sau thành "true" để khởi tạo và thêm dữ liệu vào mongodb:
-      IMPORT_DATA=false
-      IMPORT_CARRIER_DATA=false
-      UPDATE_BEST_SELLERS=false
-Sau lần khởi tạo đầu tiên, thay đổi các giá trị trên trở lại thành "false".
-Đối với thư mục VP-app, cần chạy lệnh "npm i" để cài tất cả node_modules cần thiêt.
+Sau khi clone repo này, vào thư mục backend, chạy lệnh "npm i" để cài node_modules cần thiết. Sau đó vào ".env" file và thay đổi các giá trị sau thành "true" để khởi tạo và thêm dữ liệu vào mongodb: <br/>
+      IMPORT_DATA=false <br/>
+      IMPORT_CARRIER_DATA=false <br/>
+      UPDATE_BEST_SELLERS=false <br/>
+Sau lần khởi tạo đầu tiên, thay đổi các giá trị trên trở lại thành "false". <br/>
+Đối với thư mục VP-app, cần chạy lệnh "npm i" để cài tất cả node_modules cần thiêt. <br/>
 Từ đây, VP-app đã có thể kết nối tới backend và hoạt động bình thường.
 
 ## Development server
