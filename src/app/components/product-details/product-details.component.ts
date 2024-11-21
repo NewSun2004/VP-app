@@ -135,13 +135,11 @@ export class ProductDetailsComponent implements OnInit{
           if (cart_line.product_id == cartLine.product_id)
           {
             this.existed = true;
-            setTimeout(() => this.existed = false, 3000);
           }
           else
           {
             this._cartService.getCartLines(this._authService.currentUser.cart).subscribe();
             this.success = true;
-            setTimeout(() => this.success = false, 3000);
           }
         }
       });

@@ -248,4 +248,4 @@
   </div>
 </div>
 
-<app-toast [show]="showToast" [success]="isEnoughInformation" [message]="isEnoughInformation ? 'Order success' : 'Please fill in missed information!'"></app-toast>
+<app-toast [show]="showToast" [success]="isEnoughInformation" [message]="isEnoughInformation ? 'Order success' : 'Please fill in missed information!'" [displayTimer]="isEnoughInformation" [maxTimer]="isEnoughInformation ? 3 : 2" (timerEnded)="returnToHomepage()"></app-toast>

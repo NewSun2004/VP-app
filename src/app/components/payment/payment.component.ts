@@ -182,12 +182,15 @@ export class PaymentComponent implements OnInit {
     this._cartService.insertOrder(order).subscribe({
       next : () => {
         this.showToast = true;
-        setTimeout(() => this.showToast = false, 3000);
-        this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
-          next : () => {
-            this._router.navigate([""]);
-          }
-        });
+      }
+    });
+  }
+
+  returnToHomepage() : void
+  {
+    this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
+      next : () => {
+        this._router.navigate([""]);
       }
     });
   }

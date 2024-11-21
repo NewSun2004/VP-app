@@ -267,7 +267,7 @@ async function fetchProductsData(category, req, res) {
           };
           break;
         case "material":
-          expression["Product_material"] = {
+          expression["product_material"] = {
             $in: filters,
           };
           break;
@@ -280,7 +280,7 @@ async function fetchProductsData(category, req, res) {
       andExpressions.push(expression);
     }
 
-    await Product.find({ $and: andExpressions })
+    await Product.find({ category_name : category, $and: andExpressions })
       .then((products) => res.json(products))
       .catch((err) => res.status(500).json({ error: err.message }));
   }
