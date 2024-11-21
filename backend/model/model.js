@@ -371,7 +371,8 @@ const carrierSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 0
-      }
+      },
+      expected: Number
     }
   ]
 })
