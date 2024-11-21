@@ -262,6 +262,10 @@ div.review {
   }
 }
 
+.xs {
+  width: 23%;
+}
+
 @media (max-width: 992px)
 {
   div.display-image {
@@ -273,5 +277,18 @@ div.review {
   }
 }
 
+@media (max-width: 768px)
+{
+  .xs {
+    width: 45%;
+  }
+}
+
+@media (max-width: 576px)
+{
+  .xs {
+    width: 60%;
+  }
+}
 
 
