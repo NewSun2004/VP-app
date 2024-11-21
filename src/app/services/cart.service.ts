@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Cart } from '../interfaces/cart';
 import { CartLine } from '../interfaces/cart-line';
 import { ProductDetails } from '../interfaces/product-details';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,8 @@ export class CartService {
   phone : string = "";
   address : string = "";
 
-  currentItemsInCart : CartLine[] = [];
+  cart : Cart | undefined;
+  currentItemsInCartSubject = new BehaviorSubject<CartLine[]>([]);
   selectedCartLines : CartLine[] = [];
   selectedCartProducts : ProductDetails[] = [];
 
@@ -27,12 +27,16 @@ export class CartService {
 
   getCart(userId : string) : Observable<Cart>
   {
-    return this._httpClient.get<Cart>(this.myAPIUrl + `/cart/${userId}`);
+    return this._httpClient.get<Cart>(this.myAPIUrl + `/cart/${userId}`)
   }
 
   getCartLines(cartId : string) : Observable<CartLine[]>
   {
-    return this._httpClient.get<CartLine[]>(this.myAPIUrl + `/cart/cart_lines/${cartId}`);
+    return this._httpClient.get<CartLine[]>(this.myAPIUrl + `/cart/cart_lines/${cartId}`).pipe(
+      tap((cartLines) => {
+        this.currentItemsInCartSubject.next(cartLines);
+      })
+    );
   }
 
   insertCartLine(cartLine : CartLine) : Observable<CartLine>

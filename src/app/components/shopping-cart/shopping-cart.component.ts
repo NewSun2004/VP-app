@@ -29,24 +29,17 @@ export class ShoppingCartComponent implements OnInit{
   { }
 
   ngOnInit() : void {
-    this._authService.checkSession().subscribe({
-      next : state => {
-        if (state)
+    this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
+      next : cartLines => {
+        this.cartLines = cartLines;
+        for (let cartLine of this.cartLines)
         {
-          this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
-            next : cartLines => {
-              this.cartLines = cartLines
-              for (let cartLine of this.cartLines)
-              {
-                this._productService.getProduct(cartLine.product_id!).subscribe({
-                  next : productData => {
-                    this.cartProducts.push(productData);
-                    this.boxChecked.push(true);
-                    this.totalPriceElements.push(cartLine.quantity * productData.product_price);
-                    this.updateTotalPrice();
-                  }
-                })
-              }
+          this._productService.getProduct(cartLine.product_id!).subscribe({
+            next : productData => {
+              this.cartProducts.push(productData);
+              this.boxChecked.push(true);
+              this.totalPriceElements.push(cartLine.quantity * productData.product_price);
+              this.updateTotalPrice();
             }
           })
         }
