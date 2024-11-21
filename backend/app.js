@@ -8,7 +8,10 @@ const fs = require("fs");
 require("dotenv").config();
 const session = require("express-session");
 
+// Khởi tạo ứng dụng
 const app = express();
+
+// Import các route và model
 const categoryRoute = require("./routes/category");
 const userRoute = require("./routes/user");
 const tempUserRoute = require("./routes/temporary_user");
@@ -16,7 +19,7 @@ const cartRoute = require("./routes/cart");
 const productRoute = require("./routes/product");
 const orderRoute = require("./routes/order");
 const carrierRoutes = require("./routes/carrier");
-const { Product, Review } = require("./model/model");
+const { Product, Review, Carrier } = require("./model/model");
 
 // Kết nối MongoDB
 async function connectDB() {
@@ -24,17 +27,17 @@ async function connectDB() {
     await mongoose.connect(process.env.DB_URL, {});
     console.log("Connected to MongoDB");
   } catch (err) {
-    console.error("Connection error:", err.message); // Chi tiết lỗi
+    console.error("Connection error:", err.message);
     process.exit(1);
   }
 }
 
-// Middleware CORS - Đặt ở trên cùng để đảm bảo xử lý trước các route khác
+// Middleware CORS
 app.use(
   cors({
-    origin: "http://localhost:4200", // Địa chỉ frontend
-    methods: ["GET", "POST", "PUT", "DELETE"], // Các phương thức được phép
-    credentials: true, // Cho phép gửi cookie và session
+    origin: "http://localhost:4200",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 
@@ -43,14 +46,14 @@ app.use(bodyParser.json({ limit: "50mb" }));
 app.use(morgan("common"));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "default_secret_key", // Chuỗi bí mật
-    resave: false, // Không lưu session nếu không có thay đổi
-    saveUninitialized: false, // Không lưu session trống
+    secret: process.env.SESSION_SECRET || "default_secret_key",
+    resave: false,
+    saveUninitialized: false,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
-      httpOnly: true, // Ngăn cookie bị truy cập từ JavaScript
-      secure: false, // Bật khi sử dụng HTTPS
-      sameSite: "strict", // Ngăn chặn CSRF
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
     },
   })
 );
@@ -61,18 +64,17 @@ app.use("/user", userRoute);
 app.use("/register-temp", tempUserRoute);
 app.use("/cart", cartRoute);
 app.use("/bestseller", productRoute);
-app.use("/orders", orderRoute)
+app.use("/orders", orderRoute);
 app.use("/carrier", carrierRoutes);
-
 
 // Endpoint kiểm tra server
 app.get("/", (req, res) => {
   res.status(200).json({ message: "API is running" });
 });
 
-// Hàm nhập dữ liệu từ JSON (nếu IMPORT_DATA = true)
+// Hàm nhập dữ liệu từ JSON (sản phẩm)
 async function importData() {
-  console.log("Starting data import...");
+  console.log("Starting product data import...");
   try {
     const dataPath = path.resolve(__dirname, process.env.DATA_FILE_PATH);
     const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
@@ -106,15 +108,15 @@ async function importData() {
       // Thêm reviews
       for (const review of productData.reviews || []) {
         const reviewDoc = await Review.create({
-          product_id: product._id, // Liên kết với sản phẩm
+          product_id: product._id,
           username: review.username,
           title: review.title,
           rating: review.rating,
           review_text: review.review_text,
-          prescription_type: review["prescription type"], // Lấy từ JSON
-          creation_datetime: new Date(), // Hoặc từ JSON nếu có
+          prescription_type: review["prescription type"],
+          creation_datetime: new Date(),
         });
-        product.reviews.push(reviewDoc._id); // Chỉ lưu _id vào sản phẩm
+        product.reviews.push(reviewDoc._id);
       }
 
       // Lưu sản phẩm
@@ -122,11 +124,42 @@ async function importData() {
       console.log(`Saved product: ${productData.product_name}`);
     }
 
-    console.log("Data import completed successfully.");
+    console.log("Product data import completed successfully.");
   } catch (err) {
-    console.error("Error importing data:", err.stack);
+    console.error("Error importing product data:", err.stack);
   }
 }
+
+// Hàm nhập dữ liệu từ JSON (Carrier)
+async function importCarrierData() {
+  console.log("Starting carrier data import...");
+  try {
+    const dataPath = path.resolve(__dirname, process.env.DATA_CARRIER_FILE_PATH);
+    const data = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+    console.log("File JSON loaded successfully");
+
+    for (const carrierData of data) {
+      console.log(`Processing carrier: ${carrierData.shipping_carrier}`);
+
+      let carrier = new Carrier({
+        shipping_carrier: carrierData.shipping_carrier,
+        shipping_methods: carrierData.shipping_methods.map((method) => ({
+          method_name: method.method_name,
+          shipping_fee: method.shipping_fee,
+        })),
+      });
+
+      await carrier.save();
+      console.log(`Saved carrier: ${carrierData.shipping_carrier}`);
+    }
+
+    console.log("Carrier data import completed successfully.");
+  } catch (err) {
+    console.error("Error importing carrier data:", err.stack);
+  }
+}
+
+// Hàm cập nhật Best Sellers
 async function updateBestSellers() {
   console.log("Starting best-seller update...");
   try {
@@ -134,22 +167,18 @@ async function updateBestSellers() {
     console.log(`Found ${products.length} products`);
 
     for (const product of products) {
-      // Lấy tổng số lượng review của sản phẩm
       const totalReviewsCount = await Review.countDocuments({
         product_id: product._id,
       });
 
-      // Đếm số lượng review với rating là 5
       const fiveStarReviewsCount = await Review.countDocuments({
         product_id: product._id,
         rating: 5,
       });
 
-      // Nếu tất cả review đều 5 sao, là best-seller
       const isBestSeller =
         totalReviewsCount > 0 && totalReviewsCount === fiveStarReviewsCount;
 
-      // Cập nhật `is_best_seller` trong cơ sở dữ liệu
       await Product.updateOne(
         { _id: product._id },
         { is_best_seller: isBestSeller }
@@ -166,115 +195,23 @@ async function updateBestSellers() {
   }
 }
 
-// Khởi động server và nhập dữ liệu nếu cần
+// Khởi động server và xử lý nhập liệu
 (async () => {
   await connectDB();
 
-  // Kiểm tra flag IMPORT_DATA trong .env
   if (process.env.IMPORT_DATA === "true") {
     await importData();
   }
-  // Kiểm tra flag UPDATE_BEST_SELLERS trong .env
+
   if (process.env.UPDATE_BEST_SELLERS === "true") {
     await updateBestSellers();
   }
+
+  if (process.env.IMPORT_CARRIER_DATA === "true") {
+    await importCarrierData();
+  }
+
   app.listen(3001, () => {
     console.log("Server is running on port 3001");
   });
 })();
-
-// Read operation || eye_glasses, sun_glasses, search
-app.get("/search/:searchTerm", async (req, res) => {
-  const { searchTerm } = req.params;
-
-  try {
-    const searchedProduct = await Product.find({
-      product_name: { $regex: `${searchTerm}*` },
-    });
-    res.json(searchedProduct);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get("/:product", async (req, res) => {
-  const { product } = req.params;
-
-  if (product == "eyeglasses") {
-    await fetchProductsData("eye glasses", req, res);
-  }
-
-  if (product == "sunglasses") {
-    await fetchProductsData("sun glasses", req, res);
-  }
-});
-
-async function fetchProductsData(category, req, res) {
-  const filterQuerry = req.query;
-  const filterQuerryKeys = Object.keys(filterQuerry);
-
-  if (filterQuerryKeys.length < 1) {
-    await Product.find({
-      category_name: category,
-    })
-      .then((products) => res.json(products))
-      .catch((err) => res.status(500).json({ error: err.message }));
-  } else {
-    let andExpressions = [];
-
-    for (let key in filterQuerry) {
-      filters = filterQuerry[key].split(",");
-      let expression = {};
-
-      switch (key) {
-        case "shape":
-          expression["product_shape"] = {
-            $in: filters,
-          };
-          break;
-        case "material":
-          expression["Product_material"] = {
-            $in: filters,
-          };
-          break;
-        default:
-          expression["product_gender"] = {
-            $in: filters.map((filter) => filter.toLowerCase()),
-          };
-          break;
-      }
-      andExpressions.push(expression);
-    }
-
-    await Product.find({ $and: andExpressions })
-      .then((products) => res.json(products))
-      .catch((err) => res.status(500).json({ error: err.message }));
-  }
-}
-
-app.get("/product/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const product = await Product.findById(id);
-    if (!product) {
-      return res.status(404).json({ error: "Product not found" });
-    }
-    return res.json(product);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.get("/reviews/:productId", async (req, res) => {
-  const { productId } = req.params;
-
-  try {
-    const reviews = await Review.find({
-      product_id: productId,
-    });
-    return res.json(reviews);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});

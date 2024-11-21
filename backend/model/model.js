@@ -305,6 +305,7 @@ const shippingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    note:String,
     shipping_fee: {
       type: Number,
       required: true,

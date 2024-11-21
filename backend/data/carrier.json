@@ -1,0 +1,68 @@
+[
+    {
+      "shipping_carrier": "Viettel Post",
+      "shipping_methods": [
+        {
+          "method_name": "Express Delivery",
+          "shipping_fee": 2.5
+        },
+        {
+          "method_name": "Economy Delivery",
+          "shipping_fee": 1.8
+        }
+      ]
+    },
+    {
+      "shipping_carrier": "VNPost",
+      "shipping_methods": [
+        {
+          "method_name": "EMS (Express Mail Service)",
+          "shipping_fee": 3.0
+        },
+        {
+          "method_name": "Standard Delivery",
+          "shipping_fee": 1.5
+        }
+      ]
+    },
+    {
+      "shipping_carrier": "GHN (Giao Hang Nhanh)",
+      "shipping_methods": [
+        {
+          "method_name": "Standard Shipping",
+          "shipping_fee": 2.0
+        },
+        {
+          "method_name": "Fast Shipping",
+          "shipping_fee": 2.8
+        }
+      ]
+    },
+    {
+      "shipping_carrier": "GHTK (Giao Hang Tiet Kiem)",
+      "shipping_methods": [
+        {
+          "method_name": "Economy Shipping",
+          "shipping_fee": 1.7
+        },
+        {
+          "method_name": "Fast Shipping",
+          "shipping_fee": 2.6
+        }
+      ]
+    },
+    {
+      "shipping_carrier": "J&T Express",
+      "shipping_methods": [
+        {
+          "method_name": "Express Shipping",
+          "shipping_fee": 2.4
+        },
+        {
+          "method_name": "Economy Shipping",
+          "shipping_fee": 1.9
+        }
+      ]
+    }
+  ]
+  

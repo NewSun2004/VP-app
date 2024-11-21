@@ -16,6 +16,7 @@ const orderController = {
         receiver_name,
         receiver_phone_number,
         destination,
+        note, // Optional field for Shipping
       } = req.body;
 
       // Validate payment_method
@@ -86,6 +87,7 @@ const orderController = {
         receiver_name,
         receiver_phone_number,
         destination,
+        note: note || null, // Add note to Shipping
         shipping_status: "Pending",
       });
       await newShipping.save();
