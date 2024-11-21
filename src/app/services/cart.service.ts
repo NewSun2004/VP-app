@@ -20,6 +20,8 @@ export class CartService {
   selectedCartLines : CartLine[] = [];
   selectedCartProducts : ProductDetails[] = [];
 
+  note : string = "";
+
   totalPrice : number = 0;
   shippingFee : number = 0;
 

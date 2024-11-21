@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { ProductDetails } from '../../interfaces/product-details';
 
 @Component({
   selector: 'app-display-search-product',
@@ -11,9 +12,9 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './display-search-product.component.css'
 })
 export class DisplaySearchProductComponent implements OnChanges{
-  @Input() products : any;
+  @Input() products : ProductDetails[] = [];
 
-  displayedProducts: any[] = [];
+  displayedProducts: ProductDetails[] = [];
   productsPerPage = 15;
   currentPage = 1;
 

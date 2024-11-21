@@ -24,6 +24,8 @@ export class PaymentComponent implements OnInit {
   cartLines : CartLine[] = [];
   cartProducts : ProductDetails[] = [];
 
+  note : string = "";
+
   totalPrice : number = 0;
   shippingFee : number = 0;
 
@@ -36,7 +38,6 @@ export class PaymentComponent implements OnInit {
     this.phone = this._cartService.phone;
     this.address = this._cartService.address;
     this.totalPrice = this._cartService.totalPrice;
-    this.shippingFee = this._cartService.shippingFee;
   }
 
   editMode() : void

@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { DisplaySearchProductComponent } from "../display-search-product/display-search-product.component";
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
+import { ProductDetails } from '../../interfaces/product-details';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
   searchInput: string = "";
   cartCount: number = 0;
-  products: any;
+  products: ProductDetails[] = [];
 
   constructor(private _authService: AuthService, private _productService: ProductService, private _cartService : CartService, private router: Router) {}
 
