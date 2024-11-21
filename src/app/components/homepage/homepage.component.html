@@ -128,13 +128,15 @@
     <div class="product-card" *ngFor="let product of visibleProducts">
       <!-- Product Image -->
       <div class="product-image-wrapper">
-        <img
+        <a [routerLink]="[getCategoryRoute(product.category_name), product._id]" routerLinkActive="router-link-active" >
+          <img
           [src]="product.product_lines[0].image_urls[1]"
           alt="{{ product.product_name }}"
           class="product-image"
           (mouseenter)="hoverImage(product._id, true)"
           (mouseleave)="hoverImage(product._id, false)"
         />
+        </a>
       </div>
       <!-- Product Name -->
       <h3 class="product-name">{{ product.product_name }}</h3>

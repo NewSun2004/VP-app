@@ -14,16 +14,16 @@ export class CartService {
   customerName : string = "";
   phone : string = "";
   address : string = "";
+  note : string = "";
 
   cart : Cart | undefined;
   currentItemsInCartSubject = new BehaviorSubject<CartLine[]>([]);
   selectedCartLines : CartLine[] = [];
   selectedCartProducts : ProductDetails[] = [];
 
-  note : string = "";
 
   totalPrice : number = 0;
-  shippingFee : number = 0;
+
 
   constructor(private _httpClient : HttpClient) { }
 
@@ -49,5 +49,10 @@ export class CartService {
   removeCartLine(cartLineId : string) : Observable<any>
   {
     return this._httpClient.delete<any>(this.myAPIUrl + `/cart/cart_line/delete/${cartLineId}`);
+  }
+
+  insertOrder(order : any) : Observable<any>
+  {
+    return this._httpClient.post<any>(this.myAPIUrl + "/orders/create", order);
   }
 }

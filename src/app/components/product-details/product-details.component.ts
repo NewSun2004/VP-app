@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ProductService } from './../../services/product.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ProductDetails } from '../../interfaces/product-details';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
@@ -11,7 +11,7 @@ import { ToastComponent } from '../toast/toast.component';
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, ToastComponent],
+  imports: [CommonModule, FormsModule, ToastComponent, RouterLink],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
@@ -200,5 +200,15 @@ export class ProductDetailsComponent implements OnInit{
     this.updateDisplayedReviews();
 
     this.checkMaxReviewsShow();
+  }
+
+  getCategoryRoute(categoryName: string): string
+  {
+    const categoryMap: { [key: string]: string } = {
+      "eye glasses": "/eyeglasses",
+      "sun glasses": "/sunglasses"
+    };
+
+    return categoryMap[categoryName.toLowerCase()] || '/default-category';
   }
 }

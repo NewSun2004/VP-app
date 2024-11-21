@@ -89,7 +89,7 @@
       <p>Shipping</p>
     </div>
 
-    <div class="row">
+    <div class="row pt-2">
       <div class="col ms-2">
         <p>
           Note
@@ -105,12 +105,12 @@
           </p>
 
           <div class="dropdown">
-            <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn m-0 p-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="Icons/edit.svg" alt="">
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li *ngFor="let carrier of carriers, let i = index">
-                <button class="dropdown-item btn" (click)="updateShipping(i)">
+                <button class="dropdown-item btn" (click)="updateSelectedCarrier(i)">
                   {{carrier.shipping_carrier}}
                 </button>
               </li>
@@ -119,9 +119,19 @@
         </div>
 
         <div class="d-flex flex-row justify-content-between">
-          <p>
-            {{shippingType}}
-          </p>
+          <div class="dropdown">
+            <button class="btn p-0 m-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              {{shippingType}}
+              <img src="Icons/arrow.svg" alt="" class="arrow">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li *ngFor="let shipping of selectedCarrier.shipping_methods, let i = index">
+                <button class="dropdown-item btn" (click)="updateShippingType(i)">
+                  {{shipping.method_name}}
+                </button>
+              </li>
+            </ul>
+          </div>
 
           <p>
             ${{shippingFee}}
@@ -134,7 +144,7 @@
           </p>
 
           <p>
-            17/9/2024
+            {{expectedDate}}
           </p>
         </div>
       </div>
@@ -159,13 +169,33 @@
 
       <div class="d-flex flex-row justify-content-end gap-3">
         <p>
-          Cash on delivery
+          {{this.selectedMethod}}
         </p>
 
-        <button class="btn">
-          <img src="Icons/edit.svg" alt="">
-        </button>
+        <div class="dropdown">
+          <button class="btn p-0 m-0" type="button" id="paymentDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="Icons/edit.svg" alt="">
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="paymentDropdown">
+            <li *ngFor="let method of paymentMethods, let i = index">
+              <button class="dropdown-item btn" (click)="updatePaymentMethod(i)">
+                {{method}}
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
+    </div>
+
+    <div class="d-flex flex-column gap-2 p-2" *ngIf="selectedMethod == 'Banking'">
+        <label for="account">Account Name:</label>
+        <input [(ngModel)]="account_name" type="text" name="account" id="account" class="form-control shadow-none">
+
+        <label for="number">Account Number:</label>
+        <input [(ngModel)]="account_number" type="text" name="number" id="number" class="form-control shadow-none">
+
+        <label for="bank">Bank Name:</label>
+        <input [(ngModel)]="bank_name" type="text" name="bank" id="bank" class="form-control shadow-none">
     </div>
   </div>
 
@@ -211,9 +241,11 @@
         </p>
       </div>
 
-      <button class="order">
+      <button class="order" (click)="confirmOrder()">
         ORDER
       </button>
     </div>
   </div>
 </div>
+
+<app-toast [show]="showToast" [success]="isEnoughInformation" [message]="isEnoughInformation ? 'Order success' : 'Please fill in missed information!'"></app-toast>

@@ -79,3 +79,7 @@
 .vertical-toggle-show {
   grid-template-rows: 1fr;
 }
+
+.arrow {
+  rotate: -90deg;
+}

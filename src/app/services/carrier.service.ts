@@ -9,6 +9,9 @@ export class CarrierService {
   myAPIUrl: string = 'http://localhost:3001';
 
   carriers : any[] = [];
+  selectedCarrier : string = "";
+  selectedMethod : string = "";
+  shippingFee : number = 0;
 
   constructor(private _httpClient : HttpClient) {}
 

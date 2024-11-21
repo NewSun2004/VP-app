@@ -216,7 +216,7 @@
 
   <div class="d-flex flex-row justify-items-between gap-3">
     <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let recProduct of recommendations">
-      <a  class="product" style="height: 100%;">
+      <a [routerLink]="[getCategoryRoute(recProduct.category_name), recProduct._id]" class="product" style="height: 100%;">
         <img [src]="recProduct.product_lines[0].image_urls[1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
         <div class="card-body text-center">

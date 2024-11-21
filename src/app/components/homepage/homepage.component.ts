@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CommonModule, NgFor, CurrencyPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
   standalone: true,
-  imports: [CommonModule, NgFor, CurrencyPipe],
+  imports: [CommonModule, NgFor, CurrencyPipe, RouterLink],
 })
 export class HomepageComponent implements OnInit, OnDestroy {
   bestSellingProducts: any[] = [];
@@ -165,5 +166,15 @@ export class HomepageComponent implements OnInit, OnDestroy {
       );
       this.seconds = formatTime(Math.floor((timeLeft % (1000 * 60)) / 1000));
     }, 1000);
+  }
+
+  getCategoryRoute(categoryName: string): string
+  {
+    const categoryMap: { [key: string]: string } = {
+      "eye glasses": "/eyeglasses",
+      "sun glasses": "/sunglasses"
+    };
+
+    return categoryMap[categoryName.toLowerCase()] || '/default-category';
   }
 }

@@ -2,7 +2,9 @@
   <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" *ngIf="show">
     <div class="toast-body rounded" [ngClass]="success ? 'bg-success' : 'bg-danger'">
       <span class="text-white">
-        <i class="bi bi-check-lg"></i> {{message}}
+        <i class="bi bi-check-lg" *ngIf="success"></i>
+        <i class="bi bi-x-lg" *ngIf="!success"></i>
+        {{message}}
       </span>
     </div>
   </div>
