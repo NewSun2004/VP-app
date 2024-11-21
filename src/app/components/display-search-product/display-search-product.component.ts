@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ProductService } from '../../services/product.service';
 import { ProductDetails } from '../../interfaces/product-details';
 
 @Component({
@@ -26,6 +25,16 @@ export class DisplaySearchProductComponent implements OnChanges{
   searchForProducts()
   {
     this.updateDisplayedProducts();
+  }
+
+  getCategoryRoute(categoryName: string): string
+  {
+    const categoryMap: { [key: string]: string } = {
+      "eye glasses": "/eyeglasses",
+      "sun glasses": "/sunglasses"
+    };
+
+    return categoryMap[categoryName.toLowerCase()] || '/default-category';
   }
 
   updateDisplayedProducts() : void

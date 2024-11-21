@@ -2,7 +2,7 @@
   <div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
     <!-- NgFor to populate display with cards of product -->
     <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of displayedProducts">
-      <a [routerLink]="[product.category_name, product._id]" class="product">
+      <a [routerLink]="[getCategoryRoute(product.category_name), product._id]" class="product" data-bs-dismiss="offcanvas">
         <img [src]="product.product_lines[0].image_urls[1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
         <div class="card-body text-center">
