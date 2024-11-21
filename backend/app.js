@@ -146,6 +146,7 @@ async function importCarrierData() {
         shipping_methods: carrierData.shipping_methods.map((method) => ({
           method_name: method.method_name,
           shipping_fee: method.shipping_fee,
+          expected: method.expected
         })),
       });
 
