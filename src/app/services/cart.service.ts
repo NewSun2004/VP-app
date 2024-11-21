@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Cart } from '../interfaces/cart';
 import { CartLine } from '../interfaces/cart-line';
 import { ProductDetails } from '../interfaces/product-details';
@@ -15,21 +15,30 @@ export class CartService {
   phone : string = "";
   address : string = "";
 
+  cart : Cart | undefined;
+  currentItemsInCartSubject = new BehaviorSubject<CartLine[]>([]);
   selectedCartLines : CartLine[] = [];
   selectedCartProducts : ProductDetails[] = [];
 
+  note : string = "";
+
   totalPrice : number = 0;
+  shippingFee : number = 0;
 
   constructor(private _httpClient : HttpClient) { }
 
   getCart(userId : string) : Observable<Cart>
   {
-    return this._httpClient.get<Cart>(this.myAPIUrl + `/cart/${userId}`);
+    return this._httpClient.get<Cart>(this.myAPIUrl + `/cart/${userId}`)
   }
 
   getCartLines(cartId : string) : Observable<CartLine[]>
   {
-    return this._httpClient.get<CartLine[]>(this.myAPIUrl + `/cart/cart_lines/${cartId}`);
+    return this._httpClient.get<CartLine[]>(this.myAPIUrl + `/cart/cart_lines/${cartId}`).pipe(
+      tap((cartLines) => {
+        this.currentItemsInCartSubject.next(cartLines);
+      })
+    );
   }
 
   insertCartLine(cartLine : CartLine) : Observable<CartLine>

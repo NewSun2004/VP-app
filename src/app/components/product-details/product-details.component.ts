@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { ProductService } from './../../services/product.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductDetails } from '../../interfaces/product-details';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { AuthService } from '../../services/auth.service';
+import { ToastComponent } from '../toast/toast.component';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ToastComponent],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.css'
 })
@@ -20,6 +21,8 @@ export class ProductDetailsComponent implements OnInit{
   showDescription : boolean = true;
   showPolicy : boolean = false;
   disableSeeMore : boolean = false;
+  existed : boolean = false;
+  success : boolean = false;
 
   productData : any;
   currentProductImageSet : any;
@@ -41,9 +44,9 @@ export class ProductDetailsComponent implements OnInit{
   constructor (private _authService : AuthService, private _productService : ProductService, private _cartService : CartService, private _router : Router) { }
 
   ngOnInit(): void {
-    this._authService.isLoggedIn().subscribe({
-      next : inSession => {
-        this.isLoggedIn = inSession;
+    this._authService.isLoggedIn.subscribe({
+      next : status => {
+        this.isLoggedIn = status;
       }
     })
 
@@ -127,7 +130,21 @@ export class ProductDetailsComponent implements OnInit{
         quantity : this.selectedQuantity
       }
 
-      this._cartService.insertCartLine(cart_line).subscribe({});
+      this._cartService.insertCartLine(cart_line).subscribe({
+        next : cartLine => {
+          if (cart_line.product_id == cartLine.product_id)
+          {
+            this.existed = true;
+            setTimeout(() => this.existed = false, 3000);
+          }
+          else
+          {
+            this._cartService.getCartLines(this._authService.currentUser.cart).subscribe();
+            this.success = true;
+            setTimeout(() => this.success = false, 3000);
+          }
+        }
+      });
     }
     else
     {

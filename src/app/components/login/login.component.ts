@@ -5,6 +5,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +20,8 @@ export class LoginComponent implements OnInit {
   passwordVisible = false;
   popupMessage: string | null = null; // Nội dung popup thông báo
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router,
-    private authService : AuthService
-  ) {
+  constructor(private fb: FormBuilder, private router: Router, private authService : AuthService, private _cartService : CartService)
+  {
     this.loginForm = this.fb.group({
       user_email: ['', [Validators.required, Validators.email]],
       user_password: ['', [Validators.required]],
@@ -59,7 +57,11 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value).subscribe({
         next: currentUser => {
           this.router.navigate(['/']);
-          this.authService.currentUser = currentUser;
+          this.authService.checkSession().subscribe({
+            next : () => {
+              this._cartService.getCartLines(currentUser.cart).subscribe();
+            }
+          })
         },
         error: (err: any) => {
           const message = err.error?.message || 'An error occurred. Please try again!';

@@ -1,13 +1,20 @@
-<div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
-  <!-- NgFor to populate display with cards of product -->
-  <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of displayedProducts">
-    <a [routerLink]="['/eyeglasses', product._id]" class="product">
-      <img [src]="product['images by colors'][0]['image urls'][1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row flex-wrap justify-content-evenly items-start">
+    <!-- NgFor to populate display with cards of product -->
+    <div class="card mb-2 border-0" style="width: 31%;" *ngFor="let product of displayedProducts">
+      <a [routerLink]="[getCategoryRoute(product.category_name), product._id]" class="product" data-bs-dismiss="offcanvas">
+        <img [src]="product.product_lines[0].image_urls[1]" class="card-img-top mt-5 mb-3 px-4" alt="..." loading="Lazy">
 
-      <div class="card-body text-center">
-        <p class="card-title name">{{product.name}}</p>
-        <p class="card-text price">${{product.price}}.00</p>
-      </div>
-    </a>
+        <div class="card-body text-center">
+          <p class="card-title name">{{product.product_name}}</p>
+          <p class="card-text price">${{product.product_price}}.00</p>
+        </div>
+      </a>
+    </div>
   </div>
+
+  <button class="btn btn-outline-warning" (click)="onSeeMore()" *ngIf="products.length > 0">
+    See more
+  </button>
 </div>
+

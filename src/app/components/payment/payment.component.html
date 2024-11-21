@@ -13,20 +13,32 @@
     </div>
 
     <div class="vertical-toggle-hide" [ngClass]="{'vertical-toggle-show' : addressBarToggle}">
-      <div class="d-flex flex-row justify-content-between align-items-center overflow-hidden">
+      <form #customerForm="ngForm" class="d-flex flex-row justify-content-between align-items-center overflow-hidden">
         <div class="d-flex flex-column align-items-start gap-3 p-2">
           <div class="d-flex flex-row justify-content-start gap-3">
-            <input [(ngModel)]="customerName" type="text" class="form-control shadow-none" placeholder="Enter your name ....">
-            <input [(ngModel)]="phone" type="text" class="form-control shadow-none" placeholder="Enter your phone number ....">
+            <!-- Name Input -->
+            <input [(ngModel)]="customerName" name="customerName" type="text" class="form-control shadow-none" placeholder="Enter your name ...." *ngIf="isEdit" required/>
+            <!-- Phone Input -->
+            <input [(ngModel)]="phone" name="phone" type="text" class="form-control shadow-none" placeholder="Enter your phone number ...." *ngIf="isEdit" required/>
+            <!-- Display Mode -->
+            <p *ngIf="!isEdit">
+              {{ customerName }} - {{ phone }}
+            </p>
           </div>
-          <input [(ngModel)]="address" type="text" class="form-control shadow-none" placeholder="Enter your address ....">
+
+          <!-- Address Input -->
+          <input [(ngModel)]="address" name="address" type="text" class="form-control shadow-none" placeholder="Enter your address ...." *ngIf="isEdit" required/>
+          <!-- Display Mode -->
+          <p *ngIf="!isEdit">
+            {{ address }}
+          </p>
         </div>
 
-        <button class="btn" (click)="editMode()">
-          <img src="Icons/edit.svg" alt="" *ngIf="!isEdit">
+        <!-- Edit Button -->
+        <button type="button" class="btn me-3" (click)="editMode()" [disabled]="customerForm.invalid && isEdit"><img src="Icons/edit.svg" alt="" *ngIf="!isEdit">
           <i class="bi bi-check-lg" *ngIf="isEdit"></i>
         </button>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -78,22 +90,22 @@
     </div>
 
     <div class="row">
-      <div class="col">
+      <div class="col ms-2">
         <p>
           Note
         </p>
 
-        <input type="text" class="form-control shadow-none">
+        <input [(ngModel)]="note" type="text" class="form-control shadow-none">
       </div>
 
-      <div class="col d-flex flex-column">
+      <div class="col d-flex flex-column me-2">
         <div class="d-flex flex-row justify-content-between">
           <p>
             Ninja Van
           </p>
 
           <button class="btn">
-            Edit
+            <img src="Icons/edit.svg" alt="">
           </button>
         </div>
 
@@ -142,7 +154,7 @@
         </p>
 
         <button class="btn">
-          Edit
+          <img src="Icons/edit.svg" alt="">
         </button>
       </div>
     </div>
@@ -156,7 +168,7 @@
         </p>
 
         <p>
-          $190
+          ${{totalPrice}}
         </p>
       </div>
 
@@ -166,7 +178,7 @@
         </p>
 
         <p>
-          $5
+          ${{shippingFee}}
         </p>
       </div>
 
@@ -186,7 +198,7 @@
         </p>
 
         <p class="orange">
-          $195
+          ${{totalPrice + shippingFee}}
         </p>
       </div>
 

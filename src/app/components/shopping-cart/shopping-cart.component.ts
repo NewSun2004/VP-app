@@ -21,32 +21,23 @@ export class ShoppingCartComponent implements OnInit{
 
   boxChecked : boolean[] = [];
   totalPriceElements : number[] = [];
-  shippingPrice : number = 5;
   totalPrice : number = 0;
-  totalOrder : number = 0;
 
   constructor(private _authService : AuthService, private _productService : ProductService, private _cartService : CartService, private _router : Router)
   { }
 
   ngOnInit() : void {
-    this._authService.checkSession().subscribe({
-      next : state => {
-        if (state)
+    this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
+      next : cartLines => {
+        this.cartLines = cartLines;
+        for (let cartLine of this.cartLines)
         {
-          this._cartService.getCartLines(this._authService.currentUser.cart).subscribe({
-            next : cartLines => {
-              this.cartLines = cartLines
-              for (let cartLine of this.cartLines)
-              {
-                this._productService.getProduct(cartLine.product_id!).subscribe({
-                  next : productData => {
-                    this.cartProducts.push(productData);
-                    this.boxChecked.push(true);
-                    this.totalPriceElements.push(cartLine.quantity * productData.product_price);
-                    this.updateTotalPrice();
-                  }
-                })
-              }
+          this._productService.getProduct(cartLine.product_id!).subscribe({
+            next : productData => {
+              this.cartProducts.push(productData);
+              this.boxChecked.push(true);
+              this.totalPriceElements.push(cartLine.quantity * productData.product_price);
+              this.updateTotalPrice();
             }
           })
         }
@@ -93,8 +84,6 @@ export class ShoppingCartComponent implements OnInit{
 
       this.totalPrice = totalPriceTemp;
     }
-
-    this.totalOrder = this.totalPrice + this.shippingPrice;
   }
 
   processToOrder() : void
@@ -110,6 +99,7 @@ export class ShoppingCartComponent implements OnInit{
         this._cartService.selectedCartProducts.push(this.cartProducts[i]);
       }
     }
+    this._cartService.totalPrice = this.totalPrice;
     this._router.navigate(["/payment"]);
   }
 }

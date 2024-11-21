@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 export class PaymentComponent implements OnInit {
   addressBarToggle : boolean = true;
   isEnoughInformation : boolean = false;
-  isEdit : boolean = false;
+  isEdit : boolean = true;
 
   customerName : string = "";
   phone : string = "";
@@ -24,7 +24,10 @@ export class PaymentComponent implements OnInit {
   cartLines : CartLine[] = [];
   cartProducts : ProductDetails[] = [];
 
+  note : string = "";
+
   totalPrice : number = 0;
+  shippingFee : number = 0;
 
   constructor(private _cartService : CartService) {}
 
@@ -34,25 +37,12 @@ export class PaymentComponent implements OnInit {
     this.customerName = this._cartService.customerName;
     this.phone = this._cartService.phone;
     this.address = this._cartService.address;
+    this.totalPrice = this._cartService.totalPrice;
   }
 
   editMode() : void
   {
-    if (this.checkInformation())
-    {
-      this.isEdit = !this.isEdit;
-    }
-  }
-
-  checkInformation() : boolean
-  {
     if (this.customerName && this.phone && this.address)
-    {
-      this._cartService.customerName = this.customerName;
-      this._cartService.phone = this.phone;
-      this._cartService.address = this.address;
-      return true;
-    }
-    return false;
+    this.isEdit = !this.isEdit;
   }
 }

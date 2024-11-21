@@ -71,11 +71,6 @@
       <p>${{totalPrice}}</p>
     </div>
 
-    <div class="d-flex flex-row">
-      <p class="flex-grow-1">Shipping Fee:</p>
-      <p>${{shippingPrice}}</p>
-    </div>
-
     <button class="voucher">
       Apply voucher
     </button>
@@ -87,7 +82,7 @@
         Order Total
       </p>
 
-      <p>${{this.totalOrder}}</p>
+      <p>${{this.totalPrice}}</p>
     </div>
     <button class="checkout" style="width: 100%;" (click)="processToOrder()">
       Proceed to checkout

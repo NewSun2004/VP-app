@@ -78,6 +78,8 @@
       <div class="d-flex flex-row justify-content-between">
         <button class="btn add" (click)="addToCart()">ADD TO CART</button>
         <button class="btn buy">BUY NOW</button>
+        <app-toast [show]="existed" [success]="false" message="Product already in cart! Please manage!"></app-toast>
+        <app-toast [show]="success" [success]="true" message="Product added to cart successfully!"></app-toast>
       </div>
     </div>
   </div>

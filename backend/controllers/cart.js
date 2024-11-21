@@ -29,24 +29,35 @@ const cartController = {
   },
   addCartline: async (req, res) => {
     try {
-        // Tạo mới một cart_line từ dữ liệu gửi lên
-        const newCart_line = new Cart_line(req.body);
-        const savedCart_line = await newCart_line.save();
+      const { cart_id, product_id } = req.body;
 
-        // Sau khi lưu cart_line, thêm ID của nó vào cart tương ứng
-        await Cart.findByIdAndUpdate(
-            req.body.cart_id, // cart_id được gửi trong body
-            { $push: { cart_line: savedCart_line._id } }, // Thêm cart_line ID vào cart_line array
-            { new: true } // Trả về document sau khi cập nhật
-        );
+      // Check if the cart line already exists for the given cart_id and product_id
+      const existingCartLine = await Cart_line.findOne({ cart_id, product_id });
 
-        res.status(200).json({
-            message: "Cart line đã được thêm thành công và cập nhật vào cart!",
-            cart_line: savedCart_line,
-        });
+      if (existingCartLine) {
+        // If the cart line already exists, return the existing cart line
+        return res.status(200).json(existingCartLine);
+      }
+
+      // If no existing cart line, create a new one
+      const newCart_line = new Cart_line(req.body);
+      const savedCart_line = await newCart_line.save();
+
+      // After saving the cart line, add its ID to the corresponding cart
+      await Cart.findByIdAndUpdate(
+        cart_id, // cart_id sent in the request body
+        { $push: { cart_line: savedCart_line._id } }, // Add the cart_line ID to the cart's cart_line array
+        { new: true } // Return the updated cart document
+      );
+
+      res.status(200).json({
+        message: "Cart line successfully added and cart updated!",
+        cart_line: savedCart_line,
+      });
+
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Lỗi server!", error: err.message });
+      console.error(err);
+      res.status(500).json({ message: "Server error!", error: err.message });
     }
   },
   deleteCartLine: async (req, res) => {

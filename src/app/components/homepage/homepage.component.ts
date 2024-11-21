@@ -32,7 +32,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
     // Fetch Best-Selling Products
     this.productService.getBestSellingProducts().subscribe(
       (products) => {
-        console.log('Fetched Best-Selling Products:', products); // Log dữ liệu
         this.bestSellingProducts = products;
         this.updateVisibleProducts();
       },
