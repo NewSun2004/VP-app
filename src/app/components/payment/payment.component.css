@@ -38,7 +38,7 @@
     color: #ffffff;
     font-weight: 600;
     background-color: #D96E05;
-    border: 3px solid transparent;
+    border: 1px solid transparent;
     padding: 2px 0px;
     transition: 0.3s ease;
   }
@@ -46,7 +46,7 @@
   .order:hover {
     color: #D96E05;
     background-color: white;
-    border: 3px solid #D96E05;
+    border: 1px solid #D96E05;
   }
 }
 

@@ -80,13 +80,15 @@
               </li>
             </ul>
           </div>
-          <a [routerLink]="['/cart']" class="me-2 manage">Cart</a>
-          <div class="position-relative">
-            <img src="Icons/shopping-bag.svg" alt="" class="img-fluid">
-            <span class="badge cart-badge">
-              {{ cartCount }}
-            </span>
-          </div>
+          <a [routerLink]="['/cart']" class="d-flex flex-row me-2 manage">
+            Cart
+            <div class="position-relative">
+              <img src="Icons/shopping-bag.svg" alt="" class="img-fluid">
+              <span class="badge cart-badge">
+                {{ cartCount }}
+              </span>
+            </div>
+          </a>
 
         </div>
       </div>
