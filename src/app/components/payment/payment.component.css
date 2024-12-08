@@ -44,7 +44,9 @@
   }
 
   .order:hover {
-    border: 3px solid #000000
+    color: #D96E05;
+    background-color: white;
+    border: 3px solid #D96E05;
   }
 }
 
