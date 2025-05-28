@@ -2,23 +2,36 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.7.
 
-# Start
+# Project Background 
 
-Sau khi clone repo này, vào thư mục backend, chạy lệnh "npm i" để cài node_modules cần thiết. Sau đó vào ".env" file và thay đổi các giá trị sau thành "true" để khởi tạo và thêm dữ liệu vào mongodb: <br/><br/>
-      IMPORT_DATA=false <br/>
-      IMPORT_CARRIER_DATA=false <br/>
-      UPDATE_BEST_SELLERS=false <br/><br/>
-Sau lần khởi tạo đầu tiên, thay đổi các giá trị trên trở lại thành "false". <br/>
-Đối với thư mục VP-app, cần chạy lệnh "npm i" để cài tất cả node_modules cần thiêt. <br/>
-Từ đây, VP-app đã có thể kết nối tới backend và hoạt động bình thường.
+Demo:
+Elist Electronics, established in 2018, is a global e-commerce company that sells popular electronic products worldwide via its website and mobile app.
+The company has significant amounts of data on its sales, marketing efforts, operational efficiency, product offerings, and loyalty program that has been previously underutilized. This project thoroughly analyzes and synthesizes this data in order to uncover critical insights that will improve Elist's commercial success.
+Insights and recommendations are provided on the following key areas:
+- Sales Trends Analysis: Evaluation of historical sales patterns, both globally and by region, focusing on Revenue, Order Volume, and Average Order Value (AOV).
+- Product Level Performance: An analysis of Elist's various product lines, understanding their impact on sales and returns.
+- Loyalty Program Success: An assessment of the loyalty program on customer retention and sales.
+- Regional Comparisons: An evaluation of sales and orders by region.
 
-## Development server
+An interactive PowerBI dashboard can be downloaded here.
+The SQL queries utilized to inspect and perform quality checks can be found here.
+The SQL queries utilized to clean, organize, and prepare data for the dashboard can be found here.
+Targeted SQL queries regarding various business questions can be found here.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Data structure & Initial check
+give the ERD here
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Executive Summary
+
+Overview of the findings 
+(give an overall introduction + Dashboard + Insights)
+Each insight should contain:
+quantified value
+business metric
+simple story about historical trend
+(Recommendations from those insights)
 
 ## Build
 
